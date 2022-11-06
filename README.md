@@ -9,7 +9,7 @@ Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUB
 * **Urquiza Villa, Elías Santos** - [Elias-Urquiza](https://github.com/integrante1)
 * **Mateo Ezequiel Ibañez** - [Mateo-Ibañez](https://github.com/MateoIbaniez)
 * **Tosto Valenzuela, Ezequiel Martin** - [Ezequiel Tosto](https://github.com/echitosto)
-* **Integrante 4** - [integrante4](https://github.com/integrante4)
+* **Suarez Pino, Imanol** - [Imanol-Suarez Pino](https://github.com/Imasuarezpino)
 
 Corrector: **{Corrector}**
 
