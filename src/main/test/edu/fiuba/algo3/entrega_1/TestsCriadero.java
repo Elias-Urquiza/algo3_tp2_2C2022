@@ -16,7 +16,7 @@ public class TestsCriadero {
         try{
             unCriadero.extraerLarvas(1);
         }
-        catch (Exception unaExcepcion){
+        catch (RuntimeException unaExcepcion){
             afirmacion = false;
         }
         assert(afirmacion);
@@ -31,7 +31,7 @@ public class TestsCriadero {
         try{
             unCriadero.extraerLarvas(3);
         }
-        catch (Exception unaExcepcion){
+        catch (RuntimeException unaExcepcion){
             afirmacion = false;
         }
         assert(afirmacion);
@@ -46,7 +46,7 @@ public class TestsCriadero {
         try{
             unCriadero.extraerLarvas(4);
         }
-        catch (Exception unaExcepcion){
+        catch (RuntimeException unaExcepcion){
             afirmacion = true;
         }
         assert(afirmacion);
