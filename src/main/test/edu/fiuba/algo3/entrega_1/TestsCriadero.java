@@ -13,6 +13,11 @@ public class TestsCriadero {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = true;
 
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
         try{
             unCriadero.extraerLarvas(1);
         }
@@ -27,6 +32,11 @@ public class TestsCriadero {
 
         Criadero unCriadero = new Criadero();
         boolean afirmacion = true;
+
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
 
         try{
             unCriadero.extraerLarvas(3);
@@ -43,6 +53,11 @@ public class TestsCriadero {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = false;
 
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
         try{
             unCriadero.extraerLarvas(4);
         }
@@ -56,6 +71,11 @@ public class TestsCriadero {
     public void siSeExtrajoLarvasEntoncesDespuesDeUnTurnoSeRegeneraUna() {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = true;
+
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
 
         unCriadero.extraerLarvas(1);
         unCriadero.pasarTurno();
@@ -73,6 +93,11 @@ public class TestsCriadero {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = false;
 
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
         unCriadero.extraerLarvas(1);
         unCriadero.pasarTurno();
 
@@ -89,6 +114,11 @@ public class TestsCriadero {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = true;
 
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
         unCriadero.extraerLarvas(3);
         unCriadero.pasarTurno();
         unCriadero.pasarTurno();
@@ -104,6 +134,11 @@ public class TestsCriadero {
     public void seExtraenTresLarvasEntoncesEnTresTurnosSeRepusieron() {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = true;
+
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
 
         unCriadero.extraerLarvas(3);
         unCriadero.pasarTurno();
