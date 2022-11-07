@@ -7,7 +7,7 @@ public class Criadero implements Turno{
     private int numeroDeLarvas;
     private int puntosDeVida;
 
-    public int MAXLARVAS = 3; // quiero hacer una cte de esto pero no se como.
+    private static final int MAX_LARVAS = 3;
 
     public Criadero() {
         numeroDeLarvas = 3;
@@ -23,7 +23,7 @@ public class Criadero implements Turno{
 
     @Override
     public void pasarTurno() {
-        if(numeroDeLarvas < MAXLARVAS)
+        if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
     }
 
