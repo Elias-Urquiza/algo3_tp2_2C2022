@@ -1,4 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
-public class Extractor {
+import edu.fiuba.algo3.modelo.Construccion;
+
+public class Extractor implements Construccion {
+    public void usar() {
+
+    }
 }

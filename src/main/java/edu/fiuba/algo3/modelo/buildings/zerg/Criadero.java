@@ -1,9 +1,10 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
 
+import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
 
-public class Criadero implements Turno {
+public class Criadero implements Turno, Construccion {
 
     private int numeroDeLarvas;
     private int puntosDeVida;
@@ -29,11 +30,17 @@ public class Criadero implements Turno {
 
         numeroDeLarvas-= quitarLarvas;
     }
+
     @Override
     public void pasarTurno() {
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
 
         turnosActivo++;
+    }
+
+    @Override
+    public void usar() {
+
     }
 }
