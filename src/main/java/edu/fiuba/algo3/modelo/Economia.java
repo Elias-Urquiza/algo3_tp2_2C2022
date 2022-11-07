@@ -24,4 +24,19 @@ public class Economia {
         gasVespeno+= ingreso;
     }
 
+    public void gastarMineral(int gastar)throws RuntimeException{
+        if(mineral <= 0 || mineral - gastar < 0)
+            throw new RuntimeException("No se puede gastar la cantidad indicada");
+
+        mineral-= gastar;
+    }
+
+    public void ingresarMineral(int ingreso)throws RuntimeException{
+        if(ingreso < 0)
+            throw new RuntimeException("ingreso no valido");
+
+        mineral+= ingreso;
+    }
+
+
 }

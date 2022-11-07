@@ -1,9 +1,13 @@
 package edu.fiuba.algo3.modelo;
 
-public class Criadero {
+
+
+public class Criadero implements Turno{
 
     private int numeroDeLarvas;
     private int puntosDeVida;
+
+    public int MAXLARVAS = 3; // quiero hacer una cte de esto pero no se como.
 
     public Criadero() {
         numeroDeLarvas = 3;
@@ -16,4 +20,12 @@ public class Criadero {
 
         numeroDeLarvas-= quitarLarvas;
     }
+
+    @Override
+    public void pasarTurno() {
+        if(numeroDeLarvas < MAXLARVAS)
+            numeroDeLarvas++;
+    }
+
+
 }

@@ -34,4 +34,32 @@ public class TestsEconomia {
         assert(afirmacion);
     }
 
+    @Test
+    public void agregarMineralNoDevuelveExcepcion(){
+        Economia unaEconomia = new Economia();
+        boolean afirmacion = true;
+
+        try {
+            unaEconomia.ingresarMineral(200);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
+    }
+
+    @Test
+    public void gastarMineralSeLlevaACaboSinExecpciones(){
+
+        Economia unaEconomia = new Economia();
+        boolean afirmacion = true;
+
+        unaEconomia.ingresarMineral(200);
+        try {
+            unaEconomia.gastarMineral(200);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
+    }
+
 }
