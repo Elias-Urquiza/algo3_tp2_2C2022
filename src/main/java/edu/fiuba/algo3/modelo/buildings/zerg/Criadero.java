@@ -8,6 +8,8 @@ public class Criadero implements Turno {
     private int numeroDeLarvas;
     private int puntosDeVida;
 
+    // incluir atributo de ubicacion
+
     private static final int MAX_LARVAS = 3;
 
     public Criadero() {
@@ -27,6 +29,8 @@ public class Criadero implements Turno {
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
     }
+
+    private static timerConstruccion()
 
 
 }
