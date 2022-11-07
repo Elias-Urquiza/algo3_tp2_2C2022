@@ -1,8 +1,9 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.buildings.zerg;
 
 
+import edu.fiuba.algo3.modelo.Turno;
 
-public class Criadero implements Turno{
+public class Criadero implements Turno {
 
     private int numeroDeLarvas;
     private int puntosDeVida;
