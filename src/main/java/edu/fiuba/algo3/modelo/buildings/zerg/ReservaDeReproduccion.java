@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Turno;
 
-public class ReservaDeReproduccion implements Construccion {
+public class ReservaDeReproduccion implements Construccion, Turno {
 
     private int puntosDeVida;
 
@@ -23,6 +24,9 @@ public class ReservaDeReproduccion implements Construccion {
         turnosActivo++;
     }
     public void usar() {
+        if(turnosActivo < TIEMPO_CONSTRUCCION)
+            throw new RuntimeException("Edificio en construccion");
+
 
     }
 }

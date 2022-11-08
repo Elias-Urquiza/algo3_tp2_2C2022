@@ -8,8 +8,6 @@ public class TestCriaderoActivo {
     @Test
     public void cuandoCreoUnCriaderoActivoEfectivamenteEstaActivo() {
 
-
-
         Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
 

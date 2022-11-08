@@ -1,9 +1,10 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega_1.TestsConstruccionesZerg;
 
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
+import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.mocks.CriaderoActivo;
 import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
 
 
 public class TestsCriadero {
@@ -144,6 +145,10 @@ public class TestsCriadero {
         assert(afirmacion);
     }
 
-    //FALTA PRUEBA: Probar que pasado un turno si el criadero no tenia 3 larvas, que genere una mas. se puede hacer
-    //              sacando una larva y dejar pasar un turno y ahora sacar 3.
+    @Test
+    public void noSePuedeUsarElCriaderoAntesDeQueSeTermineDeConstruir(){
+        final Criadero criadero = new Criadero();
+        Assertions.assertThrows(RuntimeException.class, () -> criadero.extraerLarvas(1));
+    }
+
 }

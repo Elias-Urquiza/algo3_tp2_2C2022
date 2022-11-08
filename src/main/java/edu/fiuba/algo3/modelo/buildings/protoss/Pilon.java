@@ -11,7 +11,7 @@ public class Pilon implements Turno {
 
     private static final int MAX_ESCUDO = 350;
 
-    public Asimilador() {
+    public Pilon() {
         puntosDeEscudo = 350;
         puntosDeVida = 350;
         turnosActivo =0;

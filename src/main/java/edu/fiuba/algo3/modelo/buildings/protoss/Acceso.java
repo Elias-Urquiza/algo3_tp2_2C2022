@@ -11,7 +11,7 @@ public class Acceso implements Turno {
 
     private static final int MAX_ESCUDO = 500;
 
-    public NexoMineral(){
+    public Acceso(){
         puntosDeVida = 500;
         turnosActivo = 0;
         puntosDeEscudo = 500;

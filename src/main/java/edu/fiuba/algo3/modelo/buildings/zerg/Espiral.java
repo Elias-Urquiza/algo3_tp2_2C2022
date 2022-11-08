@@ -6,8 +6,11 @@ import edu.fiuba.algo3.modelo.Turno;
 public class Espiral implements Turno, Construccion {
 
     private int turnosActivo;
-    private final int TIEMPO_CONSTRUCCION = 10;
+    private static final int TIEMPO_CONSTRUCCION = 10;
+    private int vida;
+
     public Espiral() {
+        vida = 1300;
         turnosActivo = 0;
     }
 

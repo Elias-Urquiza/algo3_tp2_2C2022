@@ -10,4 +10,5 @@ public class CriaderoActivo extends Criadero {
         pasarTurno();
         pasarTurno();
     }
+
 }

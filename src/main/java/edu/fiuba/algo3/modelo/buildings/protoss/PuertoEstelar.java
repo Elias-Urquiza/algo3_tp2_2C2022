@@ -11,7 +11,7 @@ public class PuertoEstelar implements Turno {
 
     private static final int MAX_ESCUDO = 600;
 
-    public NexoMineral(){
+    public PuertoEstelar(){
         puntosDeVida = 600;
         turnosActivo = 0;
         puntosDeEscudo = 600;
