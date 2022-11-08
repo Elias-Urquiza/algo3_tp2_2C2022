@@ -36,7 +36,7 @@ public class Extractor implements Construccion, Turno {
         if(zanganos < MIN_ZANGANOS ){
             throw new RuntimeException("No hay zanganos para trabajar");
         }
-        gas = zanganos * MULTIPLICADOR_GAS;
+        gas = zanganos * MULTIPLICADOR_GAS; // tendria que mandarle el mensaje a la clase economia, y agregar gas
     }
 
     public void agregarZangano(){
