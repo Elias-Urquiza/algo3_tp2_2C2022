@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega_1.TestsConstruccionesZerg;
+package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;

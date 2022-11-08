@@ -13,6 +13,8 @@ public class Asimilador implements Turno, Construccion {
 
     private static final int MAX_ESCUDO = 450;
 
+    private static final int TIEMPO_CONSTRUCCION = 6;
+
     public Asimilador() {
         puntosDeEscudo = 450;
         puntosDeVida = 450;
@@ -28,6 +30,8 @@ public class Asimilador implements Turno, Construccion {
 
     @Override
     public void usar() {
-        return;
+        if(turnosActivo < TIEMPO_CONSTRUCCION)
+            throw new RuntimeException("Edificio en construccion");
+
     }
 }

@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
+import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
 
-public class NexoMineral implements Turno {
+public class NexoMineral implements Turno, Construccion {
 
     private int puntosDeVida;
 
@@ -11,6 +12,8 @@ public class NexoMineral implements Turno {
     private int puntosDeEscudo;
 
     private static final int MAX_ESCUDO = 250;
+
+    private static final int TIEMPO_CONSTRUCCION = 4;
 
     public NexoMineral(){
         puntosDeVida = 250;
@@ -27,4 +30,10 @@ public class NexoMineral implements Turno {
 
     }
 
+    @Override
+    public void usar() {
+        if(turnosActivo < TIEMPO_CONSTRUCCION)
+            throw new RuntimeException("Edificio en construccion");
+
+    }
 }
