@@ -1,33 +1,28 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
-import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
 
-public class Asimilador implements Turno, Construccion {
-
+public class Pilon implements Turno {
     private int puntosDeVida;
 
     private int turnosActivo;
 
     private int puntosDeEscudo;
 
-    private static final int MAX_ESCUDO = 450;
+    private static final int MAX_ESCUDO = 350;
 
     public Asimilador() {
-        puntosDeEscudo = 450;
-        puntosDeVida = 450;
+        puntosDeEscudo = 350;
+        puntosDeVida = 350;
         turnosActivo =0;
     }
+
 
     @Override
     public void pasarTurno(){
         if(puntosDeEscudo < MAX_ESCUDO)
-            puntosDeEscudo++;  //Asumo que va sumando de a un por turno
+            puntosDeEscudo++;
         turnosActivo++;
-    }
-
-    @Override
-    public void usar() {
-        return;
+        //no se como implementar que sume 20 de gas por tiempo, Si el gas es guardado en minerales
     }
 }
