@@ -25,7 +25,7 @@ public class TestVolcan {
     @Test
     public void construyoUnAsimiladorSobreElVolcanYDevuelveCorrectamente() {
         final Volcan volcan = new Volcan();
-        volcan.buildOn(new Asimilador());
+        volcan.buildOn(new Asimilador(new Economia()));
         Assertions.assertNotNull(volcan.getConstruccionEncima());
     }
 }
