@@ -19,7 +19,7 @@ public class Volcan implements FloorType {
     }
     @Override
     public void buildOn(Construccion construccion) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construccion.getClass())) {
+        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
             this.construccionEncima = construccion;
             return;
         }
