@@ -37,5 +37,8 @@ public class Moho implements Turno, FloorType {
         }
         throw new RuntimeException("You cannot build on top of this");
     }
+    public Construccion getConstruccionEncima() {
+        return construccionEncima;
+    }
 
 }
