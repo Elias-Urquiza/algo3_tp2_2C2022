@@ -1,10 +1,10 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega_1.Tiles;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
-import edu.fiuba.algo3.modelo.Volcan;
+import edu.fiuba.algo3.modelo.tiles.Volcan;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

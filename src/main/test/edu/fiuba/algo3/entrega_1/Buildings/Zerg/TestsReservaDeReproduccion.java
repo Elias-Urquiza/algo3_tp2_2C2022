@@ -1,12 +1,10 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
-import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
-import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class TestsReservaDeProduccion {
+public class TestsReservaDeReproduccion {
 
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){

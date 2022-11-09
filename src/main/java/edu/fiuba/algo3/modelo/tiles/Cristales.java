@@ -1,9 +1,7 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.tiles;
 
-import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
-import edu.fiuba.algo3.modelo.tiles.FloorType;
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.tiles.FloorType;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 
 import java.util.List;

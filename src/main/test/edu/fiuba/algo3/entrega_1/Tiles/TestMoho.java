@@ -1,8 +1,7 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega_1.Tiles;
 
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Moho;
-import edu.fiuba.algo3.modelo.Volcan;
+import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
+import edu.fiuba.algo3.modelo.tiles.Moho;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
@@ -11,15 +10,17 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 
-
-import org.junit.jupiter.api.Assertions;
-
-
 public class TestMoho {
     @Test
     public void construyoUnPilonSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho();
         Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon()) );
+    }
+
+    @Test
+    public void construyoUnAccesoSobreElMohoYTiraExcepcion() {
+        final Moho moho = new Moho();
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso() ) );
     }
 
     @Test

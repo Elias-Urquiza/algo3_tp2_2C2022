@@ -1,28 +1,22 @@
-package edu.fiuba.algo3.entrega_1.Buildings;
+package edu.fiuba.algo3.entrega_1.Tiles;
 
-import edu.fiuba.algo3.modelo.Cristales;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Volcan;
+import edu.fiuba.algo3.modelo.tiles.Cristales;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
-import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestCristales {
     @Test
-    public void construyoUnCriaderoSobreCristalesYTiraExcepcion() {
+    public void construyoUnCriaderoSobreLosCristalesYTiraExcepcion() {
         final Cristales cristal = new Cristales();
         Assertions.assertThrows(RuntimeException.class, () -> cristal.buildOn(new Criadero() ) );
     }
 
-
     @Test
-    public void construyoUnExtractorSobreElVolcanYDevuelveCorrectamente() {
+    public void construyoUnNexoMineralSobreLosCristalesYDevuelveCorrectamente() {
         final Cristales cristal = new Cristales();
         cristal.buildOn(new NexoMineral( ) );
         Assertions.assertNotNull(cristal.getConstruccionEncima() );
     }
-
-
 }

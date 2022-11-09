@@ -1,8 +1,10 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.tiles;
 
 
 
 
+import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.tiles.FloorType;
 import java.util.List;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
