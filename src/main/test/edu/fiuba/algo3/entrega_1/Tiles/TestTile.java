@@ -12,12 +12,11 @@ import static org.mockito.Mockito.verify;
 
 public class TestTile {
 
-    final FloorType floorType = mock(FloorType.class);
-    final Construccion construccion = mock(Criadero.class);
-
+/*
     @Test
     public void creoUnaTileYNoTieneNingunaConstruccion() {
         final Tile tile = new Tile(floorType);
         Assertions.assertNull(tile.getConstruccion());
     }
+    */
 }

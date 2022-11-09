@@ -11,22 +11,17 @@ public class Cristales implements FloorType {
             NexoMineral.class
     );
 
-    private Construccion construccionEncima;
+
 
     public Cristales() {
-        this.construccionEncima = null;
+
     }
 
-    public void buildOn(Construccion construccion) throws RuntimeException {
+    public void buildOn(Construccion construccion, Construccion guardar) throws RuntimeException {
         if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
-            this.construccionEncima = construccion;
+            guardar = construccion;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");
     }
-
-    public Construccion getConstruccionEncima() {
-        return construccionEncima;
-    }
-
 }

@@ -15,7 +15,7 @@ import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 
 public class Moho implements Turno, FloorType {
 
-    private Construccion construccionEncima;
+
     private static final List<Class> AVAILABLE_BUILDINGS = List.of(
             Criadero.class,
             Espiral.class,
@@ -24,7 +24,7 @@ public class Moho implements Turno, FloorType {
     );
 
     public Moho(){
-        construccionEncima = null;
+
     }
 
     @Override
@@ -32,15 +32,13 @@ public class Moho implements Turno, FloorType {
 
     }
 
-    public void buildOn(Construccion construccion) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
-            this.construccionEncima = construccion;
+    public void buildOn(Construccion Aconstruir, Construccion construirEncima) throws RuntimeException {
+        if(AVAILABLE_BUILDINGS.contains(Aconstruir.getClass() ) ) {
+            construirEncima = Aconstruir;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");
     }
-    public Construccion getConstruccionEncima() {
-        return construccionEncima;
-    }
+
 
 }

@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
+import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
@@ -14,50 +15,88 @@ public class TestMoho {
     @Test
     public void construyoUnPilonSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon()) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon(), guardar) );
     }
 
     @Test
     public void construyoUnAccesoSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso() ) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso(), guardar ) );
     }
 
     @Test
     public void construyoUnNexoSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral()) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral(), guardar) );
     }
     @Test
     public void construyoUnPuertoEstelarSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar()) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar(), guardar) );
     }
 
     @Test
-    public void construyoUnCriaderoSobreElMohoYDevuelveCorrectamente() {
+    public void construyoUnCriaderoSobreElMohoYNoHayProblema() {
         final Moho moho = new Moho();
-        moho.buildOn(new Criadero() );
-        Assertions.assertNotNull(moho.getConstruccionEncima() );
+        Construccion guardar = null;
+        Criadero criadero = new Criadero();
+        boolean afirmacion = true;
+
+        try{
+            moho.buildOn(new Criadero(), guardar );
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
     @Test
-    public void construyoUnaEspiralSobreElMohoYDevuelveCorrectamente() {
+    public void construyoUnaEspiralSobreElMohoYNoHayProblema() {
         final Moho moho = new Moho();
-        moho.buildOn(new Espiral());
-        Assertions.assertNotNull(moho.getConstruccionEncima() );
+        Espiral espiral = new Espiral();
+        Construccion guardar = null;
+        boolean afirmacion = true;
+
+        try{
+            moho.buildOn(espiral, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
     @Test
-    public void construyoUnaGuaridaSobreElMohoYDevuelveCorrectamente() {
+    public void construyoUnaGuaridaSobreElMohoYNoHayProblema() {
         final Moho moho = new Moho();
-        moho.buildOn(new Guarida());
-        Assertions.assertNotNull(moho.getConstruccionEncima() );
+        Guarida guarida = new Guarida();
+        Construccion guardar = null;
+        boolean afirmacion = true;
+        
+        try{
+            moho.buildOn(guarida, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+
     }
     @Test
-    public void construyoUnaReservaSobreElMohoYDevuelveCorrectamente() {
+    public void construyoUnaReservaSobreElMohoYNoHayProblema() {
         final Moho moho = new Moho();
-        moho.buildOn(new ReservaDeReproduccion());
-        Assertions.assertNotNull(moho.getConstruccionEncima() );
+        ReservaDeReproduccion reserva = new ReservaDeReproduccion();
+        Construccion guardar = null;
+        boolean afirmacion = true;
+
+        try{
+            moho.buildOn(reserva, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
+
+
 }

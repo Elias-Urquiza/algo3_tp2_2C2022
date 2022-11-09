@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
+import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
@@ -18,53 +19,89 @@ public class TestsEnergia {
     @Test
     public void construyoUnCriaderoSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Criadero() ) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Criadero(), guardar) );
     }
 
     @Test
     public void construyoUnaEspiralSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Espiral() ) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Espiral(), guardar ) );
     }
 
     @Test
     public void construyoUnaGuaridaSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Guarida() ) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Guarida(), guardar) );
     }
 
     @Test
     public void construyoUnaReservaSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new ReservaDeReproduccion() ) );
+        Construccion guardar = null;
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new ReservaDeReproduccion(), guardar) );
     }
 
     @Test
-    public void construyoUnPilonSobreEnergiaYSeDevuelveCorrectamente() {
+    public void construyoUnPilonSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        energia.buildOn(new Pilon() );
-        Assertions.assertNotNull(energia.getConstruccionEncima() );
+        Construccion guardar = null;
+        Pilon pilon = new Pilon();
+        boolean afirmacion = true;
+
+        try{
+            energia.buildOn(pilon, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
     @Test
-    public void construyoUnAccesoSobreEnergiaYSeDevuelveCorrectamente() {
+    public void construyoUnAccesoSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        energia.buildOn(new Acceso() );
-        Assertions.assertNotNull(energia.getConstruccionEncima() );
+        Construccion guardar = null;
+        boolean afirmacion = true;
+        Acceso acceso = new Acceso();
+
+        try{
+            energia.buildOn(acceso, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
     @Test
-    public void construyoUnNexoSobreEnergiaYSeDevuelveCorrectamente() {
+    public void construyoUnNexoSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        energia.buildOn(new NexoMineral() );
-        Assertions.assertNotNull(energia.getConstruccionEncima() );
+        Construccion guardar = null;
+        boolean afirmacion = true;
+        NexoMineral nexoMineral = new NexoMineral();
+
+        try{
+            energia.buildOn(nexoMineral, guardar );
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
     @Test
-    public void construyoUnPuertoEstelarSobreEnergiaYSeDevuelveCorrectamente() {
+    public void construyoUnPuertoEstelarSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        energia.buildOn(new PuertoEstelar() );
-        Assertions.assertNotNull(energia.getConstruccionEncima() );
+        Construccion guardar = null;
+        boolean afirmacion = true;
+        PuertoEstelar puertoEstelar = new PuertoEstelar();
+
+        try{
+            energia.buildOn(puertoEstelar, guardar);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
     }
 
 }
