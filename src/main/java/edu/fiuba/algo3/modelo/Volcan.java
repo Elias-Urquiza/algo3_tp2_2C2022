@@ -17,6 +17,7 @@ public class Volcan implements FloorType {
     public Volcan() {
         this.construccionEncima = null;
     }
+
     @Override
     public void buildOn(Construccion construccion) throws RuntimeException {
         if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
@@ -24,7 +25,7 @@ public class Volcan implements FloorType {
             return;
         }
         throw new RuntimeException("You cannot build on top of this");
-    }
+    }// Se repite codigo en volcan, moho, energia y mineral (tipo de piso) --> plantear un refactor con el Strategy NO REPETIR CODIGO.
 
     public Construccion getConstruccionEncima() {
         return construccionEncima;

@@ -1,9 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
-import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.mocks.CriaderoActivo;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -168,5 +166,4 @@ public class TestsExtractor {
 
         assert(afirmacion);
     }
-
 }

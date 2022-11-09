@@ -6,13 +6,9 @@ import edu.fiuba.algo3.modelo.Turno;
 
 public class Extractor implements Construccion, Turno {
 
-
-
     private int turnosActivo;
     private int vida;
-
     private static final int MAX_LARVAS = 3;
-
     private static final int PRODUCCION_POR_ZANGANO=10;
     private int zanganos;
     private Economia economia;
@@ -24,7 +20,6 @@ public class Extractor implements Construccion, Turno {
         economia     = economiaZerg;
         zanganos     = 0           ;
     }
-
 
     public void usar() {
         if(turnosActivo < TIEMPO_CONSTRUCCION){
@@ -48,7 +43,6 @@ public class Extractor implements Construccion, Turno {
         if(zanganos < MAX_LARVAS)
             zanganos++;
     }
-
 
     @Override
     public void pasarTurno() {
