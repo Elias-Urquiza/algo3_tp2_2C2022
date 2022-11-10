@@ -11,8 +11,6 @@ public class Cristales implements FloorType {
             NexoMineral.class
     );
 
-
-
     public Cristales() {
 
     }

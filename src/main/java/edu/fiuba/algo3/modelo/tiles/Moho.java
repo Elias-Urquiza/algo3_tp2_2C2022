@@ -13,7 +13,7 @@ import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 
 
-public class Moho implements Turno, FloorType {
+public class Moho implements Turno {
 
 
     private static final List<Class> AVAILABLE_BUILDINGS = List.of(
@@ -39,6 +39,4 @@ public class Moho implements Turno, FloorType {
         }
         throw new RuntimeException("You cannot build on top of this");
     }
-
-
 }

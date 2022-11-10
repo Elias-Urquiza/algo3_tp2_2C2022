@@ -26,7 +26,5 @@ public class ReservaDeReproduccion implements Construccion, Turno {
     public void usar() {
         if(turnosActivo < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
-
-
     }
 }

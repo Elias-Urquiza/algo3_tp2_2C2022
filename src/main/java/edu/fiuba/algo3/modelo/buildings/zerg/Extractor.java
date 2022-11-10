@@ -15,18 +15,16 @@ public class Extractor implements Construccion, Turno {
     private static final int TIEMPO_CONSTRUCCION = 6;
 
     public Extractor(Economia economiaZerg){
-        turnosActivo = 0           ;
-        vida         = 750         ;
-        economia     = economiaZerg;
-        zanganos     = 0           ;
+        turnosActivo = 0;
+        vida = 750;
+        economia = economiaZerg;
+        zanganos = 0;
     }
 
     public void usar() {
         if(turnosActivo < TIEMPO_CONSTRUCCION){
             throw new RuntimeException("Edificio en construccion");
         }
-
-
     }
 
     public void agregarZangano(Criadero unCriadero){ // AGREGA DE A UNO

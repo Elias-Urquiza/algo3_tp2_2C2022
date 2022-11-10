@@ -2,29 +2,21 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
-public class NexoMineral implements Turno, Construccion {
-
-    private int puntosDeVida;
+public class NexoMineral extends ConstruccionProtoss implements Turno, Construccion {
 
     private int turnosActivo;
-
-    private int puntosDeEscudo;
-
-    private static final int MAX_ESCUDO = 250;
 
     private static final int TIEMPO_CONSTRUCCION = 4;
 
     public NexoMineral(){
-        puntosDeVida = 250;
+        super(250, 250);
         turnosActivo = 0;
-        puntosDeEscudo = 250;
     }
     @Override
     public void pasarTurno(){
-        if(puntosDeEscudo < MAX_ESCUDO){
-            puntosDeEscudo++; //Aqui solo hago un ++ ya que no se de q manera va subiendo el escudo
-        }
+        curar();
         turnosActivo ++;
         //no se como implementar que sume 20 de gas por tiempo, Si el gas es guardado en minerales
 
