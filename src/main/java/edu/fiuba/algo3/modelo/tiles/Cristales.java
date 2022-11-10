@@ -15,9 +15,8 @@ public class Cristales implements FloorType {
 
     }
 
-    public void buildOn(Construccion construccion, Construccion guardar) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
-            guardar = construccion;
+    public void buildOn(Construccion construccion) throws RuntimeException {
+        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

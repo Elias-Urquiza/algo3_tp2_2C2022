@@ -11,12 +11,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnCriadero(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = true;
 
         try{
-            vacia.buildOn(new Criadero(), guardar);
+            vacia.buildOn(new Criadero());
         }catch (RuntimeException e){
             afirmacion =false;
         }
@@ -25,12 +24,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnPilon(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = true;
 
         try{
-            vacia.buildOn(new Pilon(), guardar);
+            vacia.buildOn(new Pilon());
         }catch (RuntimeException e){
             afirmacion =false;
         }
@@ -39,12 +37,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnAcceso(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Acceso(), guardar);
+            vacia.buildOn(new Acceso());
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -53,12 +50,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnPuertoEstelar(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new PuertoEstelar(), guardar);
+            vacia.buildOn(new PuertoEstelar());
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -66,13 +62,12 @@ public class TestsTileVacia {
     }
 
     @Test
-    public void aceptaUnAsimilador(){
-        Construccion guardar = null;
+    public void aceptaUnAsimilador(){;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Asimilador(new Economia()), guardar);
+            vacia.buildOn(new Asimilador(new Economia()));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -81,12 +76,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnNexoMineral(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new NexoMineral(), guardar);
+            vacia.buildOn(new NexoMineral());
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -94,12 +88,11 @@ public class TestsTileVacia {
     }
     @Test
     public void aceptaUnEsprial(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Espiral(), guardar);
+            vacia.buildOn(new Espiral());
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -108,12 +101,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnExtractor(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Extractor(new Economia()), guardar);
+            vacia.buildOn(new Extractor(new Economia()));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -122,12 +114,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnaGuarida(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Guarida(), guardar);
+            vacia.buildOn(new Guarida());
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -136,12 +127,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnaReservaDeReproduccion(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new ReservaDeReproduccion(), guardar);
+            vacia.buildOn(new ReservaDeReproduccion());
         }catch (RuntimeException e){
             afirmacion =true;
         }

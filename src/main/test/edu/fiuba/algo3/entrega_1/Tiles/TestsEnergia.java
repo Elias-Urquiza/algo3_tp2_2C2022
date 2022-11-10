@@ -20,39 +20,38 @@ public class TestsEnergia {
     public void construyoUnCriaderoSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
         Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Criadero(), guardar) );
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Criadero()) );
     }
 
     @Test
     public void construyoUnaEspiralSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
         Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Espiral(), guardar ) );
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Espiral()) );
     }
 
     @Test
     public void construyoUnaGuaridaSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
         Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Guarida(), guardar) );
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new Guarida()) );
     }
 
     @Test
     public void construyoUnaReservaSobreEnergiaYTiraExecpcion() {
         final Energia energia = new Energia();
         Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new ReservaDeReproduccion(), guardar) );
+        Assertions.assertThrows(RuntimeException.class, () -> energia.buildOn(new ReservaDeReproduccion()) );
     }
 
     @Test
     public void construyoUnPilonSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        Construccion guardar = null;
         Pilon pilon = new Pilon();
         boolean afirmacion = true;
 
         try{
-            energia.buildOn(pilon, guardar);
+            energia.buildOn(pilon);
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -62,12 +61,11 @@ public class TestsEnergia {
     @Test
     public void construyoUnAccesoSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        Construccion guardar = null;
         boolean afirmacion = true;
         Acceso acceso = new Acceso();
 
         try{
-            energia.buildOn(acceso, guardar);
+            energia.buildOn(acceso);
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -77,12 +75,11 @@ public class TestsEnergia {
     @Test
     public void construyoUnNexoSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        Construccion guardar = null;
         boolean afirmacion = true;
         NexoMineral nexoMineral = new NexoMineral();
 
         try{
-            energia.buildOn(nexoMineral, guardar );
+            energia.buildOn(nexoMineral);
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -92,12 +89,11 @@ public class TestsEnergia {
     @Test
     public void construyoUnPuertoEstelarSobreEnergiaYNoHayProblema() {
         final Energia energia = new Energia();
-        Construccion guardar = null;
         boolean afirmacion = true;
         PuertoEstelar puertoEstelar = new PuertoEstelar();
 
         try{
-            energia.buildOn(puertoEstelar, guardar);
+            energia.buildOn(puertoEstelar);
         }catch (RuntimeException e){
             afirmacion = false;
         }
