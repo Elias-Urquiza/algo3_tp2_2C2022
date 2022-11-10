@@ -1,8 +1,10 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
-import edu.fiuba.algo3.modelo.Criadero;
+import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
+import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
+import edu.fiuba.algo3.modelo.mocks.CriaderoActivo;
 import org.junit.Test;
-
+import org.junit.jupiter.api.Assertions;
 
 
 public class TestsCriadero {
@@ -10,7 +12,7 @@ public class TestsCriadero {
     @Test
     public void seExtraeUnaLarvaDeUnCriaderoConTres(){
 
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
 
         try{
@@ -25,7 +27,7 @@ public class TestsCriadero {
     @Test
     public void seExtraeTodasLasLarvasDeUnCriadero(){
 
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
 
         try{
@@ -43,6 +45,11 @@ public class TestsCriadero {
         Criadero unCriadero = new Criadero();
         boolean afirmacion = false;
 
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
         try{
             unCriadero.extraerLarvas(4);
         }
@@ -54,8 +61,9 @@ public class TestsCriadero {
 
     @Test
     public void siSeExtrajoLarvasEntoncesDespuesDeUnTurnoSeRegeneraUna() {
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
+
 
         unCriadero.extraerLarvas(1);
         unCriadero.pasarTurno();
@@ -70,7 +78,7 @@ public class TestsCriadero {
 
     @Test
     public void siSePasaUnTurnoYLasLarvasEstanAlMaximoNoSeGeneraNingunaNueva() {
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = false;
 
         unCriadero.extraerLarvas(1);
@@ -86,7 +94,7 @@ public class TestsCriadero {
 
     @Test
     public void seExtraenDosLarvasEntoncesEnDosTurnosSeRepusieron() {
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
 
         unCriadero.extraerLarvas(3);
@@ -102,8 +110,9 @@ public class TestsCriadero {
     }
     @Test
     public void seExtraenTresLarvasEntoncesEnTresTurnosSeRepusieron() {
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
+
 
         unCriadero.extraerLarvas(3);
         unCriadero.pasarTurno();
@@ -118,6 +127,28 @@ public class TestsCriadero {
         assert (afirmacion);
     }
 
-    //FALTA PRUEBA: Probar que pasado un turno si el criadero no tenia 3 larvas, que genere una mas. se puede hacer
-    //              sacando una larva y dejar pasar un turno y ahora sacar 3.
+    @Test
+    public void unCriaderoSeConstruyeEnElTiempoEstipulado(){
+        Criadero unCriadero = new Criadero();
+        boolean afirmacion = true;
+
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+        unCriadero.pasarTurno();
+
+        try{
+            unCriadero.extraerLarvas(1);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
+    }
+
+    @Test
+    public void noSePuedeUsarElCriaderoAntesDeQueSeTermineDeConstruir(){
+        final Criadero criadero = new Criadero();
+        Assertions.assertThrows(RuntimeException.class, () -> criadero.extraerLarvas(1));
+    }
+
 }
