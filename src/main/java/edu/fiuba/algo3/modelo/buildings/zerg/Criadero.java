@@ -3,11 +3,11 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
-public class Criadero implements Turno, Construccion {
+public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private int numeroDeLarvas;
-    private int puntosDeVida;
     private int turnosActivo;
 
     // incluir atributo de ubicacion
@@ -17,15 +17,15 @@ public class Criadero implements Turno, Construccion {
 
 
     public Criadero() {
+        super(500);
         numeroDeLarvas = 3;
-        puntosDeVida = 500;
         turnosActivo = 0;
     }
 
     public void extraerLarvas(int quitarLarvas) throws RuntimeException {
         if(numeroDeLarvas <= 0 || ( (numeroDeLarvas - quitarLarvas) < 0))
             throw new RuntimeException("Numero de Larvas incorrecto");
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if (turnosActivo < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
 
         numeroDeLarvas-= quitarLarvas;
@@ -35,7 +35,7 @@ public class Criadero implements Turno, Construccion {
     public void pasarTurno() {
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
-
+        curar();
         turnosActivo++;
     }
 

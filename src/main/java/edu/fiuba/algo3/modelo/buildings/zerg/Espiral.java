@@ -2,15 +2,15 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
-public class Espiral implements Turno, Construccion {
+public class Espiral extends ConstruccionZerg implements Turno, Construccion {
 
     private int turnosActivo;
     private static final int TIEMPO_CONSTRUCCION = 10;
-    private int vida;
 
     public Espiral() {
-        vida = 1300;
+        super(1300);
         turnosActivo = 0;
     }
 
@@ -23,6 +23,7 @@ public class Espiral implements Turno, Construccion {
 
     @Override
     public void pasarTurno() {
+        curar();
         turnosActivo++;
     }
 }

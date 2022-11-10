@@ -3,8 +3,9 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
-public class Extractor implements Construccion, Turno {
+public class Extractor extends ConstruccionZerg implements Construccion, Turno {
 
     private int turnosActivo;
     private int vida;
@@ -15,8 +16,8 @@ public class Extractor implements Construccion, Turno {
     private static final int TIEMPO_CONSTRUCCION = 6;
 
     public Extractor(Economia economiaZerg){
+        super(750);
         turnosActivo = 0;
-        vida = 750;
         economia = economiaZerg;
         zanganos = 0;
     }
@@ -44,6 +45,7 @@ public class Extractor implements Construccion, Turno {
 
     @Override
     public void pasarTurno() {
+        curar();
         turnosActivo++;
         economia.ingresarGasVespeno(zanganos * PRODUCCION_POR_ZANGANO);
     }
