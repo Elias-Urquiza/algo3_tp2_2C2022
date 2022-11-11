@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
 
-public class ConstruccionZerg {
+public class ConstruccionZerg{
     private int puntosDeVida;
     private int puntosDeVidaMaxima;
     private int costoMineral;

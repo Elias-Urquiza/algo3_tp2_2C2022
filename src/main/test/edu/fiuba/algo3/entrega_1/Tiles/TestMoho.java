@@ -1,9 +1,8 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
 import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
@@ -14,39 +13,35 @@ import org.junit.jupiter.api.Assertions;
 
 
 public class TestMoho {
-    private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void construyoUnPilonSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon(mockEconomia)) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon()) );
     }
-
     @Test
     public void construyoUnAccesoSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso(mockEconomia)) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso()) );
     }
 
     @Test
     public void construyoUnNexoSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral(mockEconomia)) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral()) );
     }
     @Test
     public void construyoUnPuertoEstelarSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar(mockEconomia)) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar()) );
     }
 
     @Test
     public void construyoUnCriaderoSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Criadero criadero = new Criadero(mockEconomia);
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(criadero);
+            moho.buildOn(new Criadero());
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -55,12 +50,11 @@ public class TestMoho {
 
     @Test
     public void construyoUnaEspiralSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Espiral espiral = new Espiral(mockEconomia);
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(espiral);
+            moho.buildOn(new Espiral());
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -69,30 +63,42 @@ public class TestMoho {
 
     @Test
     public void construyoUnaGuaridaSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Guarida guarida = new Guarida(mockEconomia);
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
-        
+
         try{
-            moho.buildOn(guarida);
+            moho.buildOn(new Guarida());
         }catch (RuntimeException e){
             afirmacion = false;
         }
-
+        assert (afirmacion);
     }
     @Test
     public void construyoUnaReservaSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        ReservaDeReproduccion reserva = new ReservaDeReproduccion(mockEconomia);
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(reserva);
+            moho.buildOn(new ReservaDeReproduccion());
         }catch (RuntimeException e){
             afirmacion = false;
         }
         assert(afirmacion);
     }
 
+    /*
+    @Test
+    public  void elMohoPasadoDosTurnosCrece(){
+        Criadero criadero = new Criadero();
+        Tablero unTablero = new Tablero(20, 20);
 
-}
+        unTablero.construirEn(5,5, criadero);
+
+        unTablero.pasarTurno();
+        unTablero.pasarTurno();
+
+
+
+    }*/
+
+    }

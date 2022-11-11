@@ -1,7 +1,6 @@
 package edu.fiuba.algo3;
 
 import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.tiles.Tile;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;

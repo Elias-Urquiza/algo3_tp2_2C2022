@@ -5,25 +5,24 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.tiles.Volcan;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestVolcan {
 
-    private final Economia mockEconomia = new MockEconomia();
+
     @Test
     public void construyoUnCriaderoSobreElVolcanYTiraExcepcion() {
-        final Volcan volcan = new Volcan();
-        Criadero criadero = new Criadero(mockEconomia);
+        final Volcan volcan = new Volcan(null, null);
+        Criadero criadero = new Criadero();
 
         Assertions.assertThrows(RuntimeException.class, () -> volcan.buildOn(criadero) );
     }
 
     @Test
     public void construyoUnExtractorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan();
+        final Volcan volcan = new Volcan(null, null);
         boolean afirmacion = true;
 
         try{
@@ -36,8 +35,9 @@ public class TestVolcan {
 
     @Test
     public void construyoUnAsimiladorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan();
+        final Volcan volcan = new Volcan(null, null);
         boolean afirmacion = true;
+
 
         try{
             volcan.buildOn(new Asimilador(new Economia()));
@@ -46,6 +46,4 @@ public class TestVolcan {
         }
         assert(afirmacion);
     }
-
-
 }
