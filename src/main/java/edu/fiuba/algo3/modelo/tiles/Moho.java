@@ -4,9 +4,8 @@ package edu.fiuba.algo3.modelo.tiles;
 
 
 import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.Turno;
-import edu.fiuba.algo3.modelo.tiles.FloorType;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +28,12 @@ public class Moho implements FloorType{
     private int turnosExpandirMoho;
     private FloorType[][] tabla;
     ArrayList<ArrayList<Integer>> vecinos;
-    private Construccion estructuraEnPosecion;
+    private Construccion estructuraEnPosesion;
     private int posX;
     private int posY;
 
     public Moho(ArrayList<ArrayList<Integer>> vecinos, FloorType[][] tabla, int posX, int posY){
-        estructuraEnPosecion = null;
+        estructuraEnPosesion = null;
         this.vecinos = vecinos;
         this.tabla = tabla;
         this.posX = posX;
@@ -47,6 +46,8 @@ public class Moho implements FloorType{
     }
 
     public void accionarPiso(){
+
+
         if(turnosExpandirMoho !=0 && turnosExpandirMoho%2 == 0){
 
             for(int i = 0; i < vecinos.size(); i++){
@@ -63,19 +64,19 @@ public class Moho implements FloorType{
     }
 
     public void setConstruccion(Construccion nuevaEstructura){
-        estructuraEnPosecion = nuevaEstructura;
+        estructuraEnPosesion = nuevaEstructura;
     }
 
     public ArrayList<ArrayList<Integer>> getVecinos(){
         return vecinos;
     }
     public Construccion getConstruccion(){
-        return estructuraEnPosecion;
+        return estructuraEnPosesion;
     }
     public void buildOn(Construccion aConstruir) throws RuntimeException {
 
         if(AVAILABLE_BUILDINGS.contains( aConstruir.getClass() ) ) {
-            estructuraEnPosecion = aConstruir;
+            estructuraEnPosesion = aConstruir;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

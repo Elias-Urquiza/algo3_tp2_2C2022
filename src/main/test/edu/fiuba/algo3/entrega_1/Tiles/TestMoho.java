@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
@@ -83,6 +84,20 @@ public class TestMoho {
             afirmacion = false;
         }
         assert(afirmacion);
+    }
+
+    @Test
+    public  void elMohoPasadoDosTurnosCrece(){
+        Criadero criadero = new Criadero();
+        Tablero unTablero = new Tablero(20, 20);
+
+        unTablero.construirEn(5,5, criadero);
+
+        unTablero.pasarTurno();
+        unTablero.pasarTurno();
+
+
+
     }
 
     }
