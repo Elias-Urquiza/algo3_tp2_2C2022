@@ -14,13 +14,16 @@ public class TileVacia implements FloorType{
             Pilon.class
     );
 
-    public TileVacia(){
+    private Construccion estructuraEnPosecion;
 
+    public TileVacia(){
+        estructuraEnPosecion = null;
     }
 
-    public void buildOn(Construccion Aconstruir, Construccion guardar) throws RuntimeException {
+    public void buildOn(Construccion Aconstruir,  Tile miTile) throws RuntimeException {
         if(AVAILABLE_BUILDINGS.contains(Aconstruir.getClass() ) ) {
-            guardar = Aconstruir;
+            estructuraEnPosecion = Aconstruir;
+            miTile.cambiarPiso((FloorType) new Moho());
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

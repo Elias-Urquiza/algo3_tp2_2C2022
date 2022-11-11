@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 
 import java.util.List;
 
-public class Energia implements Turno, FloorType{
+public class Energia implements FloorType{
 
     private static final List<Class> AVAILABLE_BUILDINGS = List.of(
             Acceso.class,
@@ -23,10 +23,7 @@ public class Energia implements Turno, FloorType{
 
     }
 
-    @Override
-    public void pasarTurno() {
-
-    }
+    public void accionarPiso
 
     public void buildOn(Construccion construccion, Construccion guardar) throws RuntimeException {
         if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
