@@ -15,8 +15,8 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private static final int MAX_LARVAS = 3;
 
-    public Criadero(Economia economia) {
-        super(500, 50, 0, 4, economia);
+    public Criadero(Economia economia, int posX, int posY) {
+        super(500, 50, 0, 4, economia, posX, posY);
         numeroDeLarvas = 3;
         turnosActivo = 0;
     }

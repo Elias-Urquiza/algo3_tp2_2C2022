@@ -10,8 +10,8 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     private static final int TIEMPO_CONSTRUCCION = 5;
 
-    public Pilon(Economia economia) {
-        super(350, 350, 100, 0, 5, economia);
+    public Pilon(Economia economia, int posX, int posY) {
+        super(350, 350, 100, 0, 5, economia, posX, posY);
         turnosActivo = 0;
     }
 

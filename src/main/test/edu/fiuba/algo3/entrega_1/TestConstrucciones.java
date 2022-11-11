@@ -16,8 +16,8 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(150);
-        Extractor extractor = new Extractor(economia);
-        Criadero criadero = new Criadero(economia);
+        Extractor extractor = new Extractor(economia, 0, 0);
+        Criadero criadero = new Criadero(economia, 0, 0);
 
         extractor.pasarTurno();
         extractor.pasarTurno();
@@ -33,7 +33,7 @@ public class TestConstrucciones {
 
 
         try{
-            Extractor extractorDos = new Extractor(economia);
+            Extractor extractorDos = new Extractor(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -49,8 +49,8 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(150);
-        Extractor extractor = new Extractor(economia);
-        Criadero criadero = new Criadero(economia);
+        Extractor extractor = new Extractor(economia, 0, 0);
+        Criadero criadero = new Criadero(economia, 0, 0);
 
         extractor.pasarTurno();
         extractor.pasarTurno();
@@ -64,7 +64,7 @@ public class TestConstrucciones {
         }
 
         try{
-            Extractor extractorDos = new Extractor(economia);
+            Extractor extractorDos = new Extractor(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -79,8 +79,8 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(350);
-        Extractor extractor = new Extractor(economia);
-        Criadero criadero = new Criadero(economia);
+        Extractor extractor = new Extractor(economia, 0, 0);
+        Criadero criadero = new Criadero(economia, 0, 0);
 
         extractor.pasarTurno();
         extractor.pasarTurno();
@@ -103,7 +103,7 @@ public class TestConstrucciones {
         }
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = false;
@@ -120,7 +120,7 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(250);
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
 
 
         for (int i = 0; i<1 ;i++ ){
@@ -128,7 +128,7 @@ public class TestConstrucciones {
         }
 
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -145,7 +145,7 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(250);
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
 
 
         for (int i = 0; i<14 ;i++ ){
@@ -153,7 +153,7 @@ public class TestConstrucciones {
         }
 
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = false;

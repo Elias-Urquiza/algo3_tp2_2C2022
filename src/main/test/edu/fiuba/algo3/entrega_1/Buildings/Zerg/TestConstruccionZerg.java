@@ -1,9 +1,8 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
+import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,7 @@ public class TestConstruccionZerg {
 
     @BeforeEach
     public void initEach() {
-         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia);
+         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, 0, 0);
     }
 
     @Test
@@ -41,7 +40,7 @@ public class TestConstruccionZerg {
         final Economia economia = new Economia();
         economia.ingresarGasVespeno(100);
         economia.ingresarMineral(50);
-        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionZerg(100, 100, 100, 50, economia));
+        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionZerg(100, 100, 100, 50, economia, 0, 0));
     }
 
     @Test
@@ -49,6 +48,6 @@ public class TestConstruccionZerg {
         final Economia economia = new Economia();
         economia.ingresarGasVespeno(100);
         economia.ingresarMineral(50);
-        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionZerg(100, 100, 20, 200, economia));
+        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionZerg(100, 100, 20, 200, economia, 0, 0));
     }
 }

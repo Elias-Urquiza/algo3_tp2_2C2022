@@ -11,8 +11,8 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
 
     private static final int TIEMPO_CONSTRUCCION = 4;
 
-    public NexoMineral(Economia economia){
-        super(250, 250, 50, 0, 4, economia);
+    public NexoMineral(Economia economia, int posX, int posY){
+        super(250, 250, 50, 0, 4, economia, posX, posY);
         turnosActivo = 0;
     }
     @Override

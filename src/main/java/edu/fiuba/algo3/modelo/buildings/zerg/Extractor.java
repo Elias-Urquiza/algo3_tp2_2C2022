@@ -15,8 +15,8 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno {
     private Economia economia;
     private static final int TIEMPO_CONSTRUCCION = 6;
 
-    public Extractor(Economia economiaZerg){
-        super(750, 100, 0, 6, economiaZerg);
+    public Extractor(Economia economiaZerg, int posX, int posY){
+        super(750, 100, 0, 6, economiaZerg, posX, posY);
         turnosActivo = 0;
         economia = economiaZerg;
         zanganos = 0;

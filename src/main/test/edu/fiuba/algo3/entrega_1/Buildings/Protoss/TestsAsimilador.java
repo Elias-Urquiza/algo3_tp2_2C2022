@@ -2,7 +2,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
+import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -13,7 +13,7 @@ public class TestsAsimilador {
     public void unAsimiladorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
 
-        Asimilador asimilador = new Asimilador(mockEconomia);
+        Asimilador asimilador = new Asimilador(mockEconomia, 0, 0);
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
@@ -31,7 +31,7 @@ public class TestsAsimilador {
     @Test
     public void noSePuedeUsarElAsimiladorAntesDeQueSeTermineDeConstruir(){
         Economia economia = new Economia();
-        final Asimilador asimilador = new Asimilador(economia);
+        final Asimilador asimilador = new Asimilador(economia, 0, 0);
         Assertions.assertThrows(RuntimeException.class, () -> asimilador.usar());
     }
 
@@ -43,7 +43,7 @@ public class TestsAsimilador {
 
         Economia economia = new Economia();
 
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
         boolean afirmacion = true;
 
         for(int i = 0; i < 7; i++)
@@ -63,7 +63,7 @@ public class TestsAsimilador {
 
         Economia economia = new Economia();
 
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
         boolean afirmacion = true;
 
         for(int i = 0; i < 8; i++)
@@ -82,7 +82,7 @@ public class TestsAsimilador {
 
         Economia economia = new Economia();
 
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
         boolean afirmacion = false;
 
         for(int i = 0; i < 5; i++)

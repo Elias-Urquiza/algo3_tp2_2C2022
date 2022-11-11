@@ -1,7 +1,5 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Tablero;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
@@ -13,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 
 
 public class TestMoho {
+    /*
     @Test
     public void construyoUnPilonSobreElMohoYTiraExcepcion() {
         final Moho moho = new Moho(null, null, 1, 2);
