@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestVolcan {
+/*
+
 
     @Test
     public void construyoUnCriaderoSobreElVolcanYTiraExcepcion() {
@@ -47,6 +49,6 @@ public class TestVolcan {
         }
         assert(afirmacion);
     }
-
+*/
 
 }

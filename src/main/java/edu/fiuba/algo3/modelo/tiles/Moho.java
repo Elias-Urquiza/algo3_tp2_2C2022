@@ -27,24 +27,55 @@ public class Moho implements FloorType{
     );
 
     private int turnosExpandirMoho;
-
+    private FloorType[][] tabla;
+    ArrayList<ArrayList<Integer>> vecinos;
     private Construccion estructuraEnPosecion;
+    private int posX;
+    private int posY;
 
-    public Moho(){
+    public Moho(ArrayList<ArrayList<Integer>> vecinos, FloorType[][] tabla, int posX, int posY){
         estructuraEnPosecion = null;
+        this.vecinos = vecinos;
+        this.tabla = tabla;
+        this.posX = posX;
+        this.posY = posY;
         turnosExpandirMoho = 0;
     }
 
-    public void accionarPiso(Tablero tablero, int posX, int posY){
+    public void infectate(FloorType nuevoPiso){
+        throw new RuntimeException("No se puede infectar este piso");
+    }
+
+    public void accionarPiso(){
         if(turnosExpandirMoho !=0 && turnosExpandirMoho%2 == 0){
-            = tablero.buscarVecinosDe(posX, posY);
+
+            for(int i = 0; i < vecinos.size(); i++){
+                int vecinoPosX = (vecinos.get(i)).get(0);
+                int vecinoPosY = (vecinos.get(i)).get(1);
+
+                Moho moho = new Moho((tabla[vecinoPosX][vecinoPosY]).getVecinos(), tabla, vecinoPosX, vecinoPosY);// se crea al moho correctamente
+
+                (tabla[vecinoPosX][vecinoPosY]).infectate(moho);//se le envia a la tile el comando infectate
+
+            }
         }
         turnosExpandirMoho++;
     }
 
-    public void buildOn(Construccion Aconstruir) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(Aconstruir.getClass() ) ) {
-            estructuraEnPosecion = Aconstruir;
+    public void setConstruccion(Construccion nuevaEstructura){
+        estructuraEnPosecion = nuevaEstructura;
+    }
+
+    public ArrayList<ArrayList<Integer>> getVecinos(){
+        return vecinos;
+    }
+    public Construccion getConstruccion(){
+        return estructuraEnPosecion;
+    }
+    public void buildOn(Construccion aConstruir) throws RuntimeException {
+
+        if(AVAILABLE_BUILDINGS.contains( aConstruir.getClass() ) ) {
+            estructuraEnPosecion = aConstruir;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

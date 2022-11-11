@@ -20,25 +20,18 @@ public class Tablero implements Turno{
 
         tabla = new FloorType[dimensionX][dimensionY];
         llenarTableroConTilesVacias(tabla);
-        darVecinosACadaTile();
     }
 
-    public void darVecinosACadaTile(){
-        for(int i=0; i < maxX; i++){
-            for (int j =0; j < maxY; j++)
-                (tabla[i][j]).cargarVecinos(buscarVecinosDe(i, j));
-        }
-    }
 
     private void llenarTableroConTilesVacias(FloorType[][] tabla){
         for(int i=0; i < maxX; i++){
             for (int j =0; j < maxY; j++)
-                (tabla[i][j]) = new TileVacia();
+                (tabla[i][j]) = new TileVacia(buscarVecinosDe(i, j), tabla, i, j);
         }
     }
 
     public ArrayList<ArrayList<Integer>> buscarVecinosDe(int col, int fil) {
-        ArrayList<ArrayList>
+        ArrayList<ArrayList<Integer>> vecinos= new ArrayList<>();
         for (int colNum = col - 1 ; colNum <= (col + 1) ; colNum +=1  ) {
 
             for (int filNum = fil - 1 ; filNum <= (fil + 1) ; filNum +=1  ) {
@@ -46,12 +39,15 @@ public class Tablero implements Turno{
                 if(! ((colNum == col) && (filNum == fil))) {
 
                     if(entreCeldas (colNum, filNum)) {
-
+                        ArrayList<Integer> auxiliar = new ArrayList<>();
+                        auxiliar.add(colNum);
+                        auxiliar.add(filNum);
+                        vecinos.add(auxiliar);
                     }
                 }
             }
         }
-        return neighbors;
+        return vecinos;
     }
 
     private boolean entreCeldas(int colNum, int filNum) {
@@ -66,19 +62,16 @@ public class Tablero implements Turno{
     }
 
     public void pasarTurno(){
-        LinkedList<FloorType> vecinos;
 
         for(int i=0; i < maxX; i++){
             for (int j =0; j < maxY; j++){
-                  (tabla[i][j]).accionarPiso(this, i, j);
+                  (tabla[i][j]).accionarPiso();
             }
         }
     }
 
-
     public void construirEn(int posX, int posY, Construccion estructura){
-        //a lo mejor debe recibir la excepcion que le manda construir en caso de error.
-        (tabla [posX][posY]).construir(estructura);
+        (tabla [posX][posY]).buildOn(estructura);
     }
 
 }

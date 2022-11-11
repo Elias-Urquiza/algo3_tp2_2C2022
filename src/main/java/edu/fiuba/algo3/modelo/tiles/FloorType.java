@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 public interface FloorType {
     public void buildOn(Construccion construccion) throws RuntimeException;
-    public void cargarVecinos(ArrayList<FloorType> vecinos);
-    void accionarPiso(Tablero tablero, int i, int j);
 
-    public Construccion getConstruccion
+    void accionarPiso();
+
+    public Construccion getConstruccion();
+
+    public ArrayList<ArrayList<Integer>> getVecinos();
+
+    public void infectate(FloorType nuevoPiso);
 }

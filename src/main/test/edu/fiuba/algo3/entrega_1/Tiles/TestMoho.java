@@ -14,40 +14,33 @@ import org.junit.jupiter.api.Assertions;
 public class TestMoho {
     @Test
     public void construyoUnPilonSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon(), guardar) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Pilon()) );
     }
-
     @Test
     public void construyoUnAccesoSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso(), guardar ) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new Acceso()) );
     }
 
     @Test
     public void construyoUnNexoSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral(), guardar) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new NexoMineral()) );
     }
     @Test
     public void construyoUnPuertoEstelarSobreElMohoYTiraExcepcion() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar(), guardar) );
+        final Moho moho = new Moho(null, null, 1, 2);
+        Assertions.assertThrows(RuntimeException.class, () -> moho.buildOn(new PuertoEstelar()) );
     }
 
     @Test
     public void construyoUnCriaderoSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Construccion guardar = null;
-        Criadero criadero = new Criadero();
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(new Criadero(), guardar );
+            moho.buildOn(new Criadero());
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -56,13 +49,11 @@ public class TestMoho {
 
     @Test
     public void construyoUnaEspiralSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Espiral espiral = new Espiral();
-        Construccion guardar = null;
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(espiral, guardar);
+            moho.buildOn(new Espiral());
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -71,32 +62,27 @@ public class TestMoho {
 
     @Test
     public void construyoUnaGuaridaSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        Guarida guarida = new Guarida();
-        Construccion guardar = null;
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
-        
+
         try{
-            moho.buildOn(guarida, guardar);
+            moho.buildOn(new Guarida());
         }catch (RuntimeException e){
             afirmacion = false;
         }
-
+        assert (afirmacion);
     }
     @Test
     public void construyoUnaReservaSobreElMohoYNoHayProblema() {
-        final Moho moho = new Moho();
-        ReservaDeReproduccion reserva = new ReservaDeReproduccion();
-        Construccion guardar = null;
+        final Moho moho = new Moho(null, null, 1, 2);
         boolean afirmacion = true;
 
         try{
-            moho.buildOn(reserva, guardar);
+            moho.buildOn(new ReservaDeReproduccion());
         }catch (RuntimeException e){
             afirmacion = false;
         }
         assert(afirmacion);
     }
 
-
-}
+    }
