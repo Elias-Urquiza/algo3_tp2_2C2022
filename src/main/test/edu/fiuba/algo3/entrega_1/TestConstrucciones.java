@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
+import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
@@ -112,9 +114,60 @@ public class TestConstrucciones {
 
     }
 
-    
+    @Test
+    public void construirSinMineralesProtossLanzaError(){
+        boolean afirmacion = false;
+        Economia economia = new Economia();
+        economia.ingresarGasVespeno(0);
+        economia.ingresarMineral(250);
+        Asimilador asimilador = new Asimilador(economia);
 
- // TODO :)
+
+        for (int i = 0; i<1 ;i++ ){
+            asimilador.pasarTurno();
+        }
+
+        try{
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia);
+        }
+        catch (RuntimeException e){
+            afirmacion = true;
+        }
+        assert(afirmacion);
+
+
+
+    }
+
+    @Test
+    public void construirRecolectandoMineralesProtossNoLanzaError(){
+        boolean afirmacion = true;
+        Economia economia = new Economia();
+        economia.ingresarGasVespeno(0);
+        economia.ingresarMineral(250);
+        Asimilador asimilador = new Asimilador(economia);
+
+
+        for (int i = 0; i<14 ;i++ ){
+            asimilador.pasarTurno();
+        }
+
+        try{
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia);
+        }
+        catch (RuntimeException e){
+            afirmacion = false;
+        }
+        assert(afirmacion);
+
+
+
+    }
+
+
+
+
+    // TODO :)
 
 
 }

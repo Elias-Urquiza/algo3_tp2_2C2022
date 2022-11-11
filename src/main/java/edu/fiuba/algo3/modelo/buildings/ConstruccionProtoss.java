@@ -13,8 +13,12 @@ public class ConstruccionProtoss {
     private static final int CURACION_PROTOSS = 100;
     public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia) {
         try {
-            economia.gastarMineral(costoMineral);
-            economia.gastarGasVespeno(costoGas);
+            if (costoGas != 0){
+                economia.gastarGasVespeno(costoGas);
+            }
+            if (costoMineral != 0){
+                economia.gastarMineral(costoMineral);
+            }
         } catch(final RuntimeException e) {
             throw new RuntimeException("No tenes los minerales suficientes");
         }
