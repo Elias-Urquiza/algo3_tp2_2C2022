@@ -9,6 +9,5 @@ public class TestsTablero {
     public void puedoConstruirUnCriaderoEnCualquierLado(){
         Criadero unCriadero = new Criadero();
 
-
     }
 }

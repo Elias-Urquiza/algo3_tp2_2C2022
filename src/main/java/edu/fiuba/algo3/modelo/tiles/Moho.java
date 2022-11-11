@@ -47,7 +47,7 @@ public class Moho implements FloorType{
     }
 
     public void accionarPiso(){
-        
+
         if(turnosExpandirMoho !=0 && turnosExpandirMoho%2 == 0){
 
             for(int i = 0; i < vecinos.size(); i++){
