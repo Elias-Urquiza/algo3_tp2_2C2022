@@ -11,15 +11,15 @@ public class Cristales implements FloorType {
             NexoMineral.class
     );
 
-
+    private int mineral;
+    private static final int MINERAL_POR_CRISTAL = 2000;
 
     public Cristales() {
-
+        mineral = MINERAL_POR_CRISTAL;
     }
 
-    public void buildOn(Construccion construccion, Construccion guardar) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
-            guardar = construccion;
+    public void buildOn(Construccion construccion) throws RuntimeException {
+        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

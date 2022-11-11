@@ -1,20 +1,30 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 public class TestEspiral {
+
+    private Espiral espiral;
+
+    private static final Economia mockEconomia = new MockEconomia();
+    @BeforeEach
+    public void initEach() {
+        espiral = new Espiral(mockEconomia);
+    }
+
     @Test
     public void creoUnEspiralYNoEstaOperativo() {
-        final Espiral espiral = new Espiral();
         Assertions.assertThrows(RuntimeException.class, () -> espiral.usar());
     }
 
     @Test
     public void creoUnEspiralYPasan10TurnosYLoPuedoUsar() {
-        Espiral espiral = new Espiral();
         boolean afirmacion = true;
 
         espiral.pasarTurno();

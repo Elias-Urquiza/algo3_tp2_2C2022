@@ -1,29 +1,24 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
-public class Acceso implements Turno, Construccion {
-    private int puntosDeVida;
+public class Acceso extends ConstruccionProtoss implements Turno, Construccion {
 
     private int turnosActivo;
 
-    private int puntosDeEscudo;
-
-    private static final int MAX_ESCUDO = 500;
-
     private static final int TIEMPO_CONSTRUCCION = 8;
 
-    public Acceso(){
-        puntosDeVida = 500;
+    public Acceso(Economia economia){
+        super(500, 500, 150, 0, 8, economia);
         turnosActivo = 0;
-        puntosDeEscudo = 500;
+
     }
     @Override
     public void pasarTurno(){
-        if(puntosDeEscudo < MAX_ESCUDO){
-            puntosDeEscudo++; //Aqui solo hago un ++ ya que no se de q manera va subiendo el escudo
-        }
+        curar();
         turnosActivo ++;
     }
 

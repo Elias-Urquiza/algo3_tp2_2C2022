@@ -4,19 +4,20 @@ import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.tiles.TileVacia;
 import org.junit.Test;
 
 public class TestsTileVacia {
 
+    private final Economia mockEconomia = new MockEconomia();
     @Test
     public void aceptaUnCriadero(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = true;
 
         try{
-            vacia.buildOn(new Criadero(), guardar);
+            vacia.buildOn(new Criadero(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =false;
         }
@@ -25,12 +26,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnPilon(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = true;
 
         try{
-            vacia.buildOn(new Pilon(), guardar);
+            vacia.buildOn(new Pilon(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =false;
         }
@@ -39,12 +39,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnAcceso(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Acceso(), guardar);
+            vacia.buildOn(new Acceso(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -53,12 +52,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnPuertoEstelar(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new PuertoEstelar(), guardar);
+            vacia.buildOn(new PuertoEstelar(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -66,13 +64,12 @@ public class TestsTileVacia {
     }
 
     @Test
-    public void aceptaUnAsimilador(){
-        Construccion guardar = null;
+    public void aceptaUnAsimilador(){;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Asimilador(new Economia()), guardar);
+            vacia.buildOn(new Asimilador(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -81,12 +78,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnNexoMineral(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new NexoMineral(), guardar);
+            vacia.buildOn(new NexoMineral(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -94,12 +90,11 @@ public class TestsTileVacia {
     }
     @Test
     public void aceptaUnEsprial(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Espiral(), guardar);
+            vacia.buildOn(new Espiral(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -108,12 +103,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnExtractor(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Extractor(new Economia()), guardar);
+            vacia.buildOn(new Extractor(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -122,12 +116,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnaGuarida(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new Guarida(), guardar);
+            vacia.buildOn(new Guarida(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }
@@ -136,12 +129,11 @@ public class TestsTileVacia {
 
     @Test
     public void aceptaUnaReservaDeReproduccion(){
-        Construccion guardar = null;
         TileVacia vacia = new TileVacia();
         boolean afirmacion = false;
 
         try{
-            vacia.buildOn(new ReservaDeReproduccion(), guardar);
+            vacia.buildOn(new ReservaDeReproduccion(mockEconomia));
         }catch (RuntimeException e){
             afirmacion =true;
         }

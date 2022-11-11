@@ -5,10 +5,11 @@ import org.junit.Test;
 
 public class TestsTablero {
 
+    /*
     @Test
     public void puedoConstruirUnCriaderoEnCualquierLado(){
         Criadero unCriadero = new Criadero();
 
 
-    }
+    } */
 }

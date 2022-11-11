@@ -14,13 +14,17 @@ public class Volcan implements FloorType {
             Asimilador.class
     );
 
+    private int cantidadGas;
+
+    private static final int GAS_POR_VOLCAN = 5000;
+
     public Volcan() {
+        cantidadGas = GAS_POR_VOLCAN;
     }
 
     @Override
-    public void buildOn(Construccion construccion, Construccion guardar) throws RuntimeException {
+    public void buildOn(Construccion construccion) throws RuntimeException {
         if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
-            guardar = construccion;
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

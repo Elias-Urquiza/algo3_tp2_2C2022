@@ -3,15 +3,16 @@ package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.mocks.CriaderoActivo;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsExtractor {
 
+    private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
-        Economia economia = new Economia();
-        Extractor unExtractor = new Extractor(economia);
+        Extractor unExtractor = new Extractor(mockEconomia);
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)

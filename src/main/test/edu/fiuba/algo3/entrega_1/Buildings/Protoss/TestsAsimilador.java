@@ -2,17 +2,18 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsAsimilador {
 
+    private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void unAsimiladorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        Economia economia = new Economia();
 
-        Asimilador asimilador = new Asimilador(economia);
+        Asimilador asimilador = new Asimilador(mockEconomia);
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
