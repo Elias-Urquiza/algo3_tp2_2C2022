@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
@@ -9,8 +10,8 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     private static final int TIEMPO_CONSTRUCCION = 5;
 
-    public Pilon() {
-        super(350, 350);
+    public Pilon(Economia economia) {
+        super(350, 350, 100, 0, 5, economia);
         turnosActivo = 0;
     }
 

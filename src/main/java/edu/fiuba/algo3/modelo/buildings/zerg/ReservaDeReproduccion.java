@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
@@ -11,8 +12,8 @@ public class ReservaDeReproduccion extends ConstruccionZerg implements Construcc
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
-    public ReservaDeReproduccion(){
-        super(1000);
+    public ReservaDeReproduccion(Economia economia){
+        super(1000, 150, 0, 12, economia);
         turnosActivo = 0;
     }
 

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
@@ -9,8 +10,8 @@ public class Guarida extends ConstruccionZerg implements Construccion, Turno {
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
-    public Guarida(){
-        super(1250);
+    public Guarida(Economia economia){
+        super(1250, 200, 100, 12, economia);
         turnosActivo = 0;
     }
 

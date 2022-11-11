@@ -16,7 +16,7 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
     private static final int TIEMPO_CONSTRUCCION = 6;
 
     public Asimilador(Economia economiaProto) {  //Debo agregar una economia a los ytest asimilador
-        super(450, 450);
+        super(450, 450, 100, 0, 6, economiaProto);
         turnosActivo =0;
         economia = economiaProto;
     }

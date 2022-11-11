@@ -1,15 +1,18 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsReservaDeReproduccion {
 
+    private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        ReservaDeReproduccion unaReserva = new ReservaDeReproduccion();
+        ReservaDeReproduccion unaReserva = new ReservaDeReproduccion(mockEconomia);
         boolean afirmacion = true;
 
         for(int i = 0; i < 12; i++)
@@ -26,7 +29,7 @@ public class TestsReservaDeReproduccion {
 
     @Test
     public void noSePuedeUsarLaReservaAntesDeQueSeTermineDeConstruir(){
-        final ReservaDeReproduccion reserva = new ReservaDeReproduccion();
+        final ReservaDeReproduccion reserva = new ReservaDeReproduccion(mockEconomia);
         Assertions.assertThrows(RuntimeException.class, () -> reserva.usar());
     }
 

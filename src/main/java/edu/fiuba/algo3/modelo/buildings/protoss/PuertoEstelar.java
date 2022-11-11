@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
@@ -11,8 +12,8 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     private static final int MAX_ESCUDO = 600;
 
-    public PuertoEstelar(){
-        super(600, 600);
+    public PuertoEstelar(Economia economia){
+        super(600, 600, 150, 150, 10, economia);
         turnosActivo = 0;
     }
     @Override

@@ -33,7 +33,7 @@ public class Moho implements Turno {
     }
 
     public void buildOn(Construccion construirEncima) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construirEncima.getClass() ) ) {
+        if(AVAILABLE_BUILDINGS.contains(construirEncima.getClass())) {
             return;
         }
         throw new RuntimeException("You cannot build on top of this");

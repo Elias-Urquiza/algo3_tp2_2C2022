@@ -1,13 +1,27 @@
 package edu.fiuba.algo3.modelo.buildings;
 
+import edu.fiuba.algo3.modelo.Economia;
+
 public class ConstruccionZerg {
     private int puntosDeVida;
     private int puntosDeVidaMaxima;
+    private int costoMineral;
+    private int costoGas;
+    protected int tiempoDeConstruccion;
     private static final int CURACION_ZERG = 100;
 
-    public ConstruccionZerg(int puntosDeVidaMaxima) {
+    public ConstruccionZerg(int puntosDeVidaMaxima, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia) {
+        try {
+            economia.gastarMineral(costoMineral);
+            economia.gastarGasVespeno(costoGas);
+        } catch(final RuntimeException e) {
+            throw new RuntimeException("No tenes los minerales suficientes");
+        }
         this.puntosDeVida = puntosDeVidaMaxima;
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
+        this.costoGas = costoGas;
+        this.costoMineral = costoMineral;
+        this.tiempoDeConstruccion = tiempoDeConstruccion;
     }
 
     public int curar() {

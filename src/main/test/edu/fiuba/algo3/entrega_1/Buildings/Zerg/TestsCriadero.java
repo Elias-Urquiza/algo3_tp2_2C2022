@@ -1,17 +1,18 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.mocks.CriaderoActivo;
+import edu.fiuba.algo3.modelo.mocks.MockEconomia;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 
 public class TestsCriadero {
-
+private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void seExtraeUnaLarvaDeUnCriaderoConTres(){
-
         Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
 
@@ -42,7 +43,7 @@ public class TestsCriadero {
 
     @Test//pruebo un caso negativo, osea que falle y lance excepcion
     public void extraerMasLarvasDeLasDisponiblesResultanEnExecpcion(){
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new Criadero(mockEconomia);
         boolean afirmacion = false;
 
         unCriadero.pasarTurno();
@@ -108,11 +109,11 @@ public class TestsCriadero {
         }
         assert (afirmacion);
     }
+
     @Test
     public void seExtraenTresLarvasEntoncesEnTresTurnosSeRepusieron() {
         Criadero unCriadero = new CriaderoActivo();
         boolean afirmacion = true;
-
 
         unCriadero.extraerLarvas(3);
         unCriadero.pasarTurno();
@@ -129,7 +130,7 @@ public class TestsCriadero {
 
     @Test
     public void unCriaderoSeConstruyeEnElTiempoEstipulado(){
-        Criadero unCriadero = new Criadero();
+        Criadero unCriadero = new Criadero(mockEconomia);
         boolean afirmacion = true;
 
         unCriadero.pasarTurno();
@@ -147,7 +148,7 @@ public class TestsCriadero {
 
     @Test
     public void noSePuedeUsarElCriaderoAntesDeQueSeTermineDeConstruir(){
-        final Criadero criadero = new Criadero();
+        final Criadero criadero = new Criadero(mockEconomia);
         Assertions.assertThrows(RuntimeException.class, () -> criadero.extraerLarvas(1));
     }
 

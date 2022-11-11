@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
@@ -10,8 +11,8 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
 
     private static final int TIEMPO_CONSTRUCCION = 4;
 
-    public NexoMineral(){
-        super(250, 250);
+    public NexoMineral(Economia economia){
+        super(250, 250, 50, 0, 4, economia);
         turnosActivo = 0;
     }
     @Override
