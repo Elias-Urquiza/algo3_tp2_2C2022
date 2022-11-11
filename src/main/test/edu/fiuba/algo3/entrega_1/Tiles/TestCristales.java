@@ -8,31 +8,28 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestCristales {
-/*
+
     @Test
     public void construyoUnCriaderoSobreLosCristalesYTiraExcepcion() {
-        final Cristales cristal = new Cristales();
+        final Cristales cristal = new Cristales(null, null);
         Criadero criadero = new Criadero();
-        Construccion guardar = null;
 
-        Assertions.assertThrows(RuntimeException.class, () -> cristal.buildOn(criadero, guardar ) );
+        Assertions.assertThrows(RuntimeException.class, () -> cristal.buildOn(criadero ) );
     }
 
     @Test
     public void construyoUnNexoMineralSobreLosCristalesYNoHayProblema() {
-        final Cristales cristal = new Cristales();
+        final Cristales cristal = new Cristales(null, null);
         NexoMineral nexoMineral = new NexoMineral();
-        Construccion guardar = null;
         boolean afirmacion = true;
 
-
         try{
-            cristal.buildOn(nexoMineral, guardar );
+            cristal.buildOn(nexoMineral);
         }catch (RuntimeException e){
             afirmacion = false;
         }
         assert(afirmacion);
     }
-*/
+
 
 }

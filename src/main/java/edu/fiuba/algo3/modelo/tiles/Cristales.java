@@ -19,6 +19,7 @@ public class Cristales implements FloorType {
     public Cristales(ArrayList<ArrayList<Integer>> vecinos, FloorType[][] tabla) {
         this.tabla = tabla;
         this.vecinos =vecinos;
+
     }
 
     public void infectate(FloorType nuevoPiso){

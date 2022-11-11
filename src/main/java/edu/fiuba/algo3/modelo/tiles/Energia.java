@@ -35,8 +35,8 @@ public class Energia implements FloorType{
     public void infectate(FloorType nuevoPiso){
         if(estructuraEnPosecion == null)
             tabla[posX][posY] = nuevoPiso;
-
-        throw new RuntimeException("No se puede quitar este piso");
+        else
+            throw new RuntimeException("No se puede quitar este piso");
     }
 
     public ArrayList<ArrayList<Integer>> getVecinos(){

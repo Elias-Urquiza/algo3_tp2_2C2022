@@ -10,26 +10,23 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestVolcan {
-/*
 
 
     @Test
     public void construyoUnCriaderoSobreElVolcanYTiraExcepcion() {
-        final Volcan volcan = new Volcan();
-        Construccion guardar = null;
+        final Volcan volcan = new Volcan(null, null);
         Criadero criadero = new Criadero();
 
-        Assertions.assertThrows(RuntimeException.class, () -> volcan.buildOn(criadero, guardar) );
+        Assertions.assertThrows(RuntimeException.class, () -> volcan.buildOn(criadero) );
     }
 
     @Test
     public void construyoUnExtractorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan();
-        Construccion guardar = null;
+        final Volcan volcan = new Volcan(null, null);
         boolean afirmacion = true;
 
         try{
-            volcan.buildOn(new Extractor( new Economia() ), guardar);
+            volcan.buildOn(new Extractor( new Economia() ));
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -38,17 +35,15 @@ public class TestVolcan {
 
     @Test
     public void construyoUnAsimiladorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan();
+        final Volcan volcan = new Volcan(null, null);
         boolean afirmacion = true;
-        Construccion guardar = null;
+
 
         try{
-            volcan.buildOn(new Asimilador(new Economia()), guardar);
+            volcan.buildOn(new Asimilador(new Economia()));
         }catch (RuntimeException e){
             afirmacion = false;
         }
         assert(afirmacion);
     }
-*/
-
 }
