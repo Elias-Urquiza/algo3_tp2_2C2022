@@ -48,5 +48,10 @@ public class Extractor implements Construccion, Turno {
     public void pasarTurno() {
         turnosActivo++;
         economia.ingresarGasVespeno(zanganos * PRODUCCION_POR_ZANGANO);
+
+        if(turnosActivo >= TIEMPO_CONSTRUCCION){
+
+        }
+
     }
 }

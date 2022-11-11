@@ -27,6 +27,7 @@ public class Moho implements FloorType{
 
     private int turnosExpandirMoho;
     private FloorType[][] tabla;
+    private static final int CRIADERO = 0;
     ArrayList<ArrayList<Integer>> vecinos;
     private Construccion estructuraEnPosesion;
     private int posX;
@@ -47,6 +48,8 @@ public class Moho implements FloorType{
 
     public void accionarPiso(){
 
+        
+        estructuraEnPosesion.pasarTurno();
 
         if(turnosExpandirMoho !=0 && turnosExpandirMoho%2 == 0){
 
