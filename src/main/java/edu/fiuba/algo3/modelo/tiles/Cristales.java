@@ -11,8 +11,11 @@ public class Cristales implements FloorType {
             NexoMineral.class
     );
 
-    public Cristales() {
+    private int mineral;
+    private static final int MINERAL_POR_CRISTAL = 2000;
 
+    public Cristales() {
+        mineral = MINERAL_POR_CRISTAL;
     }
 
     public void buildOn(Construccion construccion) throws RuntimeException {
