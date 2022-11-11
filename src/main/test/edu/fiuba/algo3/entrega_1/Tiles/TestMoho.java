@@ -86,6 +86,7 @@ public class TestMoho {
         assert(afirmacion);
     }
 
+    /*
     @Test
     public  void elMohoPasadoDosTurnosCrece(){
         Criadero criadero = new Criadero();
@@ -98,6 +99,6 @@ public class TestMoho {
 
 
 
-    }
+    }*/
 
     }
