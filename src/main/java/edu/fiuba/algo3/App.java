@@ -30,8 +30,8 @@ public class App extends Application {
         Economia econ = new Economia();
         econ.ingresarMineral(1000000000);
         econ.ingresarGasVespeno(100000000);
-        Manager m = new Manager();
-        m.construirCriaderoEn(3, 4, new Criadero(econ, 10, 10));
+        Manager m = new Manager(30, 30);
+        m.construirCriaderoEn(3, 4, new Criadero(econ, 3, 4));
         m.printMohos();
         //launch();
     }

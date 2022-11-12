@@ -19,9 +19,10 @@ public class Manager {
     LinkedList<Volcan> volcanes;
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
+    int maxX;
+    int maxY;
 
-
-    public Manager() {
+    public Manager(int dimensionX, int dimensionY) {
         this.construccionesZerg =new LinkedList<>();
         this.construccionProtoss = new LinkedList<>();
         this.construccionQueExtrae = new LinkedList<>();
@@ -30,16 +31,18 @@ public class Manager {
         this.volcanes = new LinkedList<>();
         this.energias = new LinkedList<>();
         this.tilesVacias = new LinkedList<>();
+        this.maxX = dimensionX;
+        this.maxY = dimensionY;
     }
 
 
     public void construirCriaderoEn(int x, int y, Criadero criadero) {
-        criadero.mohificar(x, y, moho);
+        criadero.mohificar(x, y, maxX, maxY, moho);
         construccionesZerg.add(criadero);
     }
 
     public void construirPilonEn(int x, int y, Pilon pilon) {
-        pilon.energizar(energias);
+        pilon.energizar(x, y, maxX, maxY, energias);
         construccionProtoss.add(pilon);
     }
 

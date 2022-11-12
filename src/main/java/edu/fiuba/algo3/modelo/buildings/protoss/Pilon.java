@@ -32,30 +32,28 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
             throw new RuntimeException("Edificio en construccion");
     }
 
-    public void energizar(LinkedList<Energia> listaDeEnergias) {
+    public void energizar(int x, int y, int maxX, int maxY, LinkedList<Energia> listaDeEnergias) {
         //hacer que energice segun acordado
+
         int posicion_x = posX -3;
-        if (posicion_x<0){
+        if (posicion_x<0)
             posicion_x = 0;   // aca hay que ver como hacer pra el cso del borde de coordenadas
-                                //
-        }
-    /*
-        E £ 0 0 0 0 0
-        E £ 0 0 0 0 0
-        E £ 0 0 0 0 0
-        E £ 0 P 0 0 0
-        E £ 0 0 0 0 0
-        E £ 0 0 0 0 0
-        E £ 0 0 0 0 0
-    */
+
 
         int posicion_y = posY -3;
-        if (posicion_y < 0){
+        if (posicion_y < 0)
             posicion_y = 0;
-        }
 
-        for(int i = posicion_x; i <(posX+3) ; i++){
-            for(int j = posicion_y ; j<(posY+3); j++){
+        int topeX = posX + 4;
+        if(topeX > maxX)
+            topeX = maxX;
+
+        int topeY = posY + 4;
+        if(topeY > maxY)
+            topeY = maxY;
+
+        for(int i = posicion_x; i <(topeX) ; i++){
+            for(int j = posicion_y ; j<(topeY); j++){
                 Energia energia = new Energia(i, j);
                 listaDeEnergias.add(energia);
             }
