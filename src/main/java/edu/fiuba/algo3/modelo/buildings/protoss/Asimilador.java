@@ -2,14 +2,17 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.tiles.Recurso;
 
-public class Asimilador extends ConstruccionProtoss implements Turno, Construccion {
+public class Asimilador extends ConstruccionProtoss implements Turno, Construccion, ExtraeRecurso {
 
     private int turnosActivo;
 
     private Economia economia;
+    private Recurso recurso;
 
     private static final int GAS_POR_TURNO = 20;
 
@@ -25,7 +28,7 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
     public void pasarTurno(){
         curar();  //Asumo que va sumando de a un por turno
         if(turnosActivo >= TIEMPO_CONSTRUCCION){
-            economia.ingresarGasVespeno(GAS_POR_TURNO);
+            extraer();
         }
         turnosActivo++;
     }
@@ -35,5 +38,15 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
         if(turnosActivo < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
 
+    }
+
+    @Override
+    public void extraer() {
+        economia.ingresarGasVespeno(recurso.extraer(GAS_POR_TURNO));
+    }
+
+    @Override
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 }

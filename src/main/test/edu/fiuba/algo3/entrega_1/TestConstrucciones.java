@@ -6,7 +6,8 @@ import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
-import org.junit.Test;
+import edu.fiuba.algo3.modelo.tiles.Volcan;
+import org.junit.jupiter.api.Test;
 
 public class TestConstrucciones {
 
@@ -80,6 +81,7 @@ public class TestConstrucciones {
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(350);
         Extractor extractor = new Extractor(economia, 0, 0);
+        extractor.setRecurso(new Volcan(0 ,0));
         Criadero criadero = new Criadero(economia, 0, 0);
 
         extractor.pasarTurno();
@@ -146,7 +148,7 @@ public class TestConstrucciones {
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(250);
         Asimilador asimilador = new Asimilador(economia, 0, 0);
-
+        asimilador.setRecurso(new Volcan(0 ,0));
 
         for (int i = 0; i<14 ;i++ ){
             asimilador.pasarTurno();

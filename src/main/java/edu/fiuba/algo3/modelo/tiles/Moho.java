@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
 import java.util.LinkedList;
 
+
 public class Moho {
     private int posX;
     private int posY;
@@ -19,5 +20,17 @@ public class Moho {
             return;
         }
         list.add(construccionZerg);
+    }
+
+    public void pasarTurno(LinkedList<Moho> mohos) {
+        //logica de expansion de mohos
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
     }
 }

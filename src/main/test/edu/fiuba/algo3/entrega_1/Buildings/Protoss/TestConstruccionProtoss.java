@@ -3,7 +3,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.mocks.MockEconomia;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -13,13 +13,13 @@ public class TestConstruccionProtoss {
 
     @BeforeEach
     public void initEach() {
-        constr = new ConstruccionProtoss(1000, 10, 10, 10, 0, mockEconomia, 0, 0);
+        constr = new ConstruccionProtoss(1000, 50, 10, 10, 0, mockEconomia, 0, 0);
     }
 
 
     @Test
     public void danioUnaConstruccionProtossSinSacarleElEscudoYNoPierdeVida() {
-        Assertions.assertEquals(0, constr.daniar(100));
+        Assertions.assertEquals(0, constr.daniar(50));
     }
 
     @Test

@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.TileVacia;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestsTileVacia {
 

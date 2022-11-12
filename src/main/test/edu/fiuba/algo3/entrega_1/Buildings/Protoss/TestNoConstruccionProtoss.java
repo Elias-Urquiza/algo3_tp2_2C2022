@@ -2,7 +2,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestNoConstruccionProtoss {
 

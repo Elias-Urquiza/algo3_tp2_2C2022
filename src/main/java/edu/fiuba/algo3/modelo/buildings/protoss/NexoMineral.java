@@ -2,18 +2,22 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.tiles.Recurso;
 
-public class NexoMineral extends ConstruccionProtoss implements Turno, Construccion {
+public class NexoMineral extends ConstruccionProtoss implements Turno, Construccion, ExtraeRecurso {
 
     private int turnosActivo;
-
+    private Recurso recurso;
+    private Economia economia;
     private static final int TIEMPO_CONSTRUCCION = 4;
 
     public NexoMineral(Economia economia, int posX, int posY){
         super(250, 250, 50, 0, 4, economia, posX, posY);
         turnosActivo = 0;
+        this.economia = economia;
     }
     @Override
     public void pasarTurno(){
@@ -28,5 +32,15 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
         if(turnosActivo < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
 
+    }
+
+    @Override
+    public void extraer() {
+        return;
+    }
+
+    @Override
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 }

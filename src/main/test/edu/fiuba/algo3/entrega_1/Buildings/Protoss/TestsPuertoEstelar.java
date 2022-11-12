@@ -3,7 +3,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.mocks.MockEconomia;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsPuertoEstelar {

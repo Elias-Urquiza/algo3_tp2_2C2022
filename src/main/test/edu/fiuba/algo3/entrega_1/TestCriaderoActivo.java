@@ -2,7 +2,7 @@ package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.mocks.CriaderoActivo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestCriaderoActivo {
     @Test

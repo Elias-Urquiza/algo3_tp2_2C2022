@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.tiles.Cristales;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestCristales {

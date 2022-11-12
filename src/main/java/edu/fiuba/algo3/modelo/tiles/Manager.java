@@ -1,19 +1,19 @@
 package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
-import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
-import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
-import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
+import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Manager {
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
+    LinkedList<ExtraeRecurso> construccionQueExtrae;
     LinkedList<Moho> moho;
     LinkedList<Cristales> cristales;
     LinkedList<Volcan> volcanes;
@@ -24,6 +24,7 @@ public class Manager {
     public Manager() {
         this.construccionesZerg =new LinkedList<>();
         this.construccionProtoss = new LinkedList<>();
+        this.construccionQueExtrae = new LinkedList<>();
         this.moho = new LinkedList<>();
         this.cristales= new LinkedList<>();
         this.volcanes = new LinkedList<>();
@@ -31,105 +32,77 @@ public class Manager {
         this.tilesVacias = new LinkedList<>();
     }
 
-    public void construirCriaderoEn(int x, int y, Economia economia) {
-        construccionesZerg.add(new Criadero(economia, x, y));
-        moho.add(new Moho(x, y));
+
+    public void construirCriaderoEn(int x, int y, Criadero criadero) {
+        criadero.mohificar(x, y, moho);
+        construccionesZerg.add(criadero);
     }
 
-    public void construirExtractorEn(int x, int y, Economia economia) {
-        Extractor extr = new Extractor(economia, x, y);
-        int size = construccionesZerg.size();
-
-        for(Volcan v : volcanes) {
-            v.construir(construccionesZerg, extr, x, y);
-        }
-
-        if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un volcan en la posicion");
+    public void construirPilonEn(int x, int y, Pilon pilon) {
+        pilon.energizar(energias);
+        construccionProtoss.add(pilon);
     }
 
-    public void construirEspiralEn(int x, int y, Economia economia) {
-        Espiral espiral = new Espiral(economia, x, y);
-        int size = construccionesZerg.size();
-
-        for(Moho m : moho) {
-            m.construir(construccionesZerg, espiral, x, y);
-        }
-
-        if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un moho en la posicion");
-    }
-
-    public void construirGuaridaEn(int x, int y, Economia economia) {
-        Guarida guarida = new Guarida(economia, x, y);
-        int size = construccionesZerg.size();
-
-        for(Moho m : moho) {
-            m.construir(construccionesZerg, guarida, x, y);
-        }
-
-        if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un moho en la posicion");
-    }
-
-    public void construirReservaDeReproduccionEn(int x, int y, Economia economia) {
-        ReservaDeReproduccion reservaDeReproduccion = new ReservaDeReproduccion(economia, x, y);
-        int size = construccionesZerg.size();
-
-        for(Moho m : moho) {
-            m.construir(construccionesZerg, reservaDeReproduccion, x, y);
-        }
-
-        if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un moho en la posicion");
-    }
-
-    public void construirAsimiladorEn(int x, int y, Economia economia) {
-        Asimilador asimilador = new Asimilador(economia, x, y);
-        int size = construccionProtoss.size();
-
-        for(Volcan v : volcanes) {
-            v.construir(construccionProtoss, asimilador, x, y);
-        }
-
-        if(size == construccionProtoss.size())
-            throw new RuntimeException("No hay un volcan en la posicion");
-    }
-
-    public void construirNexoMineralEn(int x, int y, Economia economia) {
-        NexoMineral asimilador = new NexoMineral(economia, x, y);
-        int size = construccionProtoss.size();
-
+    public void construirEstructuraDeCristales(int x, int y, ExtraeRecurso extrae){
+        int size = construccionQueExtrae.size();
         for(Cristales c : cristales) {
-            c.construir(construccionProtoss, asimilador, x, y);
+            Recurso recurso = c.construir(construccionQueExtrae, extrae, x, y);
+            if(Objects.nonNull(recurso)) {
+                extrae.setRecurso(c);
+                break;
+            }
         }
-
-        if(size == construccionProtoss.size())
+        if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un mineral en la posicion");
     }
 
-    public void construirAccesoEn(int x, int y, Economia economia) {
-        Acceso acceso = new Acceso(economia, x, y);
-        int size = construccionProtoss.size();
-
-        for(Energia e : energias) {
-            e.construir(construccionProtoss, acceso, x, y);
+    public void construirEstructuraDeVolcan(int x, int y, ExtraeRecurso extrae){
+        int size = construccionQueExtrae.size();
+        for(Volcan v : volcanes) {
+            Recurso recurso = v.construir(construccionQueExtrae, extrae, x, y);
+            if(Objects.nonNull(recurso)) {
+                extrae.setRecurso(v);
+                break;
+            }
         }
+        if(size == construccionQueExtrae.size())
+            throw new RuntimeException("No hay un volcan en la posicion");
+    }
 
+    public void construirProtoss(int x, int y, ConstruccionProtoss protoss) {
+        int size = construccionProtoss.size();
+        for(Energia e : energias) {
+            e.construir(construccionProtoss, protoss, x, y);
+        }
         if(size == construccionProtoss.size())
             throw new RuntimeException("No esta energizada esta posicion");
     }
 
-    public void construirPuertoEstelarEn(int x, int y, Economia economia) {
-        PuertoEstelar puertoEstelar = new PuertoEstelar(economia, x, y);
-        int size = construccionProtoss.size();
-
-        for(Energia e : energias) {
-            e.construir(construccionProtoss, puertoEstelar, x, y);
+    public void construirZerg(int x, int y, ConstruccionZerg zerg) {
+        int size = construccionesZerg.size();
+        for(Moho m : moho) {
+            m.construir(construccionesZerg, zerg, x, y);
         }
-
-        if(size == construccionProtoss.size())
-            throw new RuntimeException("No esta energizada esta posicion");
+        if(size == construccionesZerg.size())
+            throw new RuntimeException("No hay un moho en la posicion");
     }
 
+    public void printMohos() {
+        char[][] matrix = new char[30][30];
+
+        for (int i =0; i < 30; i++ ){
+            for(int j =0; j < 30; j++ ){
+                matrix[i][j]='-';
+            }
+        }
+        for(Moho m : moho){
+            matrix[m.getX()][m.getY()] = 'm';
+        }
+        for (int i =0; i < 30; i++ ){
+            for(int j =0; j < 30; j++ ){
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println("\n");
+        }
+    }
 }
