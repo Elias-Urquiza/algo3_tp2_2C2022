@@ -108,4 +108,9 @@ public class Manager {
             System.out.println("\n");
         }
     }
+    public void buscarCoincidencias(int CoordenadaX, int CoordenadaY){
+        for(ConstruccionProtoss cp: construccionProtoss){
+            cp
+        }
+    }
 }

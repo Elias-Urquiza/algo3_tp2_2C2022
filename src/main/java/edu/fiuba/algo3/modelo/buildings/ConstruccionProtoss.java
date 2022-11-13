@@ -37,6 +37,7 @@ public class ConstruccionProtoss {
         this.posY=posY;
     }
 
+
     public int daniar(int danio) {
         int dmg = escudo - danio;
         if (dmg < 0) {

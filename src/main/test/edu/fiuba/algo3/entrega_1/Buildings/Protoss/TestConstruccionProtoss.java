@@ -3,6 +3,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +56,18 @@ public class TestConstruccionProtoss {
         economia.ingresarGasVespeno(100);
         economia.ingresarMineral(50);
         Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionProtoss(100, 100, 20, 200, 0, economia, 0, 0));
+    }
+
+    @Test
+    public void construitSobreConstruccionFalla(){
+        boolean afirmacion = false;
+        Acceso acceso = new Acceso(mockEconomia, 2 ,2);
+        try {
+            Acceso accesoDos = new Acceso(mockEconomia, 2,2);
+        }catch (RuntimeException e){
+            afirmacion = true;
+        }
+        assert (afirmacion);
     }
 
 
