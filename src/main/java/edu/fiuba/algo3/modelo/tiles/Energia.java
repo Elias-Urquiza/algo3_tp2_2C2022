@@ -2,36 +2,29 @@ package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Energia implements Turno, FloorType{
-
-    private static final List<Class> AVAILABLE_BUILDINGS = List.of(
-            Acceso.class,
-            Pilon.class,
-            NexoMineral.class,
-            PuertoEstelar.class
-    );
-
-
-    public Energia(){
-
+public class Energia {
+    private int posX;
+    private int posY;
+    public Energia(int posX, int posY){
+        this.posX = posX;
+        this.posY = posY;
     }
 
-    @Override
-    public void pasarTurno() {
-
-    }
-
-    public void buildOn(Construccion construccion) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construccion.getClass() ) ) {
+    public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, int x, int y) {
+        if (x != posX || y != posY) {
             return;
         }
-        throw new RuntimeException("You cannot build on top of this");
+        list.add(construccionProtoss);
     }
 }

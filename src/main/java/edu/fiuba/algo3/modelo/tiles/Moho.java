@@ -1,41 +1,36 @@
 package edu.fiuba.algo3.modelo.tiles;
 
 
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+
+import java.util.LinkedList;
 
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Turno;
-import edu.fiuba.algo3.modelo.tiles.FloorType;
-import java.util.List;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
-import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
-import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
-import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
+public class Moho {
+    private int posX;
+    private int posY;
 
-
-public class Moho implements Turno {
-
-
-    private static final List<Class> AVAILABLE_BUILDINGS = List.of(
-            Criadero.class,
-            Espiral.class,
-            Guarida.class,
-            ReservaDeReproduccion.class
-    );
-
-    public Moho(){
-
+    public Moho(int posX, int posY){
+        this.posX = posX;
+        this.posY = posY;
     }
 
-    @Override
-    public void pasarTurno() {
-
-    }
-
-    public void buildOn(Construccion construirEncima) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construirEncima.getClass())) {
+    public void construir(LinkedList list, ConstruccionZerg construccionZerg, int x, int y) {
+        if (x != posX || y != posY) {
             return;
         }
-        throw new RuntimeException("You cannot build on top of this");
+        list.add(construccionZerg);
+    }
+
+    public void pasarTurno(LinkedList<Moho> mohos) {
+        //logica de expansion de mohos
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
     }
 }

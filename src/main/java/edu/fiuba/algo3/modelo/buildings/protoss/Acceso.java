@@ -11,8 +11,8 @@ public class Acceso extends ConstruccionProtoss implements Turno, Construccion {
 
     private static final int TIEMPO_CONSTRUCCION = 8;
 
-    public Acceso(Economia economia){
-        super(500, 500, 150, 0, 8, economia);
+    public Acceso(Economia economia, int posX, int posY){
+        super(500, 500, 150, 0, 8, economia, posX, posY);
         turnosActivo = 0;
 
     }

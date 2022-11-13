@@ -12,8 +12,8 @@ public class ReservaDeReproduccion extends ConstruccionZerg implements Construcc
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
-    public ReservaDeReproduccion(Economia economia){
-        super(1000, 150, 0, 12, economia);
+    public ReservaDeReproduccion(Economia economia, int posX, int posY){
+        super(1000, 150, 0, 12, economia, posX, posY);
         turnosActivo = 0;
     }
 

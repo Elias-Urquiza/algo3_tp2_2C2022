@@ -10,8 +10,8 @@ public class Espiral extends ConstruccionZerg implements Turno, Construccion {
     private int turnosActivo;
     private static final int TIEMPO_CONSTRUCCION = 10;
 
-    public Espiral(Economia economia) {
-        super(1300, 150, 100, 10, economia);
+    public Espiral(Economia economia, int posX, int posY) {
+        super(1300, 150, 100, 10, economia, posX, posY);
         turnosActivo = 0;
     }
 

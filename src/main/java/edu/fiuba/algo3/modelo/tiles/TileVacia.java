@@ -5,23 +5,15 @@ import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TileVacia implements FloorType {
+public class TileVacia {
+    private int posX;
+    private int posY;
 
-    private static final List<Class> AVAILABLE_BUILDINGS = List.of(
-            Criadero.class,
-            Pilon.class
-    );
-
-    public TileVacia(){
-
-    }
-
-    public void buildOn(Construccion construirEncima) throws RuntimeException {
-        if(AVAILABLE_BUILDINGS.contains(construirEncima.getClass() ) ) {
-            return;
-        }
-        throw new RuntimeException("You cannot build on top of this");
+    public TileVacia(int posX, int posY){
+        this.posX = posX;
+        this.posY = posY;
     }
 }

@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.modelo.Economia;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestsEconomia {
 

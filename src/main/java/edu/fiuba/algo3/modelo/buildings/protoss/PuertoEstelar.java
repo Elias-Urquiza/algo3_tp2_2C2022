@@ -12,8 +12,8 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     private static final int MAX_ESCUDO = 600;
 
-    public PuertoEstelar(Economia economia){
-        super(600, 600, 150, 150, 10, economia);
+    public PuertoEstelar(Economia economia, int posX, int posY){
+        super(600, 600, 150, 150, 10, economia, posX, posY);
         turnosActivo = 0;
     }
     @Override

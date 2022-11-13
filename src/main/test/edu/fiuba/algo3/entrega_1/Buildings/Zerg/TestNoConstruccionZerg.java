@@ -12,7 +12,7 @@ public class TestNoConstruccionZerg {
         Economia economia = new Economia();
 
         try{
-            Criadero criadero = new Criadero(economia);
+            Criadero criadero = new Criadero(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -28,7 +28,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Criadero criadero = new Criadero(economia);
+            Criadero criadero = new Criadero(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -43,7 +43,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Espiral espiral = new Espiral(economia);
+            Espiral espiral = new Espiral(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -59,7 +59,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Espiral espiral = new Espiral(economia);
+            Espiral espiral = new Espiral(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -74,7 +74,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Extractor extractor = new Extractor(economia);
+            Extractor extractor = new Extractor(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -90,7 +90,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Extractor extractor = new Extractor(economia);
+            Extractor extractor = new Extractor(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -106,7 +106,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -122,7 +122,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -138,7 +138,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            ReservaDeReproduccion reservaDeReproduccion = new ReservaDeReproduccion(economia);
+            ReservaDeReproduccion reservaDeReproduccion = new ReservaDeReproduccion(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -154,7 +154,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -170,7 +170,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -186,7 +186,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(300);
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -202,7 +202,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(300);
 
         try{
-            Guarida guarida = new Guarida(economia);
+            Guarida guarida = new Guarida(economia, 0, 0);
         }
         catch (RuntimeException e){
             afirmacion = false;

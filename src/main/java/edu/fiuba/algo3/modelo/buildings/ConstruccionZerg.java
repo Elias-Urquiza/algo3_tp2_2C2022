@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Turno;
 
 public class ConstruccionZerg {
     private int puntosDeVida;
@@ -9,8 +10,12 @@ public class ConstruccionZerg {
     private int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_ZERG = 100;
+    protected int posX;
+    protected int posY;
 
-    public ConstruccionZerg(int puntosDeVidaMaxima, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia) {
+
+    public ConstruccionZerg(int puntosDeVidaMaxima, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia,
+                            int posX, int posY) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -27,6 +32,8 @@ public class ConstruccionZerg {
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
         this.costoGas = costoGas;
         this.costoMineral = costoMineral;
+        this.posX = posX;
+        this.posY = posY;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
     }
 

@@ -10,8 +10,8 @@ public class Guarida extends ConstruccionZerg implements Construccion, Turno {
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
-    public Guarida(Economia economia){
-        super(1250, 200, 100, 12, economia);
+    public Guarida(Economia economia, int posX, int posY){
+        super(1250, 200, 100, 12, economia, posX, posY);
         turnosActivo = 0;
     }
 

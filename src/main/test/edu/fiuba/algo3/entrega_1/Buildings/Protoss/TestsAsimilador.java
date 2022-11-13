@@ -2,8 +2,9 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
-import org.junit.Test;
+import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.tiles.Volcan;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsAsimilador {
@@ -13,7 +14,7 @@ public class TestsAsimilador {
     public void unAsimiladorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
 
-        Asimilador asimilador = new Asimilador(mockEconomia);
+        Asimilador asimilador = new Asimilador(mockEconomia, 0, 0);
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
@@ -30,20 +31,16 @@ public class TestsAsimilador {
 
     @Test
     public void noSePuedeUsarElAsimiladorAntesDeQueSeTermineDeConstruir(){
-        Economia economia = new Economia();
-        final Asimilador asimilador = new Asimilador(economia);
+        final Asimilador asimilador = new Asimilador(mockEconomia, 0, 0);
         Assertions.assertThrows(RuntimeException.class, () -> asimilador.usar());
     }
 
-
-
-
     @Test
     public void unAsimiladorSumaGasAlEstarOperativo(){
-
         Economia economia = new Economia();
-
-        Asimilador asimilador = new Asimilador(economia);
+        economia.ingresarMineral(100);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
+        asimilador.setRecurso(new Volcan(0 ,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 7; i++)
@@ -62,8 +59,9 @@ public class TestsAsimilador {
     public void unAsimiladorSumaGasAlEstarOperativoVariosTurnos(){
 
         Economia economia = new Economia();
-
-        Asimilador asimilador = new Asimilador(economia);
+        economia.ingresarMineral(100);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
+        asimilador.setRecurso(new Volcan(0 ,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 8; i++)
@@ -81,8 +79,8 @@ public class TestsAsimilador {
     public void unAsimiladorNoSumaGasAlNoEstarOperativo(){
 
         Economia economia = new Economia();
-
-        Asimilador asimilador = new Asimilador(economia);
+        economia.ingresarMineral(100);
+        Asimilador asimilador = new Asimilador(economia, 0, 0);
         boolean afirmacion = false;
 
         for(int i = 0; i < 5; i++)

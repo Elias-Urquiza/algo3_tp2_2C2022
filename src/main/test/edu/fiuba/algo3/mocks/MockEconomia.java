@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.mocks;
+package edu.fiuba.algo3.mocks;
 
 import edu.fiuba.algo3.modelo.Economia;
 

@@ -1,10 +1,9 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
-import edu.fiuba.algo3.modelo.mocks.MockEconomia;
-import org.junit.Test;
+import edu.fiuba.algo3.mocks.MockEconomia;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsPuertoEstelar {
@@ -13,7 +12,7 @@ public class TestsPuertoEstelar {
     @Test
     public void unNexoMineralSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        PuertoEstelar puertoEstelar = new PuertoEstelar(mockEconomia);
+        PuertoEstelar puertoEstelar = new PuertoEstelar(mockEconomia, 0, 0);
         boolean afirmacion = true;
 
         for(int i = 0; i < 10; i++)
@@ -30,7 +29,7 @@ public class TestsPuertoEstelar {
 
     @Test
     public void noSePuedeUsarElNexoMineralAntesDeQueSeTermineDeConstruir(){
-        final PuertoEstelar puertoEstelar = new PuertoEstelar(mockEconomia);
+        final PuertoEstelar puertoEstelar = new PuertoEstelar(mockEconomia, 0, 0);
         Assertions.assertThrows(RuntimeException.class, () -> puertoEstelar.usar());
     }
 }

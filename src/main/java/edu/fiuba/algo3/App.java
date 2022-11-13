@@ -1,14 +1,13 @@
 package edu.fiuba.algo3;
 
-import edu.fiuba.algo3.modelo.Tablero;
-import edu.fiuba.algo3.modelo.tiles.Tile;
+import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
+import edu.fiuba.algo3.modelo.tiles.Manager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 /**
  * JavaFX App
@@ -27,8 +26,13 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        final Tablero tablero = new Tablero(20, 20);
-        final List<Tile> neighborsOf = tablero.getNeighbours(1, 0);
+
+        Economia econ = new Economia();
+        econ.ingresarMineral(1000000000);
+        econ.ingresarGasVespeno(100000000);
+        Manager m = new Manager(30, 30);
+        m.construirCriaderoEn(3, 4, new Criadero(econ, 3, 4));
+        m.printMohos();
         //launch();
     }
 

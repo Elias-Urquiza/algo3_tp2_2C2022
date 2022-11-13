@@ -2,10 +2,12 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.tiles.Recurso;
 
-public class Extractor extends ConstruccionZerg implements Construccion, Turno {
+public class Extractor extends ConstruccionZerg implements Construccion, Turno, ExtraeRecurso {
 
     private int turnosActivo;
     private int vida;
@@ -13,10 +15,11 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno {
     private static final int PRODUCCION_POR_ZANGANO=10;
     private int zanganos;
     private Economia economia;
+    private Recurso recurso;
     private static final int TIEMPO_CONSTRUCCION = 6;
 
-    public Extractor(Economia economiaZerg){
-        super(750, 100, 0, 6, economiaZerg);
+    public Extractor(Economia economiaZerg, int posX, int posY){
+        super(750, 100, 0, 6, economiaZerg, posX, posY);
         turnosActivo = 0;
         economia = economiaZerg;
         zanganos = 0;
@@ -46,7 +49,20 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno {
     @Override
     public void pasarTurno() {
         curar();
+        if(turnosActivo >= TIEMPO_CONSTRUCCION){
+            //Asumo que va sumando de a un por turno
+            extraer();
+        }
         turnosActivo++;
-        economia.ingresarGasVespeno(zanganos * PRODUCCION_POR_ZANGANO);
+    }
+
+    @Override
+    public void extraer() {
+        economia.ingresarGasVespeno(recurso.extraer(zanganos * PRODUCCION_POR_ZANGANO));
+    }
+
+    @Override
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 }

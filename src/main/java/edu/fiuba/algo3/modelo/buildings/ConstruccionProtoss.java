@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Turno;
 
 public class ConstruccionProtoss {
     private int puntosDeVidaMaxima;
@@ -11,7 +12,10 @@ public class ConstruccionProtoss {
     protected int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_PROTOSS = 100;
-    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia) {
+    protected int posX;
+    protected int posY;
+
+    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, int posX, int posY) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -29,6 +33,8 @@ public class ConstruccionProtoss {
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
+        this.posX=posX;
+        this.posY=posY;
     }
 
     public int daniar(int danio) {
