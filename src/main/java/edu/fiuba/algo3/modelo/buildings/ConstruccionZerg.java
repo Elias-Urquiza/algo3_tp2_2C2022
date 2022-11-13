@@ -1,7 +1,10 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
+
+import java.util.LinkedList;
 
 public class ConstruccionZerg {
     private int puntosDeVida;
@@ -10,8 +13,7 @@ public class ConstruccionZerg {
     private int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_ZERG = 100;
-    protected int posX;
-    protected int posY;
+    protected Posicion pos;
 
 
     public ConstruccionZerg(int puntosDeVidaMaxima, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia,
@@ -32,8 +34,7 @@ public class ConstruccionZerg {
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
         this.costoGas = costoGas;
         this.costoMineral = costoMineral;
-        this.posX = posX;
-        this.posY = posY;
+        this.pos = new Posicion(posX, posY);
         this.tiempoDeConstruccion = tiempoDeConstruccion;
     }
 
@@ -57,5 +58,15 @@ public class ConstruccionZerg {
             puntosDeVida -= danio;
         }
         return vidaPreDanio - puntosDeVida;
+    }
+
+    public void destruir(LinkedList<ConstruccionZerg> construccionZergs) {
+        for (Object any : construccionZergs) {
+            construccionZergs.removeIf(constr -> constr.getPosicion().equals(pos));
+        }
+    }
+
+    public Posicion getPosicion() {
+        return pos;
     }
 }

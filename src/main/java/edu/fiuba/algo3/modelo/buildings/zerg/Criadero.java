@@ -62,19 +62,19 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     public void mohificar(int x, int y, int maxX, int maxY, LinkedList<Moho> mohos) {
         mohos.add(new Moho(x, y));
 
-        int posicion_x = posX -5;
+        int posicion_x = pos.getX() -5;
         if (posicion_x<0)
             posicion_x = 0;
 
-        int posicion_y = posY -5;
+        int posicion_y = pos.getY() -5;
         if (posicion_y < 0)
             posicion_y = 0;
 
-        int topeX = posX + 6;
+        int topeX = pos.getX() + 6;
         if(topeX > maxX)
             topeX = maxX;
 
-        int topeY = posY + 6;
+        int topeY = pos.getY() + 6;
         if(topeY > maxY)
             topeY = maxY;
 

@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.ExtraeRecurso;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
@@ -33,23 +34,37 @@ public class Manager {
         this.tilesVacias = new LinkedList<>();
         this.maxX = dimensionX;
         this.maxY = dimensionY;
+        for (int i = 0; i < maxX; i ++) {
+            for (int j = 0; j < maxY; j++) {
+                tilesVacias.add(new TileVacia(i, j));
+            }
+        }
     }
 
-
-    public void construirCriaderoEn(int x, int y, Criadero criadero) {
-        criadero.mohificar(x, y, maxX, maxY, moho);
-        construccionesZerg.add(criadero);
+    public void construirCriaderoEn(Posicion pos, Criadero criadero) {
+        int size = construccionesZerg.size();
+        for (TileVacia t : tilesVacias) {
+            t.construir(construccionesZerg, criadero, pos);
+        }
+        if(size == construccionesZerg.size())
+            throw new RuntimeException("No se puede construir en esta posicion");
+        criadero.mohificar(pos, maxX, maxY, moho);
     }
 
-    public void construirPilonEn(int x, int y, Pilon pilon) {
+    public void construirPilonEn(Posicion pos, Pilon pilon) {
+        int size = construccionProtoss.size();
+        for (TileVacia t : tilesVacias) {
+            t.construir(construccionProtoss, pilon, x, y);
+        }
+        if(size == construccionProtoss.size())
+            throw new RuntimeException("No se puede construir en esta posicion");
         pilon.energizar(x, y, maxX, maxY, energias);
-        construccionProtoss.add(pilon);
     }
 
-    public void construirEstructuraDeCristales(int x, int y, ExtraeRecurso extrae){
+    public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
         int size = construccionQueExtrae.size();
         for(Cristales c : cristales) {
-            Recurso recurso = c.construir(construccionQueExtrae, extrae, x, y);
+            Recurso recurso = c.construir(construccionQueExtrae, extrae, pos);
             if(Objects.nonNull(recurso)) {
                 extrae.setRecurso(c);
                 break;
@@ -81,7 +96,21 @@ public class Manager {
             throw new RuntimeException("No esta energizada esta posicion");
     }
 
-    public void construirZerg(int x, int y, ConstruccionZerg zerg) {
+    public void destruirProtoss(Posicion pos) {
+        // TODO: Refactor with hash maps
+        /*
+        int size = construccionProtoss.size();
+        LinkedList<ConstruccionProtoss> clone = (LinkedList<ConstruccionProtoss>) construccionProtoss.clone();
+        for(ConstruccionProtoss c : clone) {
+            c.destruir(pos, construccionProtoss);
+        }
+        if(size == construccionProtoss.size())
+            throw new RuntimeException("No hay nada para destruir");
+
+         */
+    }
+
+    public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
         int size = construccionesZerg.size();
         for(Moho m : moho) {
             m.construir(construccionesZerg, zerg, x, y);
@@ -91,21 +120,46 @@ public class Manager {
     }
 
     public void printMohos() {
-        char[][] matrix = new char[30][30];
-
-        for (int i =0; i < 30; i++ ){
-            for(int j =0; j < 30; j++ ){
+        char[][] matrix = new char[maxX][maxY];
+        for (int i =0; i < maxX; i++ ){
+            for(int j =0; j < maxY; j++ ){
                 matrix[i][j]='-';
             }
         }
         for(Moho m : moho){
             matrix[m.getX()][m.getY()] = 'm';
         }
-        for (int i =0; i < 30; i++ ){
-            for(int j =0; j < 30; j++ ){
+        for (int i =0; i < maxX; i++ ){
+            for(int j =0; j < maxY; j++ ){
                 System.out.print(matrix[i][j]);
             }
             System.out.println("\n");
         }
+    }
+
+    public void printEnergias() {
+        char[][] matrix = new char[maxX][maxY];
+        for (int i =0; i < maxX; i++ ){
+            for(int j =0; j < maxY; j++ ){
+                matrix[i][j]='-';
+            }
+        }
+        for(Energia e : energias){
+            matrix[e.getPos().getX()][e.getPos().getY()] = 'e';
+        }
+        for (int i =0; i < maxX; i++ ){
+            for(int j =0; j < maxY; j++ ){
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println("\n");
+        }
+    }
+
+    public void agregarCristales(int x, int y) {
+        cristales.add(new Cristales(x, y));
+    }
+
+    public void agregarVolcanes(int x, int y) {
+        volcanes.add(new Volcan(x, y));
     }
 }

@@ -1,7 +1,11 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.tiles.Energia;
+
+import java.util.LinkedList;
 
 public class ConstruccionProtoss {
     private int puntosDeVidaMaxima;
@@ -12,8 +16,7 @@ public class ConstruccionProtoss {
     protected int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_PROTOSS = 100;
-    protected int posX;
-    protected int posY;
+    protected Posicion pos;
 
     public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, int posX, int posY) {
         try {
@@ -33,8 +36,7 @@ public class ConstruccionProtoss {
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
-        this.posX=posX;
-        this.posY=posY;
+        this.pos = new Posicion(posX, posY);
     }
 
     public int daniar(int danio) {
@@ -69,5 +71,15 @@ public class ConstruccionProtoss {
             escudo += CURACION_PROTOSS;
         }
         return escudo - escudoPreCuracion;
+    }
+
+    public void destruir(Posicion pos, LinkedList<ConstruccionProtoss> construccionProtoss) {
+        if (pos.equals(this.pos)) {
+            construccionProtoss.remove(this);
+        }
+    }
+
+    public Posicion getPosicion() {
+        return pos;
     }
 }

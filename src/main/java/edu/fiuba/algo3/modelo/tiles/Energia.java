@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.Construccion;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
@@ -14,17 +15,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Energia {
-    private int posX;
-    private int posY;
-    public Energia(int posX, int posY){
-        this.posX = posX;
-        this.posY = posY;
+    Posicion pos;
+    public Energia(Posicion posicion){
+        this.pos = posicion;
     }
 
     public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, int x, int y) {
-        if (x != posX || y != posY) {
-            return;
+        if (new Posicion(x, y).equals(pos)) {
+            list.add(construccionProtoss);
         }
-        list.add(construccionProtoss);
+        return;
+    }
+
+    public Posicion getPos() {
+        return pos;
     }
 }
