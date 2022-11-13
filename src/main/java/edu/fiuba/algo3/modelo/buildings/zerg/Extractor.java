@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.ExtraeRecurso;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 
@@ -18,8 +15,8 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno, 
     private Recurso recurso;
     private static final int TIEMPO_CONSTRUCCION = 6;
 
-    public Extractor(Economia economiaZerg, int posX, int posY){
-        super(750, 100, 0, 6, economiaZerg, posX, posY);
+    public Extractor(Economia economiaZerg, Posicion pos){
+        super(750, 100, 0, 6, economiaZerg, pos);
         turnosActivo = 0;
         economia = economiaZerg;
         zanganos = 0;

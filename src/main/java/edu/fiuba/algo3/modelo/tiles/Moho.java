@@ -25,5 +25,4 @@ public class Moho {
         //logica de expansion de mohos
     }
 
-    public
 }

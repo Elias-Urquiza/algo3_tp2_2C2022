@@ -18,7 +18,7 @@ public class ConstruccionProtoss {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
 
-    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, int posX, int posY) {
+    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -36,7 +36,7 @@ public class ConstruccionProtoss {
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
-        this.pos = new Posicion(posX, posY);
+        this.pos = pos;
     }
 
     public int daniar(int danio) {

@@ -34,7 +34,8 @@ public class TestMoho {
 
     @Test
     public void cuandoLaPosicionNoEsLaMismaNoAgregaLaConstruccionALaLista() {
-        moho.construir(construcciones, new Espiral(econ, pos), pos);
+
+        moho.construir(construcciones, new Espiral(econ, pos), new Posicion(2,2));
         assertEquals(0, construcciones.size());
     }
 }

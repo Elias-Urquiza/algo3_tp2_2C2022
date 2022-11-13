@@ -17,7 +17,7 @@ public class ConstruccionZerg {
 
 
     public ConstruccionZerg(int puntosDeVidaMaxima, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia,
-                            int posX, int posY) {
+                            Posicion pos) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -34,7 +34,7 @@ public class ConstruccionZerg {
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
         this.costoGas = costoGas;
         this.costoMineral = costoMineral;
-        this.pos = new Posicion(posX, posY);
+        this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
     }
 

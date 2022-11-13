@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 import edu.fiuba.algo3.modelo.tiles.Volcan;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +12,7 @@ public class TestVolcan {
     Recurso rec;
 
     @BeforeEach
-    public void init() { rec = new Volcan(0, 0);}
+    public void init() { rec = new Volcan(new Posicion(0,0));}
     @Test
     public void tratoDeExtraerYDevuelveCorrectamente() {
         Assertions.assertEquals(100, rec.extraer(100));

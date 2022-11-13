@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestsReservaDeReproduccion {
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        ReservaDeReproduccion unaReserva = new ReservaDeReproduccion(mockEconomia, 0, 0);
+        ReservaDeReproduccion unaReserva = new ReservaDeReproduccion(mockEconomia, new Posicion(0, 0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 12; i++)
@@ -29,7 +30,7 @@ public class TestsReservaDeReproduccion {
 
     @Test
     public void noSePuedeUsarLaReservaAntesDeQueSeTermineDeConstruir(){
-        final ReservaDeReproduccion reserva = new ReservaDeReproduccion(mockEconomia, 0, 0);
+        final ReservaDeReproduccion reserva = new ReservaDeReproduccion(mockEconomia,  new Posicion(0, 0));
         Assertions.assertThrows(RuntimeException.class, () -> reserva.usar());
     }
 

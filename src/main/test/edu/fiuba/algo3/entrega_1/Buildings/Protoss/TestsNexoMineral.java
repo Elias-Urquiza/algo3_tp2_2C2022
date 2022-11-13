@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ public class TestsNexoMineral {
     @Test
     public void unNexoMineralSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        NexoMineral nexoMineral = new NexoMineral(mockEconomia, 0, 0);
+        NexoMineral nexoMineral = new NexoMineral(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 4; i++)
@@ -29,7 +30,7 @@ public class TestsNexoMineral {
 
     @Test
     public void noSePuedeUsarElNexoMineralAntesDeQueSeTermineDeConstruir(){
-        final NexoMineral nexoMineral = new NexoMineral(mockEconomia, 0, 0);
+        final NexoMineral nexoMineral = new NexoMineral(mockEconomia, new Posicion(0,0));
         Assertions.assertThrows(RuntimeException.class, () -> nexoMineral.usar());
     }
 }

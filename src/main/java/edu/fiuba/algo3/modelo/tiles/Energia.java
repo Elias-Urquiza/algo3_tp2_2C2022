@@ -20,11 +20,10 @@ public class Energia {
         this.pos = posicion;
     }
 
-    public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, int x, int y) {
-        if (new Posicion(x, y).equals(pos)) {
+    public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, Posicion posicion) {
+        if (posicion.equals(pos)) {
             list.add(construccionProtoss);
         }
-        return;
     }
 
     public Posicion getPos() {

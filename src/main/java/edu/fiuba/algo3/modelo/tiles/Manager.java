@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import javafx.geometry.Pos;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class Manager {
         this.maxY = dimensionY;
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
-                tilesVacias.add(new TileVacia(i, j));
+                tilesVacias.add(new TileVacia(new Posicion(i, j)));
             }
         }
     }
@@ -54,11 +55,11 @@ public class Manager {
     public void construirPilonEn(Posicion pos, Pilon pilon) {
         int size = construccionProtoss.size();
         for (TileVacia t : tilesVacias) {
-            t.construir(construccionProtoss, pilon, x, y);
+            t.construir(construccionProtoss, pilon, pos);
         }
         if(size == construccionProtoss.size())
             throw new RuntimeException("No se puede construir en esta posicion");
-        pilon.energizar(x, y, maxX, maxY, energias);
+        pilon.energizar(pos, maxX, maxY, energias);
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
@@ -74,10 +75,10 @@ public class Manager {
             throw new RuntimeException("No hay un mineral en la posicion");
     }
 
-    public void construirEstructuraDeVolcan(int x, int y, ExtraeRecurso extrae){
+    public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
         int size = construccionQueExtrae.size();
         for(Volcan v : volcanes) {
-            Recurso recurso = v.construir(construccionQueExtrae, extrae, x, y);
+            Recurso recurso = v.construir(construccionQueExtrae, extrae, pos);
             if(Objects.nonNull(recurso)) {
                 extrae.setRecurso(v);
                 break;
@@ -87,10 +88,10 @@ public class Manager {
             throw new RuntimeException("No hay un volcan en la posicion");
     }
 
-    public void construirProtoss(int x, int y, ConstruccionProtoss protoss) {
+    public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
         int size = construccionProtoss.size();
         for(Energia e : energias) {
-            e.construir(construccionProtoss, protoss, x, y);
+            e.construir(construccionProtoss, protoss, pos);
         }
         if(size == construccionProtoss.size())
             throw new RuntimeException("No esta energizada esta posicion");
@@ -113,12 +114,13 @@ public class Manager {
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
         int size = construccionesZerg.size();
         for(Moho m : moho) {
-            m.construir(construccionesZerg, zerg, x, y);
+            m.construir(construccionesZerg, zerg, pos);
         }
         if(size == construccionesZerg.size())
             throw new RuntimeException("No hay un moho en la posicion");
     }
 
+    /*
     public void printMohos() {
         char[][] matrix = new char[maxX][maxY];
         for (int i =0; i < maxX; i++ ){
@@ -153,13 +155,13 @@ public class Manager {
             }
             System.out.println("\n");
         }
+    }*/
+
+    public void agregarCristales(Posicion pos) {
+        cristales.add(new Cristales(pos));
     }
 
-    public void agregarCristales(int x, int y) {
-        cristales.add(new Cristales(x, y));
-    }
-
-    public void agregarVolcanes(int x, int y) {
-        volcanes.add(new Volcan(x, y));
+    public void agregarVolcanes(Posicion pos) {
+        volcanes.add(new Volcan(pos));
     }
 }

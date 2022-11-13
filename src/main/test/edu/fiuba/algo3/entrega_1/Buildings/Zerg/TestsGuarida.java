@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestsGuarida {
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        Guarida unaGuarida = new Guarida(mockEconomia, 0, 0);
+        Guarida unaGuarida = new Guarida(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 12; i++)
@@ -29,7 +30,7 @@ public class TestsGuarida {
 
     @Test
     public void noSePuedeUsarLaGuaridaAntesDeQueSeTermineDeConstruir(){
-        final Guarida guarida = new Guarida(mockEconomia, 0, 0);
+        final Guarida guarida = new Guarida(mockEconomia, new Posicion(0,0));
         Assertions.assertThrows(RuntimeException.class, () -> guarida.usar());
     }
 }

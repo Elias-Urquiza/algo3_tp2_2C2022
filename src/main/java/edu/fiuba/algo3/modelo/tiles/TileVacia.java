@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
+import javafx.geometry.Pos;
 
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ public class TileVacia {
         this.posicion = posicion;
     }
 
-    public void construir(LinkedList list, Object building, int x, int y) {
-        if (x != posicion.getX() || y != posicion.getY()) {
+    public void construir(LinkedList list, Object building, Posicion pos) {
+        if (pos.getX() != posicion.getX() || pos.getY() != posicion.getY()) {
             return;
         }
         list.add(building);

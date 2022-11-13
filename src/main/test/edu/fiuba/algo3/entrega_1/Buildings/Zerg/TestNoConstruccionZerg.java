@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class TestNoConstruccionZerg {
         Economia economia = new Economia();
 
         try{
-            Criadero criadero = new Criadero(economia, 0, 0);
+            Criadero criadero = new Criadero(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -28,7 +29,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Criadero criadero = new Criadero(economia, 0, 0);
+            Criadero criadero = new Criadero(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -43,7 +44,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Espiral espiral = new Espiral(economia, 0, 0);
+            Espiral espiral = new Espiral(economia, new Posicion(1,1));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -59,7 +60,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Espiral espiral = new Espiral(economia, 0, 0);
+            Espiral espiral = new Espiral(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -74,7 +75,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Extractor extractor = new Extractor(economia, 0, 0);
+            Extractor extractor = new Extractor(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -90,7 +91,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Extractor extractor = new Extractor(economia, 0, 0);
+            Extractor extractor = new Extractor(economia,new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -106,7 +107,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -122,7 +123,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -138,7 +139,7 @@ public class TestNoConstruccionZerg {
 
 
         try{
-            ReservaDeReproduccion reservaDeReproduccion = new ReservaDeReproduccion(economia, 0, 0);
+            ReservaDeReproduccion reservaDeReproduccion = new ReservaDeReproduccion(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -154,7 +155,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -170,7 +171,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(30);
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -186,7 +187,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(300);
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -202,7 +203,7 @@ public class TestNoConstruccionZerg {
         economia.ingresarGasVespeno(300);
 
         try{
-            Guarida guarida = new Guarida(economia, 0, 0);
+            Guarida guarida = new Guarida(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = false;

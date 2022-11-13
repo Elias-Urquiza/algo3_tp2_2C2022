@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.tiles.Volcan;
@@ -14,7 +15,7 @@ public class TestsAsimilador {
     public void unAsimiladorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
 
-        Asimilador asimilador = new Asimilador(mockEconomia, 0, 0);
+        Asimilador asimilador = new Asimilador(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
@@ -31,7 +32,7 @@ public class TestsAsimilador {
 
     @Test
     public void noSePuedeUsarElAsimiladorAntesDeQueSeTermineDeConstruir(){
-        final Asimilador asimilador = new Asimilador(mockEconomia, 0, 0);
+        final Asimilador asimilador = new Asimilador(mockEconomia, new Posicion(0,0));
         Assertions.assertThrows(RuntimeException.class, () -> asimilador.usar());
     }
 
@@ -39,8 +40,8 @@ public class TestsAsimilador {
     public void unAsimiladorSumaGasAlEstarOperativo(){
         Economia economia = new Economia();
         economia.ingresarMineral(100);
-        Asimilador asimilador = new Asimilador(economia, 0, 0);
-        asimilador.setRecurso(new Volcan(0 ,0));
+        Asimilador asimilador = new Asimilador(economia, new Posicion(0,0));
+        asimilador.setRecurso(new Volcan(new Posicion(0,0)));
         boolean afirmacion = true;
 
         for(int i = 0; i < 7; i++)
@@ -60,8 +61,8 @@ public class TestsAsimilador {
 
         Economia economia = new Economia();
         economia.ingresarMineral(100);
-        Asimilador asimilador = new Asimilador(economia, 0, 0);
-        asimilador.setRecurso(new Volcan(0 ,0));
+        Asimilador asimilador = new Asimilador(economia, new Posicion(0,0));
+        asimilador.setRecurso(new Volcan(new Posicion(0,0)));
         boolean afirmacion = true;
 
         for(int i = 0; i < 8; i++)
@@ -80,7 +81,7 @@ public class TestsAsimilador {
 
         Economia economia = new Economia();
         economia.ingresarMineral(100);
-        Asimilador asimilador = new Asimilador(economia, 0, 0);
+        Asimilador asimilador = new Asimilador(economia, new Posicion(0,0));
         boolean afirmacion = false;
 
         for(int i = 0; i < 5; i++)

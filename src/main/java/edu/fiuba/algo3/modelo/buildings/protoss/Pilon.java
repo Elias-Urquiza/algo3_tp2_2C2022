@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.tiles.Energia;
+import javafx.geometry.Pos;
 
 import java.util.LinkedList;
 
@@ -15,8 +16,8 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     private static final int TIEMPO_CONSTRUCCION = 5;
     private LinkedList<Energia> energias;
 
-    public Pilon(Economia economia, int posX, int posY) {
-        super(350, 350, 100, 0, 5, economia, posX, posY);
+    public Pilon(Economia economia, Posicion pos) {
+        super(350, 350, 100, 0, 5, economia, pos);
         turnosActivo = 0;
         this.energias = null;
     }
@@ -35,7 +36,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
             throw new RuntimeException("Edificio en construccion");
     }
 
-    public void energizar(int x, int y, int maxX, int maxY, LinkedList<Energia> listaDeEnergias) {
+    public void energizar(Posicion pos, int maxX, int maxY, LinkedList<Energia> listaDeEnergias) {
         //hacer que energice segun acordado
         this.energias = listaDeEnergias;
         int posicion_x = pos.getX() -3;
@@ -98,10 +99,4 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
             }
         }
     }
-
-    /*
-
-
-     */
-
 }
