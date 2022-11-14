@@ -3,16 +3,15 @@ package edu.fiuba.algo3.entrega_1.Tiles;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
-import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
-import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
+import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -385,36 +384,226 @@ public class TestManager {
         assertEquals("Todo ok", afirmacion);
     }
 
-    /**
+
 
     @Test
     public void intentoDestruirUnProtossYEfectivamenteLoDestruye() {
         Posicion pos1 = new Posicion(10, 10);
         Posicion pos3 = new Posicion(12, 12);
-        Posicion posMock = new Posicion(12 ,12);
+
         manager.construirPilonEn(pos1, new Pilon(economia, pos1));
         manager.construirProtoss(pos3, new Acceso(economia, pos3));
-        manager.destruirProtoss(posMock);
+        assertDoesNotThrow(() -> manager.destruirProtoss(pos3));
+
+    }
+
+    @Test
+    public void intentoDestruirUnProtossQueNoExisteYEntoncesNoSeDestruyeNada() {
+        Posicion pos1 = new Posicion(10, 10);
+        Posicion pos3 = new Posicion(12, 12);
+
+        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
+        manager.construirProtoss(pos3, new Acceso(economia, pos3));
+        manager.destruirProtoss(pos3);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.destruirProtoss(posMock)
+                () -> manager.destruirProtoss(pos3)
         );
         assertEquals("No hay nada para destruir", exception.getMessage());
     }
 
-
     @Test
     public void intentoDestruirUnPilonYNoPuedoConstruirOtraConstruccionProtoss() {
-        Posicion posMock = new Posicion(10 ,10);
-        Posicion pos1 = new Posicion(11, 11);
-        manager.construirPilonEn(posMock, new Pilon(economia, posMock));
-        manager.destruirProtoss(posMock);
+        Posicion pos = new Posicion(10 ,10);
+
+        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        manager.destruirProtoss(pos);
+
+
+        int contador= 0;
+
+        int posicion_x = 7;
+        int posicion_y = 7;
+        int topeX = 14;
+        int topeY = 14;
+
+        for (int i = posicion_x; i < (topeX); i++) {
+            for (int j = posicion_y; j < (topeY); j++) {
+                try {
+                    pos = new Posicion(i, j);
+                    manager.construirProtoss(pos, new Acceso(economia, pos));
+                } catch (RuntimeException e) {
+                        contador ++;
+                }
+            }
+
+        }
+        assertEquals (49, contador, "Se elimina un pilon y la zona se desenergiza correctamente");
+    }
+
+    @Test
+    public void sePuedenDestruirMuchosEdificiosSinProblemaAlguno(){
+        Posicion pos = new Posicion(10,10);
+        Posicion pos1 = new Posicion(11,11);
+        Posicion pos2 = new Posicion(10,13);
+        Posicion pos3 = new Posicion(7,10);
+        Posicion pos4 = new Posicion(10,11);
+        Posicion pos5 = new Posicion(9,9);
+        Posicion pos6 = new Posicion(8,13);
+        Posicion pos7 = new Posicion(11,12);
+
+
+        manager.construirPilonEn(pos,  new Pilon (economia, pos ));
+        manager.construirProtoss(pos1, new Acceso(economia, pos1));
+        manager.construirProtoss(pos2, new Acceso(economia, pos2));
+        manager.construirProtoss(pos3, new Acceso(economia, pos3));
+        manager.construirProtoss(pos4, new PuertoEstelar(economia, pos4));
+        manager.construirProtoss(pos5, new PuertoEstelar(economia, pos5));
+        manager.construirProtoss(pos6, new PuertoEstelar(economia, pos6));
+        manager.construirProtoss(pos7, new PuertoEstelar(economia, pos7));
+
+        boolean afirmacion = true;
+        LinkedList<Posicion> list = new LinkedList<>();
+        list.add(pos);list.add(pos1);list.add(pos2);list.add(pos3);list.add(pos4);list.add(pos5);list.add(pos6);list.add(pos7);
+
+        for(int i = 0; i<8; i++) {
+            try {
+                manager.destruirProtoss(list.get(i));
+            } catch (RuntimeException e) {
+                afirmacion = false;
+            }
+        }
+
+        assert (afirmacion);
+    }
+
+    @Test
+    public void edificioSinEnergiaNoFunciona(){
+        Posicion pos = new Posicion(10,10);
+        Posicion pos1 = new Posicion(11,11);
+        Posicion pos2 = new Posicion(10,13);
+        Posicion pos3 = new Posicion(7,10);
+
+        int contador = 0;
+
+        Acceso acceso1 = new Acceso(economia, pos1);
+        Acceso acceso2 = new Acceso(economia, pos3);
+        PuertoEstelar puertoEstelar =  new PuertoEstelar(economia, pos2);
+
+        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        manager.construirProtoss(pos1, acceso1);
+        manager.construirProtoss(pos2, puertoEstelar);
+        manager.construirProtoss(pos3, acceso2);
+        manager.destruirProtoss(pos);
+
+        for(int i=0; i<14 ; i++){
+            acceso1.pasarTurno();
+            puertoEstelar.pasarTurno();
+            acceso2.pasarTurno();
+        }
+
+
+        try {
+            acceso1.usar();
+        }catch (RuntimeException e){
+            contador ++;
+        }
+        try {
+            acceso2.usar();
+        }catch (RuntimeException e){
+            contador ++;
+        }
+        try {
+            puertoEstelar.usar();
+        }catch (RuntimeException e){
+            contador ++;
+        }
+
+        assertEquals(3, contador, "Se destruye un pilon y entonces los edificios energizados por el al no tener energia, pasan a estar NO OPERATIVOS");
+    }
+
+    @Test
+    public void siSeDestruyeUnPilonPeroHayOtroCercaEntoncesElEdificioNoSeDesenergiza(){
+        Posicion pos0 = new Posicion(10,10);
+        Posicion pos1 = new Posicion(15,15);
+        Posicion pos2 = new Posicion(13,13);
+
+        Acceso acceso = new Acceso(economia, pos2);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        Pilon pilon2 = new Pilon(economia, pos1);
+
+        manager.construirPilonEn(pos0, pilon1);
+        manager.construirProtoss(pos2, acceso);
+        manager.construirPilonEn(pos1, pilon2);
+
+        for(int i=0; i<14 ; i++) {
+            acceso.pasarTurno();
+            pilon1.pasarTurno();
+            pilon2.pasarTurno();
+        }
+        manager.destruirProtoss(pos0);
+
+        assertDoesNotThrow( () -> acceso.usar() );
+    }
+
+    @Test
+    public void siSeDestruyeUnPilonSeDesenergizanLasEstructurasPeroAlConstruirOtroCercaEstasVuelvenAEstarActivas(){
+        Posicion pos0 = new Posicion(10,10);
+
+        Posicion pos2 = new Posicion(13,13);
+
+        Acceso acceso = new Acceso(economia, pos2);
+        Pilon pilon1 = new Pilon(economia, pos0);
+
+        manager.construirPilonEn(pos0, pilon1);
+        manager.construirProtoss(pos2, acceso);
+
+        for(int i=0; i<14 ; i++) {
+            acceso.pasarTurno();
+            pilon1.pasarTurno();
+        }
+
+        manager.destruirProtoss(pos0);
+
+        Posicion pos1 = new Posicion(15,15);
+        Pilon pilon2 = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon2);
+
+
+
+        assertDoesNotThrow( () -> acceso.usar() );
+    }
+
+
+    @Test
+    public void siSeDestruyenAmbosPilonesNoEstaMasOperativo(){
+        Posicion pos0 = new Posicion(10,10);
+        Posicion pos1 = new Posicion(15,15);
+        Posicion pos2 = new Posicion(13,13);
+
+        Acceso acceso = new Acceso(economia, pos2);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        Pilon pilon2 = new Pilon(economia, pos1);
+
+        manager.construirPilonEn(pos0, pilon1);
+        manager.construirProtoss(pos2, acceso);
+        manager.construirPilonEn(pos1, pilon2);
+
+        for(int i=0; i<14 ; i++) {
+            acceso.pasarTurno();
+            pilon1.pasarTurno();
+            pilon2.pasarTurno();
+        }
+        manager.destruirProtoss(pos0);
+        manager.destruirProtoss(pos1);
+
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirProtoss(pos1, new Acceso(economia,pos1))
+                () -> acceso.usar()
         );
-        assertEquals("No esta energizada esta posicion", exception.getMessage());
+        assertEquals("Edificio no operativo", exception.getMessage());
     }
-    */
+
+
 
 }

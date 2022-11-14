@@ -12,7 +12,7 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
     private static final int TIEMPO_CONSTRUCCION = 4;
 
     public NexoMineral(Economia economia, Posicion pos){
-        super(250, 250, 50, 0, 4, economia, pos);
+        super(250, 250, 50, 0, 4, economia, pos, true);
         turnosActivo = 0;
         this.economia = economia;
     }
@@ -24,14 +24,21 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
 
     }
 
+
+
     @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }
 
     @Override
+    public void desactivar(){
+        energizado = true;
+    }
+
+    @Override // no hace nada que onda
     public void extraer() {
         return;
     }

@@ -2,8 +2,6 @@ package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
-import edu.fiuba.algo3.modelo.tiles.Energia;
 
 import java.util.LinkedList;
 
@@ -18,7 +16,9 @@ public class ConstruccionProtoss {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
 
-    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos) {
+    protected boolean energizado;
+
+    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos, boolean energizado) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -37,7 +37,15 @@ public class ConstruccionProtoss {
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
         this.pos = pos;
+        this.energizado = energizado;
     }
+
+    public void desactivar(){
+        energizado = false;
+    }
+    public void activar(){
+        energizado = true;
+    }//a lo mejor usar interfaz
 
     public int daniar(int danio) {
         int dmg = escudo - danio;
@@ -73,13 +81,18 @@ public class ConstruccionProtoss {
         return escudo - escudoPreCuracion;
     }
 
-    public void destruir(Posicion pos, LinkedList<ConstruccionProtoss> construccionProtoss) {
+    public Boolean destruir(Posicion pos, int maxX, int maxY, LinkedList<ConstruccionProtoss> construccionProtoss) {
+        boolean afirmacion = false;
+
         if (pos.equals(this.pos)) {
-            construccionProtoss.remove(this);
+            afirmacion = true;
         }
+
+        return afirmacion;
     }
 
     public Posicion getPosicion() {
         return pos;
     }
+
 }

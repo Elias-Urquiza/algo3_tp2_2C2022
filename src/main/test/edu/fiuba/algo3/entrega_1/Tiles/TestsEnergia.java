@@ -21,7 +21,7 @@ public class TestsEnergia {
 
     @BeforeEach
     public void init() {
-        energia = new Energia(new Posicion(1,1));
+        energia = new Energia(new Posicion(1,1), 0);
         construcciones = new LinkedList<>();
     }
     @Test

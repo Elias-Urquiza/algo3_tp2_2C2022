@@ -16,17 +16,25 @@ import java.util.List;
 
 public class Energia {
     Posicion pos;
-    public Energia(Posicion posicion){
+
+    private final int id;
+
+    public Energia(Posicion posicion, int id){
+        this.id = id;
         this.pos = posicion;
     }
 
     public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, Posicion posicion) {
-        if (posicion.equals(pos)) {
+        if (posicion.equals(this.pos)) {
             list.add(construccionProtoss);
         }
     }
 
     public Posicion getPos() {
         return pos;
+    }
+
+    public int getID() {
+        return id;
     }
 }

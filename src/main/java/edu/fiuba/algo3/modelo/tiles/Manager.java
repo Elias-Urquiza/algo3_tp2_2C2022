@@ -24,6 +24,8 @@ public class Manager {
     int maxX;
     int maxY;
 
+    int idPilones;
+
     public Manager(int dimensionX, int dimensionY) {
         this.construccionesZerg =new LinkedList<>();
         this.construccionProtoss = new LinkedList<>();
@@ -35,11 +37,13 @@ public class Manager {
         this.tilesVacias = new LinkedList<>();
         this.maxX = dimensionX;
         this.maxY = dimensionY;
+        this.idPilones = 0;
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
                 tilesVacias.add(new TileVacia(new Posicion(i, j)));
             }
         }
+
     }
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
@@ -54,12 +58,19 @@ public class Manager {
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
         int size = construccionProtoss.size();
+
+        pilon.setID(idPilones);
+        idPilones  ++;
+
         for (TileVacia t : tilesVacias) {
             t.construir(construccionProtoss, pilon, pos);
         }
         if(size == construccionProtoss.size())
             throw new RuntimeException("No se puede construir en esta posicion");
+
         pilon.energizar(pos, maxX, maxY, energias);
+
+        activarEstructurasProtoss();
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
@@ -90,34 +101,68 @@ public class Manager {
 
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
         int size = construccionProtoss.size();
+
         for(Energia e : energias) {
             e.construir(construccionProtoss, protoss, pos);
         }
-        if(size == construccionProtoss.size())
+
+        if(size == construccionProtoss.size()) {
             throw new RuntimeException("No esta energizada esta posicion");
+        }
+//        activarEstructurasProtoss();
     }
 
     public void destruirProtoss(Posicion pos) {
-        // TODO: Refactor with hash maps
-        /*
         int size = construccionProtoss.size();
-        LinkedList<ConstruccionProtoss> clone = (LinkedList<ConstruccionProtoss>) construccionProtoss.clone();
-        for(ConstruccionProtoss c : clone) {
-            c.destruir(pos, construccionProtoss);
-        }
-        if(size == construccionProtoss.size())
-            throw new RuntimeException("No hay nada para destruir");
 
-         */
+        construccionProtoss.removeIf(construccion -> (construccion.destruir(pos, maxX, maxY, construccionProtoss) ) );
+
+        desactivarEstructurasProtoss();
+
+        if(size == construccionProtoss.size()) {
+            throw new RuntimeException("No hay nada para destruir");
+        }
+
     }
 
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
         int size = construccionesZerg.size();
+
         for(Moho m : moho) {
             m.construir(construccionesZerg, zerg, pos);
         }
+
         if(size == construccionesZerg.size())
             throw new RuntimeException("No hay un moho en la posicion");
+    }
+
+    private void desactivarEstructurasProtoss(){
+        int contador =0;
+
+        for(ConstruccionProtoss c: construccionProtoss){
+            for (Energia e: energias){
+                if( (c.getPosicion()).equals(e.getPos()) )
+                    contador ++;
+            }
+            if(contador == 0)//si no encontre ninguna coincidencia
+                c.desactivar();
+
+            contador = 0;
+        }
+    }
+
+    private void activarEstructurasProtoss(){
+        int contador =0;
+        for(ConstruccionProtoss c: construccionProtoss){
+            for (Energia e: energias){
+                if( (c.getPosicion()) .equals(e.getPos()) )
+                    contador ++;
+            }
+            if(contador != 0)//si no encontre ninguna coincidencia
+                c.activar();
+
+            contador = 0;
+        }
     }
 
     /*

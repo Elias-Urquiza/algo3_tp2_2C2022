@@ -14,7 +14,7 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
     private static final int MAX_ESCUDO = 600;
 
     public PuertoEstelar(Economia economia, Posicion pos){
-        super(600, 600, 150, 150, 10, economia, pos);
+        super(600, 600, 150, 150, 10, economia, pos, true);
         turnosActivo = 0;
     }
     @Override
@@ -24,9 +24,10 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     }
 
+
     @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }
