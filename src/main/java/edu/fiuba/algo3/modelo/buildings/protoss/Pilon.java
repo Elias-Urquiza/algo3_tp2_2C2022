@@ -108,6 +108,10 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     }
 
+    public void setID(int idNuevo){
+        id = idNuevo;
+    }
+
     @Override
     public void desactivar() {
         energizado = true;

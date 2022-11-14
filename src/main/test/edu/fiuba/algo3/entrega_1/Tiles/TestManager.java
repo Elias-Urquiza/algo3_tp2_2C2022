@@ -604,6 +604,23 @@ public class TestManager {
         assertEquals("Edificio no operativo", exception.getMessage());
     }
 
+    @Test
+    public void construirSobreUnaConstruccionLanzaError(){
+        boolean afirm = false;
+        Posicion pos0 = new Posicion(10,10);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        Acceso acceso = new Acceso(economia, pos0);
+
+        manager.construirPilonEn(pos0, pilon1);
+
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirProtoss(pos0, acceso)
+        );
+
+
+    }
+
 
 
 }

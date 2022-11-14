@@ -47,6 +47,8 @@ public class Manager {
     }
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
+        buscarCoincidencias(pos);
+
         int size = construccionesZerg.size();
         for (TileVacia t : tilesVacias) {
             t.construir(construccionesZerg, criadero, pos);
@@ -57,6 +59,7 @@ public class Manager {
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
+        buscarCoincidencias(pos);
         int size = construccionProtoss.size();
 
         pilon.setID(idPilones);
@@ -99,7 +102,28 @@ public class Manager {
             throw new RuntimeException("No hay un volcan en la posicion");
     }
 
+    public void buscarCoincidencias(Posicion posicion){
+        for (ConstruccionProtoss c: construccionProtoss){
+            Posicion posicionProtoss = c.getPosicion();
+            if(posicionProtoss.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (ConstruccionZerg c: construccionesZerg){
+            Posicion posicionZerg = c.getPosicion();
+            if(posicionZerg.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        // Habria que tener en cuenta las construcciones que extraen
+    }
+
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
+
+        buscarCoincidencias(pos);
+
         int size = construccionProtoss.size();
 
         for(Energia e : energias) {
@@ -109,6 +133,8 @@ public class Manager {
         if(size == construccionProtoss.size()) {
             throw new RuntimeException("No esta energizada esta posicion");
         }
+
+
 //        activarEstructurasProtoss();
     }
 
