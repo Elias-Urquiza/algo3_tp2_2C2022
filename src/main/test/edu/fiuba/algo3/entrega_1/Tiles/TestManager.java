@@ -626,29 +626,64 @@ public class TestManager {
         Pilon pilon1 = new Pilon(economia, pos0);
         Extractor extractor = new Extractor(economia, pos0);
         manager.agregarVolcanes(pos0);
-
-        manager.construirPilonEn(pos0, pilon1);
+        manager.construirEstructuraDeVolcan(pos0, extractor);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirEstructuraDeVolcan(pos0, extractor)
+                () -> manager.construirPilonEn(pos0, pilon1)
         );
-
+        assertEquals("Ya hay una construccion en esa posicion", exception.getMessage());
     }
 
     @Test
-    public void construirSobreUnaConstruccionExtractoraLanzaError(){
+    public void construirUnPilonSobreUnVolcanLanzaExepcion(){
         Posicion pos0 = new Posicion(10,10);
         Pilon pilon1 = new Pilon(economia, pos0);
-        Extractor extractor = new Extractor(economia, pos0);
         manager.agregarVolcanes(pos0);
-
-        manager.construirPilonEn(pos0, pilon1);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirEstructuraDeVolcan(pos0, extractor)
+                () -> manager.construirPilonEn(pos0, pilon1)
         );
+        assertEquals("No se puede construir en esta posicion", exception.getMessage());
     }
-    
+
+    @Test
+    public void construirUnPilonSobreUnCristalLanzaExcepcion() {
+        Posicion pos0 = new Posicion(10,10);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        manager.agregarVolcanes(pos0);
+
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirPilonEn(pos0, pilon1)
+        );
+        assertEquals("No se puede construir en esta posicion", exception.getMessage());
+    }
+
+    @Test
+    public void construirUnCriaderoSobreUnVolcanLanzaExepcion(){
+        Posicion pos0 = new Posicion(10,10);
+        Criadero criadero1 = new Criadero(economia, pos0);
+        manager.agregarVolcanes(pos0);
+
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirCriaderoEn(pos0, criadero1)
+        );
+        assertEquals("No se puede construir en esta posicion", exception.getMessage());
+    }
+
+    @Test
+    public void construirUnCriaderoSobreUnCristalLanzaExcepcion() {
+        Posicion pos0 = new Posicion(10,10);
+        Criadero criadero1 = new Criadero(economia, pos0);
+        manager.agregarVolcanes(pos0);
+
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirCriaderoEn(pos0, criadero1)
+        );
+        assertEquals("No se puede construir en esta posicion", exception.getMessage());
+    }
 }

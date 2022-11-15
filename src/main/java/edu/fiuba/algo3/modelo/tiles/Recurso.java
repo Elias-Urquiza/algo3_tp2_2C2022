@@ -34,4 +34,8 @@ public abstract class Recurso {
         }
         return capacidadPreExtraccion - capacidad;
     }
+
+    public Posicion getPos() {
+        return pos;
+    }
 }

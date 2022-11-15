@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Manager {
+    FloorManager floorManager;
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
@@ -37,6 +38,8 @@ public class Manager {
         this.maxX = dimensionX;
         this.maxY = dimensionY;
         this.idPilones = 0;
+        floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias);
+
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
                 tilesVacias.add(new TileVacia(new Posicion(i, j)));
@@ -54,7 +57,8 @@ public class Manager {
         }
         if(size == construccionesZerg.size())
             throw new RuntimeException("No se puede construir en esta posicion");
-        criadero.mohificar(pos, maxX, maxY, moho);
+
+        floorManager.mohificar(pos, maxX, maxY, this);
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
@@ -63,17 +67,19 @@ public class Manager {
         int size = construccionProtoss.size();
 
         pilon.setID(idPilones);
-        idPilones  ++;
 
         for (TileVacia t : tilesVacias) {
             t.construir(construccionProtoss, pilon, pos);
         }
-        if(size == construccionProtoss.size())
+        if(size == construccionProtoss.size()) {
             throw new RuntimeException("No se puede construir en esta posicion");
+        }
 
-        pilon.energizar(pos, maxX, maxY, energias);
+        pilon.setFloorManager(floorManager);
+        floorManager.energizar(pos, maxX, maxY, idPilones);
 
         activarEstructurasProtoss();
+        idPilones  ++;
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
@@ -165,6 +171,8 @@ public class Manager {
     }
 
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
+        buscarCoincidencias(pos);
+
         int size = construccionesZerg.size();
 
         for(Moho m : moho) {
@@ -201,12 +209,6 @@ public class Manager {
                 c.activar();
 
             contador = 0;
-        }
-    }
-
-    private void quitarTilesVacias(){
-        for(Moho m : moho){
-
         }
     }
 
@@ -249,9 +251,11 @@ public class Manager {
 
     public void agregarCristales(Posicion pos) {
         cristales.add(new Cristales(pos));
+        floorManager.quitarTilesVaciasParaCristales();
     }
 
     public void agregarVolcanes(Posicion pos) {
         volcanes.add(new Volcan(pos));
+        floorManager.quitarTilesVaciasParaVolcanes();
     }
 }

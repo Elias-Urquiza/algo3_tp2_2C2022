@@ -20,4 +20,11 @@ public class Posicion {
     public int getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        String x = String.valueOf(this.x);
+        String y = String.valueOf(this.y);
+        return x +", " + y;
+    }
 }

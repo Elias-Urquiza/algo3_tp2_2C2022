@@ -25,4 +25,8 @@ public class TileVacia {
         }
         list.add(building);
     }
+
+    public Posicion getPos() {
+        return posicion;
+    }
 }
