@@ -3,9 +3,12 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.tiles.Energia;
+import edu.fiuba.algo3.modelo.tiles.FloorManager;
+import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 
 import java.util.LinkedList;
@@ -19,10 +22,13 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private static final int MAX_LARVAS = 3;
 
-    public Criadero(Economia economia, int posX, int posY) {
-        super(500, 50, 0, 4, economia, posX, posY);
+    private FloorManager floorManager;
+
+    public Criadero(Economia economia, Posicion pos) {
+        super(500, 50, 0, 4, economia, pos);
         numeroDeLarvas = 3;
         turnosActivo = 0;
+        floorManager = null;
     }
 
     public void extraerLarvas(int quitarLarvas) throws RuntimeException {
@@ -58,31 +64,4 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
           - 0 0 0 0 0 0 0 0
      */
 
-
-    public void mohificar(int x, int y, int maxX, int maxY, LinkedList<Moho> mohos) {
-        mohos.add(new Moho(x, y));
-
-        int posicion_x = posX -5;
-        if (posicion_x<0)
-            posicion_x = 0;
-
-        int posicion_y = posY -5;
-        if (posicion_y < 0)
-            posicion_y = 0;
-
-        int topeX = posX + 6;
-        if(topeX > maxX)
-            topeX = maxX;
-
-        int topeY = posY + 6;
-        if(topeY > maxY)
-            topeY = maxY;
-
-        for(int i = posicion_x; i<(topeX) ; i++) {
-            for (int j = posicion_y; j < (topeY); j++) {
-                Moho moho = new Moho(i, j);
-                mohos.add(moho);
-            }
-        }
-    }
 }

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.mocks.CriaderoActivo;
 import edu.fiuba.algo3.mocks.MockEconomia;
@@ -12,7 +13,7 @@ public class TestsExtractor {
     private static final Economia mockEconomia = new MockEconomia();
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
-        Extractor unExtractor = new Extractor(mockEconomia, 0, 0);
+        Extractor unExtractor = new Extractor(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
@@ -30,14 +31,14 @@ public class TestsExtractor {
     @Test
     public void noSePuedeUsarElExtractorAntesDeQueSeTermineDeConstruir(){
         Economia economia = new Economia();
-        final Extractor extractor = new Extractor(economia, 0, 0);
+        final Extractor extractor = new Extractor(economia, new Posicion(0,0));
         Assertions.assertThrows(RuntimeException.class, () -> extractor.usar());
     }
 
     @Test
     public void seAgregaUnZanganoCorrectamente(){
         Economia economia = new Economia();
-        Extractor unExtractor = new Extractor(economia, 0, 0);
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0));
         CriaderoActivo criaderoActivo = new CriaderoActivo();
         boolean afirmacion = true;
 
@@ -58,7 +59,7 @@ public class TestsExtractor {
     @Test
     public void elCriaderoDelCualSeSacaAlZanganoNoTieneLarvasSeLanzaExcepcion(){
         Economia economia = new Economia();
-        Extractor unExtractor = new Extractor(economia, 0, 0);
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0));
         CriaderoActivo criaderoActivo = new CriaderoActivo();
         boolean afirmacion = false;
 
@@ -79,7 +80,7 @@ public class TestsExtractor {
     @Test
     public void despuesDeUnTurnoElExtractorRecolecto10DeGasSiTieneUnZangano(){
         Economia economia = new Economia()               ;
-        Extractor unExtractor = new Extractor(economia, 0, 0)  ;
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0))  ;
 
         boolean afirmacion = true;
 
@@ -100,7 +101,7 @@ public class TestsExtractor {
     @Test
     public void despuesDeUnTurnoElExtractorRecolecto20DeGasSiTieneDosZanganos(){
         Economia economia = new Economia()               ;
-        Extractor unExtractor = new Extractor(economia, 0, 0)  ;
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0))  ;
 
         boolean afirmacion = true;
 
@@ -122,7 +123,7 @@ public class TestsExtractor {
     @Test
     public void despuesDeUnTurnoElExtractorRecolecto30DeGasSiTieneTresZanganos(){
         Economia economia = new Economia()               ;
-        Extractor unExtractor = new Extractor(economia, 0, 0)  ;
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0))  ;
 
         boolean afirmacion = true;
 
@@ -145,7 +146,7 @@ public class TestsExtractor {
     @Test
     public void NoSePuedeAgregaUnZanganoMasCuandoYaHayTres(){
         Economia economia = new Economia();
-        Extractor unExtractor = new Extractor(economia, 0, 0);
+        Extractor unExtractor = new Extractor(economia, new Posicion(0,0));
         CriaderoActivo criaderoActivo = new CriaderoActivo();
         boolean afirmacion = false;
 

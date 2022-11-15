@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class TestNoConstruccionProtoss {
         boolean afirmacion = false;
         Economia economia = new Economia();
         try{
-            Acceso acceso = new Acceso(economia, 0, 0);
+            Acceso acceso = new Acceso(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -26,7 +27,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(50);
         economia.ingresarGasVespeno(50);
         try{
-            Acceso acceso = new Acceso(economia, 0, 0);
+            Acceso acceso = new Acceso(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -41,7 +42,7 @@ public class TestNoConstruccionProtoss {
         boolean afirmacion = false;
         Economia economia = new Economia();
         try{
-            Asimilador asimilador = new Asimilador(economia, 0, 0);
+            Asimilador asimilador = new Asimilador(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -56,7 +57,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(50);
         economia.ingresarGasVespeno(50);
         try{
-            Asimilador asimilador = new Asimilador(economia, 0, 0);
+            Asimilador asimilador = new Asimilador(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -70,7 +71,7 @@ public class TestNoConstruccionProtoss {
         boolean afirmacion = false;
         Economia economia = new Economia();
         try{
-            NexoMineral nexoMineral = new NexoMineral(economia, 0, 0);
+            NexoMineral nexoMineral = new NexoMineral(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -85,7 +86,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(20);
         economia.ingresarGasVespeno(50);
         try{
-            NexoMineral nexoMineral = new NexoMineral(economia, 0, 0);
+            NexoMineral nexoMineral = new NexoMineral(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -99,7 +100,7 @@ public class TestNoConstruccionProtoss {
         boolean afirmacion = false;
         Economia economia = new Economia();
         try{
-            Pilon pilon = new Pilon(economia, 0, 0);
+            Pilon pilon = new Pilon(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -114,7 +115,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(20);
         economia.ingresarGasVespeno(50);
         try{
-            Pilon pilon = new Pilon(economia, 0, 0);
+            Pilon pilon = new Pilon(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -130,7 +131,7 @@ public class TestNoConstruccionProtoss {
         boolean afirmacion = false;
         Economia economia = new Economia();
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -145,7 +146,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(50);
         economia.ingresarGasVespeno(50);
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -160,7 +161,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(500);
         economia.ingresarGasVespeno(50);
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, new Posicion(0,0) );
         }
         catch (RuntimeException e){
             afirmacion = true;
@@ -175,7 +176,7 @@ public class TestNoConstruccionProtoss {
         economia.ingresarMineral(50);
         economia.ingresarGasVespeno(500);
         try{
-            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, 0, 0);
+            PuertoEstelar puertoEstelar = new PuertoEstelar(economia, new Posicion(0,0));
         }
         catch (RuntimeException e){
             afirmacion = true;

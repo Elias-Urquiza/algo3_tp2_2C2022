@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.ExtraeRecurso;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 
@@ -18,8 +15,8 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
 
     private static final int TIEMPO_CONSTRUCCION = 6;
 
-    public Asimilador(Economia economiaProto, int posX, int posY) {  //Debo agregar una economia a los ytest asimilador
-        super(450, 450, 100, 0, 6, economiaProto, posX, posY);
+    public Asimilador(Economia economiaProto, Posicion pos) {  //Debo agregar una economia a los ytest asimilador
+        super(450, 450, 100, 0, 6, economiaProto, pos, true);
         turnosActivo =0;
         economia = economiaProto;
     }
@@ -27,15 +24,21 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
     @Override
     public void pasarTurno(){
         curar();  //Asumo que va sumando de a un por turno
-        if(turnosActivo >= TIEMPO_CONSTRUCCION){
+        if(turnosActivo >= TIEMPO_CONSTRUCCION && energizado){
             extraer();
         }
         turnosActivo++;
     }
 
     @Override
+    public void desactivar() {
+        energizado = true;
+    }
+
+
+    @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }

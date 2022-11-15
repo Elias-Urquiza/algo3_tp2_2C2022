@@ -1,7 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.Posicion;
+
+import java.util.LinkedList;
 
 public class ConstruccionProtoss {
     private int puntosDeVidaMaxima;
@@ -12,10 +14,11 @@ public class ConstruccionProtoss {
     protected int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_PROTOSS = 100;
-    protected int posX;
-    protected int posY;
+    protected Posicion pos;
 
-    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, int posX, int posY) {
+    protected boolean energizado;
+
+    public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos, boolean energizado) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -33,9 +36,16 @@ public class ConstruccionProtoss {
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
-        this.posX=posX;
-        this.posY=posY;
+        this.pos = pos;
+        this.energizado = energizado;
     }
+
+    public void desactivar(){
+        energizado = false;
+    }
+    public void activar(){
+        energizado = true;
+    }//a lo mejor usar interfaz
 
     public int daniar(int danio) {
         int dmg = escudo - danio;
@@ -70,4 +80,19 @@ public class ConstruccionProtoss {
         }
         return escudo - escudoPreCuracion;
     }
+
+    public Boolean destruir(Posicion pos, int maxX, int maxY, LinkedList<ConstruccionProtoss> construccionProtoss) {
+        boolean afirmacion = false;
+
+        if (pos.equals(this.pos)) {
+            afirmacion = true;
+        }
+
+        return afirmacion;
+    }
+
+    public Posicion getPosicion() {
+        return pos;
+    }
+
 }

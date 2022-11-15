@@ -2,6 +2,7 @@ package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class TestsAcceso {
     @Test
     public void unAccesoSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
 
-        Acceso acceso = new Acceso(mockEconomia, 0, 0);
+        Acceso acceso = new Acceso(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;
 
         for(int i = 0; i < 8; i++)
@@ -30,7 +31,7 @@ public class TestsAcceso {
 
     @Test
     public void noSePuedeUsarElAccesoAntesDeQueSeTermineDeConstruir(){
-        final Acceso acceso = new Acceso(mockEconomia, 0, 0);
+        final Acceso acceso = new Acceso(mockEconomia, new Posicion(0,0));
         Assertions.assertThrows(RuntimeException.class, () -> acceso.usar());
     }
 }

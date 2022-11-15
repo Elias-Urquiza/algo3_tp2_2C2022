@@ -1,19 +1,20 @@
 package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.ExtraeRecurso;
+import edu.fiuba.algo3.modelo.Posicion;
 
 import java.util.LinkedList;
 
 public abstract class Recurso {
-    protected int posX;
-    protected int posY;
+    protected Posicion pos;
     protected int capacidad;
-    public Recurso(int posX, int posY) {
-        this.posX = posX;
-        this.posY = posY;
+
+    public Recurso(Posicion pos) {
+        this.pos = pos;
     }
-    public Recurso construir(LinkedList list, ExtraeRecurso unidadDeExtraccion, int x, int y) {
-        if (x != posX || y != posY) {
+
+    public Recurso construir(LinkedList list, ExtraeRecurso unidadDeExtraccion, Posicion posicion) {
+        if (!pos.equals(posicion)) {
             return null;
         }
         list.add(unidadDeExtraccion);
@@ -32,5 +33,9 @@ public abstract class Recurso {
             capacidad -= cantidadAExtraer;
         }
         return capacidadPreExtraccion - capacidad;
+    }
+
+    public Posicion getPos() {
+        return pos;
     }
 }

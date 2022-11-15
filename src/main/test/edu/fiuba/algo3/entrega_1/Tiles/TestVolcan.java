@@ -1,49 +1,32 @@
 package edu.fiuba.algo3.entrega_1.Tiles;
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
-import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
+import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.tiles.Recurso;
 import edu.fiuba.algo3.modelo.tiles.Volcan;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TestVolcan {
 
-    /*
-    @Test
-    public void construyoUnCriaderoSobreElVolcanYTiraExcepcion() {
-        final Volcan volcan = new Volcan(null, null);
-        Criadero criadero = new Criadero();
+    Recurso rec;
 
-        Assertions.assertThrows(RuntimeException.class, () -> volcan.buildOn(criadero) );
+    @BeforeEach
+    public void init() { rec = new Volcan(new Posicion(0,0));}
+    @Test
+    public void tratoDeExtraerYDevuelveCorrectamente() {
+        Assertions.assertEquals(100, rec.extraer(100));
     }
 
     @Test
-    public void construyoUnExtractorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan(null, null);
-        boolean afirmacion = true;
-
-        try{
-            volcan.buildOn(new Extractor( new Economia() ));
-        }catch (RuntimeException e){
-            afirmacion = false;
-        }
-        assert(afirmacion);
+    public void extraigoTodosLosRecursosYCuandoVuelvoAExtraerFalla() {
+        Assertions.assertEquals(5000, rec.extraer(5000));
+        Assertions.assertThrows(RuntimeException.class, () -> rec.extraer(10));
     }
 
     @Test
-    public void construyoUnAsimiladorSobreElVolcanYNoHayProblema() {
-        final Volcan volcan = new Volcan(null, null);
-        boolean afirmacion = true;
-
-
-        try{
-            volcan.buildOn(new Asimilador(new Economia()));
-        }catch (RuntimeException e){
-            afirmacion = false;
-        }
-        assert(afirmacion);
-    }*/
+    public void siQuedaPocoRecursoYQuieroExtraerMasDeLoQueQuedaEntoncesDevuelveLoQueQueda() {
+        Assertions.assertEquals(4950, rec.extraer(4950));
+        Assertions.assertEquals(50, rec.extraer(100));
+    }
 }

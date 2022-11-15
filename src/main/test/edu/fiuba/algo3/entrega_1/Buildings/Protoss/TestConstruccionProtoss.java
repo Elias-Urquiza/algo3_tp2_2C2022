@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1.Buildings.Protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class TestConstruccionProtoss {
 
     @BeforeEach
     public void initEach() {
-        constr = new ConstruccionProtoss(1000, 50, 10, 10, 0, mockEconomia, 0, 0);
+        constr = new ConstruccionProtoss(1000, 50, 10, 10, 0, mockEconomia, new Posicion(0,0), true );
     }
 
 
@@ -46,7 +47,7 @@ public class TestConstruccionProtoss {
         final Economia economia = new Economia();
         economia.ingresarGasVespeno(100);
         economia.ingresarMineral(50);
-        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionProtoss(100, 100, 100, 50, 0, economia, 0, 0));
+        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionProtoss(100, 100, 100, 50, 0, economia, new Posicion(0,0),true));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class TestConstruccionProtoss {
         final Economia economia = new Economia();
         economia.ingresarGasVespeno(100);
         economia.ingresarMineral(50);
-        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionProtoss(100, 100, 20, 200, 0, economia, 0, 0));
+        Assertions.assertThrows(RuntimeException.class, () -> new ConstruccionProtoss(100, 100, 20, 200, 0, economia, new Posicion(0,0), true));
     }
 
 

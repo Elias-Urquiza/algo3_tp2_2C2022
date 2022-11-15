@@ -5,4 +5,5 @@ import edu.fiuba.algo3.modelo.tiles.Recurso;
 public interface ExtraeRecurso {
     void extraer();
     void setRecurso(Recurso recurso);
+    Posicion getPosicion();
 }

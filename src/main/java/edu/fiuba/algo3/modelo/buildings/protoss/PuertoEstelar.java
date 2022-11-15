@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
@@ -12,8 +13,8 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     private static final int MAX_ESCUDO = 600;
 
-    public PuertoEstelar(Economia economia, int posX, int posY){
-        super(600, 600, 150, 150, 10, economia, posX, posY);
+    public PuertoEstelar(Economia economia, Posicion pos){
+        super(600, 600, 150, 150, 10, economia, pos, true);
         turnosActivo = 0;
     }
     @Override
@@ -23,9 +24,10 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     }
 
+
     @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }
