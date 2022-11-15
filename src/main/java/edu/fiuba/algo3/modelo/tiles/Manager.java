@@ -139,6 +139,46 @@ public class Manager {
         // Habria que tener en cuenta las construcciones que extraen
     }
 
+
+    public void buscarCoincidenciasMoho(Posicion posicion){
+        for (ConstruccionProtoss c: construccionProtoss){
+            Posicion posicionProtoss = c.getPosicion();
+            if(posicionProtoss.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (ConstruccionZerg c: construccionesZerg){
+            Posicion posicionZerg = c.getPosicion();
+            if(posicionZerg.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (ExtraeRecurso ext : construccionQueExtrae){
+            Posicion posicionExt = ext.getPosicion();
+            if(posicionExt.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (Moho m: moho){
+            Posicion posicionMoho = m.getPos();
+            if(posicionMoho.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (Cristales c: cristales){
+            Posicion posicionCristales = c.getPos();
+            if(posicionCristales.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        // Habria que tener en cuenta las construcciones que extraen
+    }
+
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
         buscarCoincidencias(pos);

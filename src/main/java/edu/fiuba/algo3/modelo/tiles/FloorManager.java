@@ -78,7 +78,7 @@ public class FloorManager {
             for (int j = posicion_y; j < (topeY); j++) {
                 Posicion posAgregar = new Posicion(i, j);
                 try {
-                    manager.buscarCoincidencias(posAgregar);
+                    manager.buscarCoincidenciasMoho(posAgregar);
                     Moho moho = new Moho(posAgregar);
                     quitarTilesVaciasParaMoho();
                     mohos.add(moho);

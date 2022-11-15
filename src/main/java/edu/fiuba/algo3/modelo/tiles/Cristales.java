@@ -16,4 +16,10 @@ public class Cristales extends Recurso{
         super(posicion);
         this.capacidad = 2000;
     }
+
+    public Posicion getPos(){
+        return pos;
+    }
+
+    // no se si esta bien implementarlo aca o en recurso --> Repite codigo?
 }

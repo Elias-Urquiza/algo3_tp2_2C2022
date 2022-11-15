@@ -145,6 +145,16 @@ public class TestManager {
 
 
     @Test
+    public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoParaCristales() {
+
+
+
+
+        // con csitaes
+    }
+
+
+    @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeAbajoDerecha() {
         Posicion pos = new Posicion(17, 17);
         manager.construirCriaderoEn(pos, new Criadero(economia, pos));
