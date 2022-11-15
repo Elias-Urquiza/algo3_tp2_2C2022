@@ -43,6 +43,10 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno, 
             zanganos++;
     }
 
+    public Posicion getPosicion(){
+        return pos;
+    }
+
     @Override
     public void pasarTurno() {
         curar();

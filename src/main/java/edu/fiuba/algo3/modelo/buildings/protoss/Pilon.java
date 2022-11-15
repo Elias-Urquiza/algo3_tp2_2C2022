@@ -105,7 +105,6 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
             }
         }
-
     }
 
     public void setID(int idNuevo){

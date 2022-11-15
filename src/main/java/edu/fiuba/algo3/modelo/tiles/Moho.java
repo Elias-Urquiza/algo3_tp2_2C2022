@@ -25,4 +25,8 @@ public class Moho {
         //logica de expansion de mohos
     }
 
+    public Posicion getPos(){
+        return pos;
+    }
+
 }

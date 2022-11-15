@@ -23,7 +23,6 @@ public class Manager {
     LinkedList<TileVacia> tilesVacias;
     int maxX;
     int maxY;
-
     int idPilones;
 
     public Manager(int dimensionX, int dimensionY) {
@@ -31,8 +30,8 @@ public class Manager {
         this.construccionProtoss = new LinkedList<>();
         this.construccionQueExtrae = new LinkedList<>();
         this.moho = new LinkedList<>();
-        this.cristales= new LinkedList<>();
-        this.volcanes = new LinkedList<>();
+        this.cristales = new LinkedList<>();
+        this.volcanes  = new LinkedList<>();
         this.energias = new LinkedList<>();
         this.tilesVacias = new LinkedList<>();
         this.maxX = dimensionX;
@@ -60,6 +59,7 @@ public class Manager {
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
         buscarCoincidencias(pos);
+
         int size = construccionProtoss.size();
 
         pilon.setID(idPilones);
@@ -77,7 +77,10 @@ public class Manager {
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
+        buscarCoincidencias(pos);
+
         int size = construccionQueExtrae.size();
+
         for(Cristales c : cristales) {
             Recurso recurso = c.construir(construccionQueExtrae, extrae, pos);
             if(Objects.nonNull(recurso)) {
@@ -85,11 +88,14 @@ public class Manager {
                 break;
             }
         }
+
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un mineral en la posicion");
     }
 
+
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
+        buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
         for(Volcan v : volcanes) {
             Recurso recurso = v.construir(construccionQueExtrae, extrae, pos);
@@ -113,6 +119,13 @@ public class Manager {
         for (ConstruccionZerg c: construccionesZerg){
             Posicion posicionZerg = c.getPosicion();
             if(posicionZerg.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (ExtraeRecurso ext : construccionQueExtrae){
+            Posicion posicionExt = ext.getPosicion();
+            if(posicionExt.equals(posicion)){
                 throw new RuntimeException("Ya hay una construccion en esa posicion");
             }
         }
@@ -188,6 +201,12 @@ public class Manager {
                 c.activar();
 
             contador = 0;
+        }
+    }
+
+    private void quitarTilesVacias(){
+        for(Moho m : moho){
+
         }
     }
 

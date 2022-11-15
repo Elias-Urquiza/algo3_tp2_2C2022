@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
+import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import org.junit.jupiter.api.BeforeEach;
@@ -606,7 +607,6 @@ public class TestManager {
 
     @Test
     public void construirSobreUnaConstruccionLanzaError(){
-        boolean afirm = false;
         Posicion pos0 = new Posicion(10,10);
         Pilon pilon1 = new Pilon(economia, pos0);
         Acceso acceso = new Acceso(economia, pos0);
@@ -618,9 +618,37 @@ public class TestManager {
                 () -> manager.construirProtoss(pos0, acceso)
         );
 
+    }
+
+    @Test
+    public void construirSobreUnaConstruccionExtractoraLanzaError(){
+        Posicion pos0 = new Posicion(10,10);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        Extractor extractor = new Extractor(economia, pos0);
+        manager.agregarVolcanes(pos0);
+
+        manager.construirPilonEn(pos0, pilon1);
+
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirEstructuraDeVolcan(pos0, extractor)
+        );
 
     }
 
+    @Test
+    public void construirSobreUnaConstruccionExtractoraLanzaError(){
+        Posicion pos0 = new Posicion(10,10);
+        Pilon pilon1 = new Pilon(economia, pos0);
+        Extractor extractor = new Extractor(economia, pos0);
+        manager.agregarVolcanes(pos0);
 
+        manager.construirPilonEn(pos0, pilon1);
 
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirEstructuraDeVolcan(pos0, extractor)
+        );
+    }
+    
 }
