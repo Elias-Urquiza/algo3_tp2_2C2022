@@ -83,7 +83,8 @@ public class FloorManager {
                     quitarTilesVaciasParaMoho();
                     mohos.add(moho);
                 } catch (RuntimeException e) {
-                    System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion", posAgregar));
+                    System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
+
                 }
             }
         }

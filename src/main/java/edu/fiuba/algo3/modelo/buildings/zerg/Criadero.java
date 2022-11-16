@@ -30,6 +30,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         turnosActivo = 0;
         floorManager = null;
     }
+    
 
     public void extraerLarvas(int quitarLarvas) throws RuntimeException {
         if(numeroDeLarvas <= 0 || ( (numeroDeLarvas - quitarLarvas) < 0))
@@ -40,12 +41,17 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         numeroDeLarvas -= quitarLarvas;
     }
 
+    public int preguntarTurno(){
+        return turnosActivo;
+    }
+
     @Override
     public void pasarTurno() {
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
         curar();
         turnosActivo++;
+
     }
 
     @Override

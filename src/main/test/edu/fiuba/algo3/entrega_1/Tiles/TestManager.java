@@ -146,11 +146,42 @@ public class TestManager {
 
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoParaCristales() {
+        boolean afirmacion = true;
+        Posicion pos = new Posicion(17 ,3);
+        Posicion pos2 = new Posicion(17 ,2);
+        Posicion pos3 = new Posicion(19 ,2);
+        Posicion pos4 = new Posicion(1 ,17);
+        manager.agregarCristales(pos2);
+        manager.agregarCristales(pos3);
+        manager.agregarCristales(pos4); // esta linea es para verificar que no pasa nada con cistrales lejps
 
 
+        try {
+            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        }catch (RuntimeException e){
+            afirmacion  = false;
+        }
+        assert (afirmacion);
+    }
+
+    @Test
+    public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoParaVolcanes() {
+        boolean afirmacion = true;
+        Posicion pos = new Posicion(17 ,3);
+        Posicion pos2 = new Posicion(17 ,2);
+        Posicion pos3 = new Posicion(19 ,2);
+        Posicion pos4 = new Posicion(1 ,17);
+        manager.agregarVolcanes(pos2);
+        manager.agregarVolcanes(pos3);
+        manager.agregarVolcanes(pos4); // esta linea es para verificar que no pasa nada con cistrales lejps
 
 
-        // con csitaes
+        try {
+            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        }catch (RuntimeException e){
+            afirmacion  = false;
+        }
+        assert (afirmacion);
     }
 
 

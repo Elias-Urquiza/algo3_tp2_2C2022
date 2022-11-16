@@ -165,14 +165,21 @@ public class Manager {
         for (Moho m: moho){
             Posicion posicionMoho = m.getPos();
             if(posicionMoho.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
+                throw new RuntimeException("Ya hay un Moho en esa posicion");
             }
         }
 
         for (Cristales c: cristales){
             Posicion posicionCristales = c.getPos();
             if(posicionCristales.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
+                throw new RuntimeException("Ya hay un cristal en esa posicion");
+            }
+        }
+
+        for (Volcan v: volcanes){
+            Posicion posicionVolcan = v.getPos();
+            if(posicionVolcan.equals(posicion)){
+                throw new RuntimeException("Ya hay un volcan en esa posicion");
             }
         }
 
