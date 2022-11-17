@@ -48,6 +48,7 @@ public class Manager {
 
     }
 
+
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
 
         criadero.setFloorManager(floorManager);

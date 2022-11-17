@@ -86,15 +86,15 @@ public class FloorManager {
         if (posicion_x<0)
             posicion_x = 0;
 
-        int posicion_y = posCriadero.getY() -5;
+        int posicion_y = posCriadero.getY() -(5-auxiliar);
         if (posicion_y < 0)
             posicion_y = 0;
 
-        int topeX = posCriadero.getX() + 6;
+        int topeX = posCriadero.getX() + (6+auxiliar);
         if(topeX > maxX)
             topeX = maxX;
 
-        int topeY = posCriadero.getY() + 6;
+        int topeY = posCriadero.getY() + (6+auxiliar);
         if(topeY > maxY)
             topeY = maxY;
 

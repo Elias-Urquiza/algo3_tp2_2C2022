@@ -17,6 +17,8 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private int numeroDeLarvas;
     private int turnosActivo;
+    private int expansion;
+
 
     // TODO incluir atributo de ubicacion ?
 
