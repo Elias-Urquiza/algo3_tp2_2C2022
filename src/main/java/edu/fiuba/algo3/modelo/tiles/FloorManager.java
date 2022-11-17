@@ -1,30 +1,53 @@
 package edu.fiuba.algo3.modelo.tiles;
 
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
 import java.util.LinkedList;
 
 public class FloorManager {
-    LinkedList<Moho> mohos;
+    LinkedList<Moho> moho;
     LinkedList<Cristales> cristales;
     LinkedList<Volcan> volcanes;
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
+    LinkedList<ConstruccionZerg> construccionesZerg;
+    LinkedList<ConstruccionProtoss> construccionProtoss;
+    LinkedList<ExtraeRecurso> construccionQueExtrae;
+    private int maxX;
+    private int maxY;
+
+
+
     public FloorManager(LinkedList<Moho> moho, LinkedList<Cristales> cristales,
                         LinkedList<Volcan> volcanes, LinkedList<Energia> energias,
-                        LinkedList<TileVacia> tilesVacias) {
+                        LinkedList<TileVacia> tilesVacias, LinkedList<ConstruccionZerg> construccionZerg,
+                        LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> construccionQueExtrae, int maxX, int maxY) {
 
-        this.mohos = moho;
+        this.moho = moho;
         this.cristales = cristales;
         this.volcanes = volcanes;
         this.energias = energias;
         this.tilesVacias = tilesVacias;
+        this.construccionesZerg = construccionZerg;
+        this.construccionProtoss =construccionProtoss;
+        this.construccionQueExtrae = construccionQueExtrae;
+        this.maxY= maxY;
+        this.maxX= maxX;
     }
 
 
     public void quitarTilesVaciasParaMoho(){
-        for(Moho m : mohos){
+        for(Moho m : moho){
             tilesVacias.removeIf(tileVacia -> (tileVacia.getPos().equals(m.getPos() ) ) );
+        }
+    }
+
+    public void quitarEnergiasParaMoho(){
+        for(Moho m : moho){
+            energias.removeIf(energia -> (energia.getPos().equals(m.getPos() ) ) );
         }
     }
 
@@ -56,9 +79,10 @@ public class FloorManager {
         }
     }
 
-    public void mohificar(Posicion posCriadero, int maxX, int maxY, Manager manager) {
+    public void mohificar(Posicion posCriadero, int auxiliar) {
 
-        int posicion_x = posCriadero.getX() -5;
+
+        int posicion_x = posCriadero.getX() -(5-auxiliar);
         if (posicion_x<0)
             posicion_x = 0;
 
@@ -78,20 +102,20 @@ public class FloorManager {
             for (int j = posicion_y; j < (topeY); j++) {
                 Posicion posAgregar = new Posicion(i, j);
                 try {
-                    manager.buscarCoincidenciasMoho(posAgregar);
-                    Moho moho = new Moho(posAgregar);
-                    quitarTilesVaciasParaMoho();
-                    mohos.add(moho);
+                    buscarCoincidenciasMoho(posAgregar);
+                    Moho mohoNew = new Moho(posAgregar);
+                    moho.add(mohoNew);
                 } catch (RuntimeException e) {
                     System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
 
                 }
             }
         }
+        quitarEnergiasParaMoho();
         quitarTilesVaciasParaMoho();
     }
 
-    public void desenergizar(int maxX, int maxY, Posicion posPilon, int id) {
+    public void desenergizar(Posicion posPilon, int id) {
         int posicion_x = posPilon.getX() - 3;
         if (posicion_x < 0)
             posicion_x = 0;
@@ -107,18 +131,18 @@ public class FloorManager {
         if (topeY > maxY)
             topeY = maxY;
 
+        agregarTilesVaciasParaEnergia(id);
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
                 final int pos_i = i;
                 final int pos_j = j;
                 Posicion posicion = new Posicion(pos_i, pos_j);
-                agregarTilesVaciasParaEnergia(id);
                 energias.removeIf(energia ->  ( (energia.getPos()).equals(posicion) && id == energia.getID()));
             }
         }
     }
 
-    public void energizar(Posicion pos, int maxX, int maxY, int id) {
+    public void energizar(Posicion pos, int id) {
         //hacer que energice segun acordado
         int posicion_x = pos.getX() - 3;
         if (posicion_x < 0)
@@ -139,10 +163,123 @@ public class FloorManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
-                Energia energia = new Energia(new Posicion(i, j), id);
-                energias.add(energia);
+                Posicion posAgregar = new Posicion(i, j);
+                try{
+                    buscarCoincidenciasEnergia(posAgregar);
+                    Energia energia = new Energia(posAgregar, id);
+                    energias.add(energia);
+                }catch (RuntimeException e) {
+                    System.out.println(String.format("DEBUG: La energia no se expandio en la pos %s porque hay una un mineral o moho", posAgregar));
+                }
+           }
+        }
+        activarEstructurasProtoss();
+        quitarTilesVaciasParaEnergia();
+    }
+
+    public void desactivarEstructurasProtoss(){
+        int contador =0;
+
+        for(ConstruccionProtoss c: construccionProtoss){
+            for (Energia e: energias){
+                if( (c.getPosicion()).equals(e.getPos()) )
+                    contador ++;
+            }
+            if(contador == 0)//si no encontre ninguna coincidencia
+                c.desactivar();
+
+            contador = 0;
+        }
+    }
+
+    public void activarEstructurasProtoss(){
+        int contador =0;
+        for(ConstruccionProtoss c: construccionProtoss){
+            for (Energia e: energias){
+                if( (c.getPosicion()) .equals(e.getPos()) )
+                    contador ++;
+            }
+            if(contador != 0)//si no encontre ninguna coincidencia
+                c.activar();
+
+            contador = 0;
+        }
+    }
+
+    public void buscarCoincidencias(Posicion posicion){
+        for (ConstruccionProtoss c: construccionProtoss){
+            Posicion posicionProtoss = c.getPosicion();
+            if(posicionProtoss.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
             }
         }
-        quitarTilesVaciasParaEnergia();
+
+        for (ConstruccionZerg c: construccionesZerg){
+            Posicion posicionZerg = c.getPosicion();
+            if(posicionZerg.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (ExtraeRecurso ext : construccionQueExtrae){
+            Posicion posicionExt = ext.getPosicion();
+            if(posicionExt.equals(posicion)){
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+    }
+
+    public  void buscarCoincidenciasMoho(Posicion posicion) {
+        for (ConstruccionProtoss c : construccionProtoss) {
+            Posicion posicionProtoss = c.getPosicion();
+            if (posicionProtoss.equals(posicion)) {
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+
+        for (Moho m : moho) {
+            Posicion posicionMoho = m.getPos();
+            if (posicionMoho.equals(posicion)) {
+                throw new RuntimeException("Ya hay un Moho en esa posicion");
+            }
+        }
+
+        for (Cristales c : cristales) {
+            Posicion posicionCristales = c.getPos();
+            if (posicionCristales.equals(posicion)) {
+                throw new RuntimeException("Ya hay un cristal en esa posicion");
+            }
+        }
+
+        for (Volcan v : volcanes) {
+            Posicion posicionVolcan = v.getPos();
+            if (posicionVolcan.equals(posicion)) {
+                throw new RuntimeException("Ya hay un volcan en esa posicion");
+            }
+        }
+    }
+
+    public void buscarCoincidenciasEnergia(Posicion posicion){
+
+        for (Moho m: moho) {
+            Posicion posicionMoho = m.getPos();
+            if (posicionMoho.equals(posicion)) {
+                throw new RuntimeException("Ya hay un Moho en esa posicion");
+            }
+        }
+
+        for (Cristales c: cristales){
+            Posicion posicionCristales = c.getPos();
+            if(posicionCristales.equals(posicion)){
+                throw new RuntimeException("Ya hay un cristal en esa posicion");
+            }
+        }
+
+        for (Volcan v: volcanes){
+            Posicion posicionVolcan = v.getPos();
+            if(posicionVolcan.equals(posicion)){
+                throw new RuntimeException("Ya hay un volcan en esa posicion");
+            }
+        }
     }
 }

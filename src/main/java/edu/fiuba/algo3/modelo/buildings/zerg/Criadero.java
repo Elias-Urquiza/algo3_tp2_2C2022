@@ -28,7 +28,8 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         super(500, 50, 0, 4, economia, pos);
         numeroDeLarvas = 3;
         turnosActivo = 0;
-        floorManager = null;
+        expansion = 0;
+        this.floorManager = null;
     }
     
 
@@ -41,18 +42,29 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         numeroDeLarvas -= quitarLarvas;
     }
 
+    public void setFloorManager(FloorManager floorManager){ this.floorManager = floorManager; }
+
     public int preguntarTurno(){
         return turnosActivo;
     }
 
     @Override
     public void pasarTurno() {
-        if(numeroDeLarvas < MAX_LARVAS)
-            numeroDeLarvas++;
-        curar();
         turnosActivo++;
 
+        if(numeroDeLarvas < MAX_LARVAS)
+            numeroDeLarvas++;
+
+        if(turnosActivo >= tiempoDeConstruccion && turnosActivo%2 == 0) {
+            floorManager.mohificar(this.pos, expansion);
+            expansion += 1;
+        }
+
+
+        curar();
+
     }
+
 
     @Override
     public void usar() {

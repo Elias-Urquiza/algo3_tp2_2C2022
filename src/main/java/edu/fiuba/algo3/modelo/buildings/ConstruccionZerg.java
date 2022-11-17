@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.Turno;
 
 import java.util.LinkedList;
 
-public class ConstruccionZerg {
+public class ConstruccionZerg implements Turno{
     private int puntosDeVida;
     private int puntosDeVidaMaxima;
     private int costoMineral;
@@ -60,13 +60,20 @@ public class ConstruccionZerg {
         return vidaPreDanio - puntosDeVida;
     }
 
-    public void destruir(LinkedList<ConstruccionZerg> construccionZergs) {
-        for (Object any : construccionZergs) {
-            construccionZergs.removeIf(constr -> constr.getPosicion().equals(pos));
+    public Boolean destruir(Posicion pos) {
+        boolean afirmacion = false;
+
+        if (pos.equals(this.pos)) {
+            afirmacion = true;
         }
+
+        return afirmacion;
     }
 
     public Posicion getPosicion() {
         return pos;
+    }
+
+    public void pasarTurno() {
     }
 }

@@ -1,16 +1,25 @@
 package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
-import edu.fiuba.algo3.modelo.tiles.Volcan;
+import edu.fiuba.algo3.modelo.tiles.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 public class TestConstrucciones {
+
+    private FloorManager fm = new FloorManager( (new LinkedList<Moho>()), new LinkedList<Cristales>(),new LinkedList< Volcan >(), new LinkedList<Energia>(),
+            new LinkedList< TileVacia >(), new LinkedList<ConstruccionZerg>(), new LinkedList<ConstruccionProtoss>(),
+            new LinkedList<ExtraeRecurso>(),20, 20);
 
     @Test
     public void construirLuegoDeConstruirYsinTenerMineralsLanzaUnaExcepcion(){
@@ -20,6 +29,8 @@ public class TestConstrucciones {
         economia.ingresarMineral(150);
         Extractor extractor = new Extractor(economia, new Posicion(0,0));
         Criadero criadero = new Criadero(economia, new Posicion(0,0));
+        criadero.setFloorManager(fm);
+        criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();
 
         extractor.pasarTurno();
         extractor.pasarTurno();
@@ -27,12 +38,6 @@ public class TestConstrucciones {
         extractor.pasarTurno();
         extractor.pasarTurno();
         extractor.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-
-
 
         try{
             Extractor extractorDos = new Extractor(economia, new Posicion(0,0));
@@ -51,8 +56,10 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(150);
-        Extractor extractor = new Extractor(economia, new Posicion(0,0));
+        Extractor extractor = new Extractor(economia, new Posicion(2,2));
         Criadero criadero = new Criadero(economia, new Posicion(0,0));
+        criadero.setFloorManager(fm);
+        criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();
 
         extractor.pasarTurno();
         extractor.pasarTurno();
@@ -60,10 +67,6 @@ public class TestConstrucciones {
         extractor.pasarTurno();
         extractor.pasarTurno();
         extractor.pasarTurno();
-
-        for (int i = 0; i<20 ;i++ ){
-            criadero.pasarTurno();
-        }
 
         try{
             Extractor extractorDos = new Extractor(economia, new Posicion(0,0));
@@ -84,6 +87,7 @@ public class TestConstrucciones {
         Extractor extractor = new Extractor(economia, new Posicion(0,0));
         extractor.setRecurso(new Volcan(new Posicion(0,0)));
         Criadero criadero = new Criadero(economia, new Posicion(0,0));
+        criadero.setFloorManager(fm);
 
         extractor.pasarTurno();
         extractor.pasarTurno();

@@ -38,7 +38,7 @@ public class Manager {
         this.maxX = dimensionX;
         this.maxY = dimensionY;
         this.idPilones = 0;
-        floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias);
+        floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae,dimensionX, dimensionY);
 
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
@@ -49,41 +49,48 @@ public class Manager {
     }
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
-        buscarCoincidencias(pos);
 
+        criadero.setFloorManager(floorManager);
         int size = construccionesZerg.size();
+
+        floorManager.buscarCoincidencias(pos);
+
         for (TileVacia t : tilesVacias) {
             t.construir(construccionesZerg, criadero, pos);
         }
-        if(size == construccionesZerg.size())
-            throw new RuntimeException("No se puede construir en esta posicion");
+        if(size == construccionesZerg.size()) {
+            for(Moho m : moho)//porque puedo tranquilamente construir un criadero sobre moho
+                m.construir(construccionesZerg, criadero, pos);
 
-        floorManager.mohificar(pos, maxX, maxY, this);
+            if(size == construccionesZerg.size())
+                throw new RuntimeException("No se puede construir en esta posicion");
+
+        }
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
-        buscarCoincidencias(pos);
-
+        pilon.setFloorManager(floorManager);
         int size = construccionProtoss.size();
-
         pilon.setID(idPilones);
 
-        for (TileVacia t : tilesVacias) {
+        floorManager.buscarCoincidencias(pos);
+
+        for (TileVacia t : tilesVacias)
             t.construir(construccionProtoss, pilon, pos);
-        }
+
         if(size == construccionProtoss.size()) {
-            throw new RuntimeException("No se puede construir en esta posicion");
+            for(Energia e : energias)//porque puedo tranquilamente construir un pilon sobre energia
+                e.construir(construccionesZerg, pilon, pos);
+
+            if(size == construccionProtoss.size())
+                throw new RuntimeException("No se puede construir en esta posicion");
         }
 
-        pilon.setFloorManager(floorManager);
-        floorManager.energizar(pos, maxX, maxY, idPilones);
-
-        activarEstructurasProtoss();
         idPilones  ++;
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
-        buscarCoincidencias(pos);
+        floorManager.buscarCoincidencias(pos);
 
         int size = construccionQueExtrae.size();
 
@@ -101,7 +108,7 @@ public class Manager {
 
 
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
-        buscarCoincidencias(pos);
+        floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
         for(Volcan v : volcanes) {
             Recurso recurso = v.construir(construccionQueExtrae, extrae, pos);
@@ -114,81 +121,21 @@ public class Manager {
             throw new RuntimeException("No hay un volcan en la posicion");
     }
 
-    public void buscarCoincidencias(Posicion posicion){
-        for (ConstruccionProtoss c: construccionProtoss){
-            Posicion posicionProtoss = c.getPosicion();
-            if(posicionProtoss.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        for (ConstruccionZerg c: construccionesZerg){
-            Posicion posicionZerg = c.getPosicion();
-            if(posicionZerg.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        for (ExtraeRecurso ext : construccionQueExtrae){
-            Posicion posicionExt = ext.getPosicion();
-            if(posicionExt.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        // Habria que tener en cuenta las construcciones que extraen
+    public LinkedList<TileVacia> getTilesVacias(){
+        return tilesVacias;
     }
 
+    public LinkedList<Moho> getMohos(){
+        return moho;
+    }
 
-    public void buscarCoincidenciasMoho(Posicion posicion){
-        for (ConstruccionProtoss c: construccionProtoss){
-            Posicion posicionProtoss = c.getPosicion();
-            if(posicionProtoss.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        for (ConstruccionZerg c: construccionesZerg){
-            Posicion posicionZerg = c.getPosicion();
-            if(posicionZerg.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        for (ExtraeRecurso ext : construccionQueExtrae){
-            Posicion posicionExt = ext.getPosicion();
-            if(posicionExt.equals(posicion)){
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
-
-        for (Moho m: moho){
-            Posicion posicionMoho = m.getPos();
-            if(posicionMoho.equals(posicion)){
-                throw new RuntimeException("Ya hay un Moho en esa posicion");
-            }
-        }
-
-        for (Cristales c: cristales){
-            Posicion posicionCristales = c.getPos();
-            if(posicionCristales.equals(posicion)){
-                throw new RuntimeException("Ya hay un cristal en esa posicion");
-            }
-        }
-
-        for (Volcan v: volcanes){
-            Posicion posicionVolcan = v.getPos();
-            if(posicionVolcan.equals(posicion)){
-                throw new RuntimeException("Ya hay un volcan en esa posicion");
-            }
-        }
-
-        // Habria que tener en cuenta las construcciones que extraen
+    public LinkedList<Energia> getEnergias(){
+        return energias;
     }
 
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
-        buscarCoincidencias(pos);
+        floorManager.buscarCoincidencias(pos);
 
         int size = construccionProtoss.size();
 
@@ -199,17 +146,14 @@ public class Manager {
         if(size == construccionProtoss.size()) {
             throw new RuntimeException("No esta energizada esta posicion");
         }
-
-
-//        activarEstructurasProtoss();
     }
 
     public void destruirProtoss(Posicion pos) {
         int size = construccionProtoss.size();
 
-        construccionProtoss.removeIf(construccion -> (construccion.destruir(pos, maxX, maxY, construccionProtoss) ) );
+        construccionProtoss.removeIf(construccion -> (construccion.destruir(pos) ) );
 
-        desactivarEstructurasProtoss();
+        floorManager.desactivarEstructurasProtoss();
 
         if(size == construccionProtoss.size()) {
             throw new RuntimeException("No hay nada para destruir");
@@ -217,8 +161,19 @@ public class Manager {
 
     }
 
+    public void destruirZerg(Posicion pos) {
+        int size = construccionesZerg.size();
+
+        construccionesZerg.removeIf(construccion -> (construccion.destruir(pos) ) );
+
+        if(size == construccionesZerg.size()) {
+            throw new RuntimeException("No hay nada para destruir");
+        }
+
+    }
+
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
-        buscarCoincidencias(pos);
+        floorManager.buscarCoincidencias(pos);
 
         int size = construccionesZerg.size();
 
@@ -230,34 +185,9 @@ public class Manager {
             throw new RuntimeException("No hay un moho en la posicion");
     }
 
-    private void desactivarEstructurasProtoss(){
-        int contador =0;
 
-        for(ConstruccionProtoss c: construccionProtoss){
-            for (Energia e: energias){
-                if( (c.getPosicion()).equals(e.getPos()) )
-                    contador ++;
-            }
-            if(contador == 0)//si no encontre ninguna coincidencia
-                c.desactivar();
 
-            contador = 0;
-        }
-    }
 
-    private void activarEstructurasProtoss(){
-        int contador =0;
-        for(ConstruccionProtoss c: construccionProtoss){
-            for (Energia e: energias){
-                if( (c.getPosicion()) .equals(e.getPos()) )
-                    contador ++;
-            }
-            if(contador != 0)//si no encontre ninguna coincidencia
-                c.activar();
-
-            contador = 0;
-        }
-    }
 
     /*
     public void printMohos() {
@@ -305,4 +235,20 @@ public class Manager {
         volcanes.add(new Volcan(pos));
         floorManager.quitarTilesVaciasParaVolcanes();
     }
+
+    public void pasarTurno(){
+        for(ConstruccionProtoss protoss :construccionProtoss)
+            protoss.pasarTurno();
+
+        for (ConstruccionZerg zerg : construccionesZerg)
+            zerg.pasarTurno();
+
+        for (ExtraeRecurso extrae : construccionQueExtrae)
+            extrae.pasarTurno();
+
+
+
+    }
+
+
 }
