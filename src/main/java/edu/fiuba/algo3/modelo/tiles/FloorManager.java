@@ -86,7 +86,7 @@ public class FloorManager {
         if (posicion_x<0)
             posicion_x = 0;
 
-        int posicion_y = posCriadero.getY() -(5-auxiliar);
+        int posicion_y = posCriadero.getY() -(5+auxiliar);
         if (posicion_y < 0)
             posicion_y = 0;
 

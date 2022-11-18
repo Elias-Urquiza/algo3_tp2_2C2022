@@ -181,5 +181,51 @@ public class TestFloorManager {
         assertEquals(esperado, resultado);
     }
 
+    @Test
+    public void cuandoPasanLosTurnosElMohoSeEsparceCorrectamente(){
+        Posicion pos0 = new Posicion(6,6);
+        Criadero criadero = new Criadero(economia, pos0);
+        boolean afirmacion1= true;
+        int contador = 0;
 
+        manager.construirCriaderoEn(pos0, criadero);
+
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+
+        Posicion pos1 = new Posicion(12,6);
+        Posicion pos2 = new Posicion(12,3);
+        Posicion pos3 = new Posicion(12,9);
+        Posicion pos4 = new Posicion(0, 0);
+        Posicion pos5 = new Posicion(1, 0);
+        Posicion pos6 = new Posicion(2, 0);
+        Posicion pos7 = new Posicion(0,12);
+        Posicion pos8 = new Posicion(1,12);
+        Posicion pos9 = new Posicion(2,12);
+        LinkedList<Moho> mohos = manager.getMohos();
+        LinkedList<Posicion> poses = new LinkedList<>();
+
+        poses.add(pos1);poses.add(pos2);poses.add(pos3);poses.add(pos4);poses.add(pos5);poses.add(pos6);poses.add(pos7);poses.add(pos8);poses.add(pos9);
+        for(int i =0; i<9; i++) {
+            for (Moho m : mohos) {
+                if(m.getPos().equals(poses.get(i)))
+                    afirmacion1 = false;
+            }
+        }
+
+        criadero.pasarTurno();criadero.pasarTurno();
+
+        for (Posicion p : poses) {
+            for (Moho m : mohos) {
+                if(m.getPos().equals(p))
+                    contador++;
+            }
+        }
+
+        boolean afirmacion2 = contador ==9;
+        assert(afirmacion1 && afirmacion2);
+
+    }
 }
