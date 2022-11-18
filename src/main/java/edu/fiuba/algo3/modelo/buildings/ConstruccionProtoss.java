@@ -19,6 +19,7 @@ public class ConstruccionProtoss implements Turno {
 
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
+
     public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos, boolean energizado) {
         try {
             if (costoGas != 0){
@@ -92,13 +93,12 @@ public class ConstruccionProtoss implements Turno {
         return afirmacion;
     }
 
+
     public void pasarTurno() {
         return;
     }
 
-
     public Posicion getPosicion() {
         return pos;
     }
-
 }

@@ -646,7 +646,6 @@ public class TestManager {
 
         for(int i=0; i<14 ; i++) {
             acceso.pasarTurno();
-
         }
         manager.destruirProtoss(pos0);
 
@@ -667,7 +666,6 @@ public class TestManager {
 
         for(int i=0; i<14 ; i++)
             acceso.pasarTurno();
-
         manager.destruirProtoss(pos0);
 
         Posicion pos1 = new Posicion(15,15);
@@ -788,5 +786,4 @@ public class TestManager {
         );
         assertEquals("No se puede construir en esta posicion", exception.getMessage());
     }
-
 }

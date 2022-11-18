@@ -40,6 +40,7 @@ public class Manager {
         this.idPilones = 0;
         floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae,dimensionX, dimensionY);
 
+
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
                 tilesVacias.add(new TileVacia(new Posicion(i, j)));
@@ -47,7 +48,6 @@ public class Manager {
         }
 
     }
-
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
 
@@ -86,13 +86,11 @@ public class Manager {
             if(size == construccionProtoss.size())
                 throw new RuntimeException("No se puede construir en esta posicion");
         }
-
         idPilones  ++;
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
         floorManager.buscarCoincidencias(pos);
-
         int size = construccionQueExtrae.size();
 
         for(Cristales c : cristales) {
@@ -109,6 +107,7 @@ public class Manager {
 
 
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
+
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
         for(Volcan v : volcanes) {
@@ -155,12 +154,12 @@ public class Manager {
         construccionProtoss.removeIf(construccion -> (construccion.destruir(pos) ) );
 
         floorManager.desactivarEstructurasProtoss();
-
         if(size == construccionProtoss.size()) {
             throw new RuntimeException("No hay nada para destruir");
         }
 
     }
+
 
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
@@ -176,6 +175,7 @@ public class Manager {
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
         floorManager.buscarCoincidencias(pos);
 
+
         int size = construccionesZerg.size();
 
         for(Moho m : moho) {
@@ -185,10 +185,6 @@ public class Manager {
         if(size == construccionesZerg.size())
             throw new RuntimeException("No hay un moho en la posicion");
     }
-
-
-
-
 
     /*
     public void printMohos() {
@@ -250,6 +246,4 @@ public class Manager {
 
 
     }
-
-
 }

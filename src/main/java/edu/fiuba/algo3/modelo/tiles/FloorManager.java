@@ -132,6 +132,7 @@ public class FloorManager {
             topeY = maxY;
 
         agregarTilesVaciasParaEnergia(id);
+
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
                 final int pos_i = i;

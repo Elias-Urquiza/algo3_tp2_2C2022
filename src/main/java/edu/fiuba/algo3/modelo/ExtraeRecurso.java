@@ -6,6 +6,6 @@ public interface ExtraeRecurso extends Turno {
     void extraer();
     void setRecurso(Recurso recurso);
     Posicion getPosicion();
-
     public void pasarTurno();
+
 }

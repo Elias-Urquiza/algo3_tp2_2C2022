@@ -37,7 +37,7 @@ public class TestsPilon {
         Pilon pilon = new Pilon(mockEconomia, pos);
 
         pilon.setFloorManager(fm);
-        
+
         boolean afirmacion = true;
 
         for(int i = 0; i < 5; i++)

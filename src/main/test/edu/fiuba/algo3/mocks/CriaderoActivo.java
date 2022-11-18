@@ -14,8 +14,6 @@ public class CriaderoActivo extends Criadero {
     private FloorManager fm;
 
     public CriaderoActivo() {
-
-
         super(new MockEconomia(), new Posicion(0,0));
 
         fm = new FloorManager( (new LinkedList<Moho>()), new LinkedList<Cristales>(),new LinkedList<Volcan>(), new LinkedList<Energia>(),
