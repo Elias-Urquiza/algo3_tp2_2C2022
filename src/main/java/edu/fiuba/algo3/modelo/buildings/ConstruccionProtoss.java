@@ -1,17 +1,12 @@
 package edu.fiuba.algo3.modelo.buildings;
 
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
 
 import java.util.LinkedList;
 
 public class ConstruccionProtoss implements Turno, Objetivo {
-    private int puntosDeVidaMaxima;
-    private int puntosDeVida;
-    private int escudo;
-    private int escudoMaximo;
+    private VidaProtoss vida;
     protected int costoMineral;
     protected int costoGas;
     protected int tiempoDeConstruccion;
@@ -32,58 +27,28 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         } catch(final RuntimeException e) {
             throw new RuntimeException("No tenes los minerales suficientes");
         }
-        this.puntosDeVidaMaxima = puntosDeVidaMaxima;
-        this.puntosDeVida = puntosDeVidaMaxima;
-        this.escudo = escudoMaximo;
-        this.escudoMaximo = escudoMaximo;
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
         this.pos = pos;
         this.energizado = energizado;
+        this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
     }
 
+    @Override
+    public int daniar(int danio) {
+       return vida.daniar(danio);
+    }
+
+    public int curar() {
+        return vida.curar(CURACION_PROTOSS);
+    }
     public void desactivar(){
         energizado = false;
     }
     public void activar(){
         energizado = true;
     }//a lo mejor usar interfaz
-
-    @Override
-    public int daniar(int danio) {
-        int dmg = escudo - danio;
-        if (dmg < 0) {
-            int danioVida = daniarVida(danio - escudo);
-            escudo = 0;
-            return danioVida;
-        } else {
-            escudo -= danio;
-            return 0;
-        }
-    }
-
-    private int daniarVida(int danio) {
-        final int vidaPreDanio = puntosDeVida;
-        final int dmg = puntosDeVida - danio;
-        if (dmg <= 0) {
-            puntosDeVida = 0;
-        } else {
-            puntosDeVida -= danio;
-        }
-        return vidaPreDanio - puntosDeVida;
-    }
-
-    public int curar() {
-        final int escudoPreCuracion = escudo;
-        final int curacion = escudo + CURACION_PROTOSS;
-        if (curacion > escudoMaximo) {
-            escudo = escudoMaximo;
-        } else {
-            escudo += CURACION_PROTOSS;
-        }
-        return escudo - escudoPreCuracion;
-    }
 
     public Boolean destruir(Posicion pos) {
         boolean afirmacion = false;

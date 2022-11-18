@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.buildings;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.VidaZerg;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
 
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 public class ConstruccionZerg implements Turno, Objetivo {
     private int puntosDeVida;
     private int puntosDeVidaMaxima;
+    private VidaZerg vida;
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
@@ -31,8 +33,7 @@ public class ConstruccionZerg implements Turno, Objetivo {
         } catch(final RuntimeException e) {
             throw new RuntimeException("No tenes los minerales suficientes");
         }
-        this.puntosDeVida = puntosDeVidaMaxima;
-        this.puntosDeVidaMaxima = puntosDeVidaMaxima;
+        this.vida = new VidaZerg(puntosDeVidaMaxima);
         this.costoGas = costoGas;
         this.costoMineral = costoMineral;
         this.pos = pos;
@@ -40,26 +41,12 @@ public class ConstruccionZerg implements Turno, Objetivo {
     }
 
     public int curar() {
-        final int vidaPreCuracion = puntosDeVida;
-        final int curacion = puntosDeVida + CURACION_ZERG;
-        if (curacion > puntosDeVidaMaxima) {
-            puntosDeVida = puntosDeVidaMaxima;
-        } else {
-            puntosDeVida += CURACION_ZERG;
-        }
-        return puntosDeVida - vidaPreCuracion;
+        return vida.curar(CURACION_ZERG);
     }
 
     @Override
     public int daniar(int danio) {
-        final int vidaPreDanio = puntosDeVida;
-        final int dmg = puntosDeVida - danio;
-        if (dmg <= 0) {
-            puntosDeVida = 0;
-        } else {
-            puntosDeVida -= danio;
-        }
-        return vidaPreDanio - puntosDeVida;
+        return vida.daniar(danio);
     }
 
     public Boolean destruir(Posicion pos) {
