@@ -3,10 +3,11 @@ package edu.fiuba.algo3.modelo.buildings;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.unidades.Objetivo;
 
 import java.util.LinkedList;
 
-public class ConstruccionProtoss implements Turno {
+public class ConstruccionProtoss implements Turno, Objetivo {
     private int puntosDeVidaMaxima;
     private int puntosDeVida;
     private int escudo;
@@ -49,6 +50,7 @@ public class ConstruccionProtoss implements Turno {
         energizado = true;
     }//a lo mejor usar interfaz
 
+    @Override
     public int daniar(int danio) {
         int dmg = escudo - danio;
         if (dmg < 0) {
