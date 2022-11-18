@@ -17,4 +17,10 @@ public class Volcan extends Recurso{
         this.capacidad = 5000;
     }
 
+    public Posicion getPos(){
+        return pos;
+    }
+
+    // no se si esta bien implementarlo aca o en recurso --> Repite codigo?
+
 }

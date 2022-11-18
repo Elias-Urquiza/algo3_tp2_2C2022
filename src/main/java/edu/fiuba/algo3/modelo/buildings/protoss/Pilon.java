@@ -30,22 +30,26 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     public void pasarTurno() {
         curar();
         turnosActivo++;
+
+        if(turnosActivo == tiempoDeConstruccion){
+            floorManager.energizar(pos, id);
+        }
         //no se como implementar que sume 20 de gas por tiempo, Si el gas es guardado en minerales
     }
 
     @Override
     public void usar() {
-        if (turnosActivo < TIEMPO_CONSTRUCCION && energizado)
+        if (turnosActivo < TIEMPO_CONSTRUCCION )
             throw new RuntimeException("Edificio en construccion");
     }
 
 
     @Override
-    public Boolean destruir(Posicion pos, int maxX, int maxY, LinkedList<ConstruccionProtoss> construccionProtoss) {
+    public Boolean destruir(Posicion pos) {
         boolean afirmacion = false;
 
         if (pos.equals(this.pos)) {
-            floorManager.desenergizar(maxX, maxY, pos, id);
+            floorManager.desenergizar(pos, id);
             afirmacion = true;
         }
         return afirmacion;
@@ -55,7 +59,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
         id = idNuevo;
     }
 
-    public void setFloorManager(FloorManager manager) {floorManager = manager;}
+    public void setFloorManager(FloorManager floorManager) {this.floorManager = floorManager;}
 
     @Override
     public void desactivar() {

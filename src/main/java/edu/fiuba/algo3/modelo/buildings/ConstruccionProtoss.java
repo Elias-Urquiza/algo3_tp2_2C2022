@@ -2,10 +2,11 @@ package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Turno;
 
 import java.util.LinkedList;
 
-public class ConstruccionProtoss {
+public class ConstruccionProtoss implements Turno {
     private int puntosDeVidaMaxima;
     private int puntosDeVida;
     private int escudo;
@@ -17,6 +18,7 @@ public class ConstruccionProtoss {
     protected Posicion pos;
 
     protected boolean energizado;
+    //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 
     public ConstruccionProtoss(int puntosDeVidaMaxima, int escudoMaximo, int costoMineral, int costoGas, int tiempoDeConstruccion, Economia economia, Posicion pos, boolean energizado) {
         try {
@@ -81,7 +83,7 @@ public class ConstruccionProtoss {
         return escudo - escudoPreCuracion;
     }
 
-    public Boolean destruir(Posicion pos, int maxX, int maxY, LinkedList<ConstruccionProtoss> construccionProtoss) {
+    public Boolean destruir(Posicion pos) {
         boolean afirmacion = false;
 
         if (pos.equals(this.pos)) {
@@ -91,8 +93,12 @@ public class ConstruccionProtoss {
         return afirmacion;
     }
 
+
+    public void pasarTurno() {
+        return;
+    }
+
     public Posicion getPosicion() {
         return pos;
     }
-
 }

@@ -32,7 +32,12 @@ public class TestManager {
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoSinCasoBorde() {
         Posicion posicion = new Posicion(5,5);
-        manager.construirCriaderoEn(posicion, new Criadero(economia, posicion));
+        Criadero criadero = new Criadero(economia, posicion );
+        manager.construirCriaderoEn(posicion, criadero);
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -59,8 +64,12 @@ public class TestManager {
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeArribaIzquierda() {
         Posicion pos = new Posicion(3,3);
-        manager.construirCriaderoEn(pos, new Criadero(economia, pos ) );
-
+        Criadero criadero = new Criadero(economia, pos );
+        manager.construirCriaderoEn(pos, criadero );
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
         boolean afirmacion = true;
 
         int posicion_x = 0;// 3 - 5 = 0 --> 0
@@ -88,7 +97,12 @@ public class TestManager {
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeArribaDerecha() {
         Posicion pos = new Posicion(3, 17);
-        manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        Criadero criadero = new Criadero(economia, pos );
+        manager.construirCriaderoEn(pos, criadero );
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -117,7 +131,12 @@ public class TestManager {
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeAbajoIzquierda() {
         Posicion pos = new Posicion(17 ,3);
-        manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        Criadero criadero = new Criadero(economia, pos );
+        manager.construirCriaderoEn(pos,criadero );
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -145,9 +164,56 @@ public class TestManager {
 
 
     @Test
+    public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoParaCristales() {
+        boolean afirmacion = true;
+        Posicion pos = new Posicion(17 ,3);
+        Posicion pos2 = new Posicion(17 ,2);
+        Posicion pos3 = new Posicion(19 ,2);
+        Posicion pos4 = new Posicion(1 ,17);
+        manager.agregarCristales(pos2);
+        manager.agregarCristales(pos3);
+        manager.agregarCristales(pos4); // esta linea es para verificar que no pasa nada con cistrales lejps
+
+
+        try {
+            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        }catch (RuntimeException e){
+            afirmacion  = false;
+        }
+        assert (afirmacion);
+    }
+
+
+    @Test
+    public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoParaVolcanes() {
+        boolean afirmacion = true;
+        Posicion pos = new Posicion(17 ,3);
+        Posicion pos2 = new Posicion(17 ,2);
+        Posicion pos3 = new Posicion(19 ,2);
+        Posicion pos4 = new Posicion(1 ,17);
+        manager.agregarVolcanes(pos2);
+        manager.agregarVolcanes(pos3);
+        manager.agregarVolcanes(pos4); // esta linea es para verificar que no pasa nada con cistrales lejps
+
+
+        try {
+            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        }catch (RuntimeException e){
+            afirmacion  = false;
+        }
+        assert (afirmacion);
+    }
+
+
+    @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeAbajoDerecha() {
         Posicion pos = new Posicion(17, 17);
-        manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        Criadero criadero = new Criadero(economia, pos );
+        manager.construirCriaderoEn(pos, criadero );
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -178,8 +244,9 @@ public class TestManager {
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaCorrespondiente() {
         Posicion pos = new Posicion(3,3);
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
-
+        Pilon pilon = new Pilon(economia, pos);
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
         boolean afirmacion = true;
 
         int posicion_x = 0;// 3 - 3 = 0 --> 0
@@ -207,7 +274,9 @@ public class TestManager {
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaArribaIzquierda() {
         Posicion pos = new Posicion(1,1);
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        Pilon pilon = new Pilon(economia, pos);
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -235,8 +304,9 @@ public class TestManager {
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaArribaDerecha() {
         Posicion pos = new Posicion(1,18);
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
-
+        Pilon pilon =  new Pilon(economia, pos);
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
         boolean afirmacion = true;
 
         int posicion_x = 0;// 3 - 3 = 0 --> 0
@@ -263,7 +333,9 @@ public class TestManager {
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaAbajoIzquierda() {
         Posicion pos = new Posicion(18, 1);
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        Pilon pilon = new Pilon(economia, pos);
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -291,7 +363,10 @@ public class TestManager {
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaAbajoDerecha() {
         Posicion pos =new Posicion(18, 18);
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        Pilon pilon = new Pilon(economia, pos);
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
 
         boolean afirmacion = true;
 
@@ -375,7 +450,10 @@ public class TestManager {
     public void intentoConstruirProtossDespuesDeUnPilonYNoFalla() {
         Posicion pos1 = new Posicion(10, 10);
         Posicion pos3 = new Posicion(12, 12);
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
+        Pilon pilon = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
+
         String afirmacion = "Todo ok";
         try {
             manager.construirProtoss(pos3, new Acceso(economia, pos3));
@@ -391,8 +469,9 @@ public class TestManager {
     public void intentoDestruirUnProtossYEfectivamenteLoDestruye() {
         Posicion pos1 = new Posicion(10, 10);
         Posicion pos3 = new Posicion(12, 12);
-
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
+        Pilon pilon = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon);
+        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
         manager.construirProtoss(pos3, new Acceso(economia, pos3));
         assertDoesNotThrow(() -> manager.destruirProtoss(pos3));
 
@@ -403,7 +482,13 @@ public class TestManager {
         Posicion pos1 = new Posicion(10, 10);
         Posicion pos3 = new Posicion(12, 12);
 
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
+        Pilon pilon = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon);
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
         manager.construirProtoss(pos3, new Acceso(economia, pos3));
         manager.destruirProtoss(pos3);
         final RuntimeException exception = assertThrows(
@@ -453,8 +538,13 @@ public class TestManager {
         Posicion pos6 = new Posicion(8,13);
         Posicion pos7 = new Posicion(11,12);
 
-
-        manager.construirPilonEn(pos,  new Pilon (economia, pos ));
+        Pilon pilon = new Pilon (economia, pos );
+        manager.construirPilonEn(pos,  pilon);
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
         manager.construirProtoss(pos1, new Acceso(economia, pos1));
         manager.construirProtoss(pos2, new Acceso(economia, pos2));
         manager.construirProtoss(pos3, new Acceso(economia, pos3));
@@ -487,11 +577,18 @@ public class TestManager {
 
         int contador = 0;
 
+        Pilon pilon = new Pilon(economia, pos);
         Acceso acceso1 = new Acceso(economia, pos1);
         Acceso acceso2 = new Acceso(economia, pos3);
         PuertoEstelar puertoEstelar =  new PuertoEstelar(economia, pos2);
 
-        manager.construirPilonEn(pos, new Pilon(economia, pos));
+        manager.construirPilonEn(pos, pilon);
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+
         manager.construirProtoss(pos1, acceso1);
         manager.construirProtoss(pos2, puertoEstelar);
         manager.construirProtoss(pos3, acceso2);
@@ -532,15 +629,23 @@ public class TestManager {
         Acceso acceso = new Acceso(economia, pos2);
         Pilon pilon1 = new Pilon(economia, pos0);
         Pilon pilon2 = new Pilon(economia, pos1);
-
         manager.construirPilonEn(pos0, pilon1);
+        pilon1.pasarTurno();
+        pilon1.pasarTurno();
+        pilon1.pasarTurno();
+        pilon1.pasarTurno();
+        pilon1.pasarTurno();
+
         manager.construirProtoss(pos2, acceso);
         manager.construirPilonEn(pos1, pilon2);
+        pilon2.pasarTurno();
+        pilon2.pasarTurno();
+        pilon2.pasarTurno();
+        pilon2.pasarTurno();
+        pilon2.pasarTurno();
 
         for(int i=0; i<14 ; i++) {
             acceso.pasarTurno();
-            pilon1.pasarTurno();
-            pilon2.pasarTurno();
         }
         manager.destruirProtoss(pos0);
 
@@ -550,31 +655,26 @@ public class TestManager {
     @Test
     public void siSeDestruyeUnPilonSeDesenergizanLasEstructurasPeroAlConstruirOtroCercaEstasVuelvenAEstarActivas(){
         Posicion pos0 = new Posicion(10,10);
-
         Posicion pos2 = new Posicion(13,13);
 
         Acceso acceso = new Acceso(economia, pos2);
         Pilon pilon1 = new Pilon(economia, pos0);
 
         manager.construirPilonEn(pos0, pilon1);
+        pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();
         manager.construirProtoss(pos2, acceso);
 
-        for(int i=0; i<14 ; i++) {
+        for(int i=0; i<14 ; i++)
             acceso.pasarTurno();
-            pilon1.pasarTurno();
-        }
-
         manager.destruirProtoss(pos0);
 
         Posicion pos1 = new Posicion(15,15);
-        Pilon pilon2 = new Pilon(economia, pos1);
+        Pilon  pilon2 = new Pilon(economia, pos1);
         manager.construirPilonEn(pos1, pilon2);
-
-
+        pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();
 
         assertDoesNotThrow( () -> acceso.usar() );
     }
-
 
     @Test
     public void siSeDestruyenAmbosPilonesNoEstaMasOperativo(){
@@ -587,14 +687,14 @@ public class TestManager {
         Pilon pilon2 = new Pilon(economia, pos1);
 
         manager.construirPilonEn(pos0, pilon1);
+        pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();pilon1.pasarTurno();
         manager.construirProtoss(pos2, acceso);
         manager.construirPilonEn(pos1, pilon2);
+        pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();pilon2.pasarTurno();
 
-        for(int i=0; i<14 ; i++) {
+        for(int i=0; i<14 ; i++)
             acceso.pasarTurno();
-            pilon1.pasarTurno();
-            pilon2.pasarTurno();
-        }
+
         manager.destruirProtoss(pos0);
         manager.destruirProtoss(pos1);
 

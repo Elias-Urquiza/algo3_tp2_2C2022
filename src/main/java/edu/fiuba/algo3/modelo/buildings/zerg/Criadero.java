@@ -17,6 +17,8 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private int numeroDeLarvas;
     private int turnosActivo;
+    private int expansion;
+
 
     // TODO incluir atributo de ubicacion ?
 
@@ -28,8 +30,10 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         super(500, 50, 0, 4, economia, pos);
         numeroDeLarvas = 3;
         turnosActivo = 0;
-        floorManager = null;
+        expansion = 0;
+        this.floorManager = null;
     }
+    
 
     public void extraerLarvas(int quitarLarvas) throws RuntimeException {
         if(numeroDeLarvas <= 0 || ( (numeroDeLarvas - quitarLarvas) < 0))
@@ -40,13 +44,29 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         numeroDeLarvas -= quitarLarvas;
     }
 
+    public void setFloorManager(FloorManager floorManager){ this.floorManager = floorManager; }
+
+    public int preguntarTurno(){
+        return turnosActivo;
+    }
+
     @Override
     public void pasarTurno() {
+        turnosActivo++;
+
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;
+
+        if(turnosActivo >= tiempoDeConstruccion && turnosActivo%2 == 0) {
+            floorManager.mohificar(this.pos, expansion);
+            expansion += 1;
+        }
+
+
         curar();
-        turnosActivo++;
+
     }
+
 
     @Override
     public void usar() {
