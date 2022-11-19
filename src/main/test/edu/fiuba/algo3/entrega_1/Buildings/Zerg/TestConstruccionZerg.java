@@ -4,6 +4,8 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.unidades.Ataque;
+import edu.fiuba.algo3.modelo.unidades.Tierra;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -12,27 +14,27 @@ public class TestConstruccionZerg {
 
     private ConstruccionZerg construccionZerg;
     private static final Economia mockEconomia = new MockEconomia();
-
+    private static Ataque terrestre = new Tierra(0);
 
 
     @Test
     public void danioUnaConstruccionZergYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.recibirDanio(100));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre));
     }
 
     @Test
     public void danioUnaConstruccionZergPorMasDeLaVidaMaximaYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.recibirDanio(100));
-        Assertions.assertEquals(900, construccionZerg.recibirDanio(1000));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre));
+        Assertions.assertEquals(900, construccionZerg.recibirDanio(1000, terrestre));
     }
 
     @Test
     public void curoUnaConstruccionZergYLaCuracionEsLaCorrecta() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(20, construccionZerg.recibirDanio(20));
-        Assertions.assertEquals(70, construccionZerg.recibirDanio(70));
+        Assertions.assertEquals(20, construccionZerg.recibirDanio(20, terrestre));
+        Assertions.assertEquals(70, construccionZerg.recibirDanio(70, terrestre));
         Assertions.assertEquals(90, construccionZerg.curar());
     }
 

@@ -1,7 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
+import edu.fiuba.algo3.modelo.unidades.Tierra;
 
 import java.util.LinkedList;
 
@@ -35,11 +37,15 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         this.pos = pos;
         this.energizado = energizado;
         this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
+        this.superficie = new Tierra(0);
     }
 
     @Override
-    public int recibirDanio(int danio) {
-       return vida.daniar(danio);
+    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
+       if(tipoDeAtaque.equals(superficie)) {
+           return vida.daniar(danio);
+       }
+       return 0;
     }
 
     public int curar() {

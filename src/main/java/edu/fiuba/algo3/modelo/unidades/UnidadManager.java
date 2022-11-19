@@ -1,7 +1,9 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.TipoDeUnidades;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class UnidadManager {

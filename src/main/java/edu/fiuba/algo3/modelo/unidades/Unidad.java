@@ -2,12 +2,19 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.TipoDeUnidades;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class Unidad implements Objetivo {
 
     private Posicion pos;
     private int tiempoDeConstruccion;
     private int rango;
+    protected LinkedList<Ataque> ataques;
+    protected Ataque superficie;
 
     public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango) {
         try {
@@ -25,6 +32,15 @@ public abstract class Unidad implements Objetivo {
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
     }
+
     @Override
-    public abstract int recibirDanio(int danio);
+    public abstract int recibirDanio(int danio, Ataque tipoDeAtaque);
+
+    public void atacar(Objetivo objetivo) {
+        for (Ataque ataque : ataques) {
+            ataque.atacar(objetivo);
+        }
+    }
+
+    public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);
 }
