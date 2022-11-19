@@ -11,7 +11,7 @@ Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUB
 * **Tosto Valenzuela, Ezequiel Martin** - [Ezequiel Tosto](https://github.com/echitosto)
 * **Suarez Pino, Imanol** - [Imanol-Suarez Pino](https://github.com/Imasuarezpino)
 
-Corrector: **{Corrector}**
+Corrector: **Santiago Valdez**
 
 ## Aplicación
 
