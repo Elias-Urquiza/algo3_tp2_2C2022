@@ -7,6 +7,6 @@ import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
 public class Hidralisco extends UnidadZerg {
 
     public Hidralisco(Economia economia, Posicion pos) {
-        super(80, 75, 25, economia, pos, 4);
+        super(80, 75, 25, economia, pos, 4, 4);
     }
 }
