@@ -20,24 +20,24 @@ public class TestConstruccionProtoss {
 
     @Test
     public void danioUnaConstruccionProtossSinSacarleElEscudoYNoPierdeVida() {
-        Assertions.assertEquals(0, constr.daniar(50));
+        Assertions.assertEquals(0, constr.recibirDanio(50));
     }
 
     @Test
     public void danioUnaConstruccionProtossSacandoleElEscudoYPierdeVida() {
-        Assertions.assertEquals(50, constr.daniar(100));
+        Assertions.assertEquals(50, constr.recibirDanio(100));
     }
 
     @Test
     public void curarUnaConstruccionProtossSoloLeRegeneraElEscudo() {
-        Assertions.assertEquals(150, constr.daniar(200));
+        Assertions.assertEquals(150, constr.recibirDanio(200));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }
 
     @Test
     public void curarUnaConstruccionProtossConEscudoMaximoNoLoCura() {
-        Assertions.assertEquals(0, constr.daniar(50));
+        Assertions.assertEquals(0, constr.recibirDanio(50));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }

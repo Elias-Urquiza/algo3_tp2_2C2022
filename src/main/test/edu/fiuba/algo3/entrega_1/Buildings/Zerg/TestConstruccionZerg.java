@@ -18,21 +18,21 @@ public class TestConstruccionZerg {
     @Test
     public void danioUnaConstruccionZergYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.daniar(100));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100));
     }
 
     @Test
     public void danioUnaConstruccionZergPorMasDeLaVidaMaximaYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.daniar(100));
-        Assertions.assertEquals(900, construccionZerg.daniar(1000));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100));
+        Assertions.assertEquals(900, construccionZerg.recibirDanio(1000));
     }
 
     @Test
     public void curoUnaConstruccionZergYLaCuracionEsLaCorrecta() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(20, construccionZerg.daniar(20));
-        Assertions.assertEquals(70, construccionZerg.daniar(70));
+        Assertions.assertEquals(20, construccionZerg.recibirDanio(20));
+        Assertions.assertEquals(70, construccionZerg.recibirDanio(70));
         Assertions.assertEquals(90, construccionZerg.curar());
     }
 
