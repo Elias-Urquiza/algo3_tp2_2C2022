@@ -5,9 +5,11 @@ import edu.fiuba.algo3.modelo.Posicion;
 import java.util.LinkedList;
 
 public class UnidadManager {
-    private LinkedList<Objetivo> objetivos;
-    private LinkedList<UnidadProtoss> unidadesProtoss;
-    private LinkedList<UnidadZerg> unidadesZerg;
+    // no se verifica que el usuario ataque a su enemigo, puede potencialmente atacarse asi mismo.
+/*
+    private LinkedList<Objetivo> objetivosAereos;
+
+    private LinkedList<Objetivo> objetivosTerrestres;
 
     public void crearUnidadProtoss(Posicion pos, UnidadProtoss unidad) {
         unidadesProtoss.add(unidad);
