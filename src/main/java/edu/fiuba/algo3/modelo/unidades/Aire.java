@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 public class Aire implements Ataque {
 
-    private static String nombre = "aire";
+    private static String nombre = "Aire";
     private int danio;
     public Aire(int danio){
         this.danio = danio;
