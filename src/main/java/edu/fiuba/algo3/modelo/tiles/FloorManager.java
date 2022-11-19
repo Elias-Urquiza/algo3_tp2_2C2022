@@ -81,12 +81,11 @@ public class FloorManager {
 
     public void mohificar(Posicion posCriadero, int auxiliar) {
 
-
-        int posicion_x = posCriadero.getX() -(5-auxiliar);
+        int posicion_x = posCriadero.getX() -(5+auxiliar);
         if (posicion_x<0)
             posicion_x = 0;
 
-        int posicion_y = posCriadero.getY() -(5-auxiliar);
+        int posicion_y = posCriadero.getY() -(5+auxiliar);
         if (posicion_y < 0)
             posicion_y = 0;
 

@@ -167,14 +167,6 @@ public class TestConstrucciones {
         }
         assert(afirmacion);
 
-
-
     }
-
-
-
-
     // TODO :)
-
-
 }
