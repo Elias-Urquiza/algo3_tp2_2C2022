@@ -5,27 +5,22 @@ import edu.fiuba.algo3.modelo.Posicion;
 import java.util.LinkedList;
 
 public class UnidadManager {
-    // no se verifica que el usuario ataque a su enemigo, puede potencialmente atacarse asi mismo.
-/*
-    private LinkedList<Objetivo> objetivosAereos;
 
-    private LinkedList<Objetivo> objetivosTerrestres;
+    final HashMap<TipoDeUnidades, LinkedList> unidades;
 
-    public void crearUnidadProtoss(Posicion pos, UnidadProtoss unidad) {
-        unidadesProtoss.add(unidad);
+    public UnidadManager(){
+        unidades = new HashMap<>();
+        unidades.put(TipoDeUnidades.PROTOSS, new LinkedList<Unidad>());
+        unidades.put(TipoDeUnidades.ZERG, new LinkedList<Unidad>());
     }
 
-    public void crearUnidadZerg(Posicion pos, UnidadZerg unidad) {
-        unidadesZerg.add(unidad);
+    public void crearUnidad(Unidad unidad) {
+        unidad.agregate(unidades);// se filtra por tierra-aire y por proto-zerg.
     }
 
-    public void ataqueTerrestre(Unidad atacanteTerrestre, Objetivo unObjetivo){
-
+    public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
+        agresor.atacar(victima);
     }
 
-    public void ataqueAereo(Unidad atacanteAereo, Objetivo unObjetivo){
-
-    }
-*/
 
 }

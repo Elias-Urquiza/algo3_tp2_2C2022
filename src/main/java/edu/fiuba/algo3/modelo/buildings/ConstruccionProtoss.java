@@ -13,6 +13,8 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
 
+    protected Tierra superficie;
+
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 
