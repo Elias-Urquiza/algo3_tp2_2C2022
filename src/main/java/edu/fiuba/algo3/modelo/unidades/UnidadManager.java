@@ -16,4 +16,14 @@ public class UnidadManager {
     public void crearUnidadZerg(Posicion pos, UnidadZerg unidad) {
         unidadesZerg.add(unidad);
     }
+
+    public void ataqueTerrestre(Unidad atacanteTerrestre, Objetivo unObjetivo){
+
+    }
+
+    public void ataqueAereo(Unidad atacanteAereo, Objetivo unObjetivo){
+
+    }
+*/
+
 }
