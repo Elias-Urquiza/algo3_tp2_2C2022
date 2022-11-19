@@ -36,7 +36,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     }
 
     @Override
-    public int daniar(int danio) {
+    public int recibirDanio(int danio) {
        return vida.daniar(danio);
     }
 
