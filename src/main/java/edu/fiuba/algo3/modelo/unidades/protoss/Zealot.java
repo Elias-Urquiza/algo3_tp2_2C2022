@@ -15,10 +15,6 @@ public class Zealot extends UnidadProtoss  {
         ataques.add(new Tierra(8));
     }
 
-    public void atacar(Objetivo unObjetivo) {
-
-    }
-
     @Override
     public void agregate(HashMap<TipoDeUnidades, LinkedList> listas) {
         listas.get(TipoDeUnidades.PROTOSS).add(this);

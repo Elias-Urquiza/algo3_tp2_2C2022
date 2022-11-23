@@ -16,6 +16,7 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
     public PuertoEstelar(Economia economia, Posicion pos){
         super(600, 600, 150, 150, 10, economia, pos, true);
         turnosActivo = 0;
+        correlativity.add(Acceso.class);
     }
     @Override
     public void pasarTurno(){

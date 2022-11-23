@@ -15,6 +15,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
 
+    protected LinkedList<Class> correlativity;
     protected Tierra superficie;
 
     protected boolean energizado;
@@ -37,6 +38,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         this.pos = pos;
         this.energizado = energizado;
         this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
+        this.correlativity = new LinkedList<>();
         this.superficie = new Tierra(0);
     }
 
@@ -68,6 +70,22 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         return afirmacion;
     }
 
+    public void chequearCorrelatividad(LinkedList<ConstruccionProtoss> lista) {
+        boolean match = false;
+        boolean afirmacion = false;
+
+        for (ConstruccionProtoss p : lista) {
+            match = correlativity.stream().anyMatch(any -> any.equals(p.getClass()));
+            if(match)
+                afirmacion = true;
+        }
+
+        if (afirmacion || correlativity.isEmpty())
+            lista.add(this);
+        else
+            throw new RuntimeException("No existe su correlativa");
+
+    }
 
     public void pasarTurno() {
         return;

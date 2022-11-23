@@ -14,6 +14,7 @@ public class Espiral extends ConstruccionZerg implements Turno, Construccion {
     public Espiral(Economia economia, Posicion pos) {
         super(1300, 150, 100, 10, economia, pos);
         turnosActivo = 0;
+        correlativity.add(Guarida.class);
     }
 
     @Override

@@ -140,7 +140,11 @@ public class Manager {
         int size = construccionProtoss.size();
 
         for(Energia e : energias) {
-            e.construir(construccionProtoss, protoss, pos);
+            try {
+                e.construir(construccionProtoss, protoss, pos);
+            } catch (RuntimeException err1) {
+                throw err1;
+            }
         }
         if(size == construccionProtoss.size())
             throw new RuntimeException("Este piso no esta energizado");
@@ -243,8 +247,9 @@ public class Manager {
 
         for (ExtraeRecurso extrae : construccionQueExtrae)
             extrae.pasarTurno();
-
-
-
     }
+
+
+
+
 }

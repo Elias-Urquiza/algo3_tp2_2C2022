@@ -17,6 +17,7 @@ public class UnidadManager {
     }
 
     public void crearUnidad(Unidad unidad) {
+
         unidad.agregate(unidades);// se filtra por tierra-aire y por proto-zerg.
     }
 

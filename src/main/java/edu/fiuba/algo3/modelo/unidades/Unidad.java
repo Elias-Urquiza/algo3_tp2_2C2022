@@ -38,10 +38,12 @@ public abstract class Unidad implements Objetivo {
     @Override
     public abstract int recibirDanio(int danio, Ataque tipoDeAtaque);
 
-    public void atacar(Objetivo objetivo) {
+    public int atacar(Objetivo objetivo) {
+        int danio = 0;
         for (Ataque ataque : ataques) {
-            ataque.atacar(objetivo);
+            danio += ataque.atacar(objetivo);
         }
+        return danio;
     }
 
     public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);

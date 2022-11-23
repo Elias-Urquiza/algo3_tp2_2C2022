@@ -19,7 +19,7 @@ public class ConstruccionZerg implements Turno, Objetivo {
     protected int tiempoDeConstruccion;
     private static final int CURACION_ZERG = 100;
     protected Posicion pos;
-
+    protected LinkedList<Class> correlativity;
     private Ataque superficie;
 
 
@@ -42,6 +42,7 @@ public class ConstruccionZerg implements Turno, Objetivo {
         this.costoMineral = costoMineral;
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
+        this.correlativity = new LinkedList<>();
         superficie = new Tierra(0);
     }
 
@@ -65,6 +66,23 @@ public class ConstruccionZerg implements Turno, Objetivo {
         }
 
         return afirmacion;
+    }
+
+    public void chequearCorrelatividad(LinkedList<ConstruccionZerg> lista) {
+        boolean match = false;
+        boolean afirmacion = false;
+
+        for (ConstruccionZerg z : lista) {
+            match = correlativity.stream().anyMatch(any -> any.equals(z.getClass()));
+            if(match)
+                afirmacion = true;
+        }
+
+        if (afirmacion || correlativity.isEmpty())
+            lista.add(this);
+        else
+            throw new RuntimeException("No existe su correlativa");
+
     }
 
     public Posicion getPosicion() {

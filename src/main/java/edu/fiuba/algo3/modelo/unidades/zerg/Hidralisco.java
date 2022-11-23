@@ -17,10 +17,6 @@ public class Hidralisco extends UnidadZerg {
         ataques.add(new Tierra(10));
     }
 
-    public void atacar(Objetivo unObjetivo) {
-
-    }
-
     @Override
     public void agregate(HashMap<TipoDeUnidades, LinkedList> listas) {
         listas.get(TipoDeUnidades.ZERG).add(this);

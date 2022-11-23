@@ -4,6 +4,7 @@ import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.tiles.Energia;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ public class TestsEnergia {
     }
     @Test
     public void cuandoLaPosicionEsLaMismaAgregaLaConstruccionALaLista() {
-        energia.construir(construcciones, new PuertoEstelar(econ, new Posicion(1,1)), new Posicion(1,1));
+        energia.construir(construcciones, new Asimilador(econ, new Posicion(1,1)), new Posicion(1,1));
         assertEquals(1, construcciones.size());
     }
 

@@ -9,8 +9,8 @@ public class Tierra implements Ataque {
     }
 
     @Override
-    public void atacar(Objetivo objetivo) {
-        objetivo.recibirDanio(danio, this);
+    public int atacar(Objetivo objetivo) {
+        return objetivo.recibirDanio(danio, this);
     }
 
     @Override
