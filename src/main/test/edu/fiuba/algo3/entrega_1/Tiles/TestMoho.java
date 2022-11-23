@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
+import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.tiles.Moho;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,14 +29,13 @@ public class TestMoho {
     }
     @Test
     public void cuandoLaPosicionEsLaMismaAgregaLaConstruccionALaLista() {
-        moho.construir(construcciones, new Espiral(econ, pos), pos);
+        moho.construir(construcciones, new ReservaDeReproduccion(econ, pos), pos);
         assertEquals(1, construcciones.size());
     }
 
     @Test
     public void cuandoLaPosicionNoEsLaMismaNoAgregaLaConstruccionALaLista() {
-
-        moho.construir(construcciones, new Espiral(econ, pos), new Posicion(2,2));
+        moho.construir(construcciones, new ReservaDeReproduccion(econ, pos), new Posicion(2,2));
         assertEquals(0, construcciones.size());
     }
 }

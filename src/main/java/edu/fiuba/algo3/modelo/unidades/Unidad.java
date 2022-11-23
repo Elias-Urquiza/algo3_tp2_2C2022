@@ -46,5 +46,9 @@ public abstract class Unidad implements Objetivo {
         return danio;
     }
 
+    public void setPosicion(Posicion nuevaPosicion){
+        pos = nuevaPosicion;
+    }
+
     public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);
 }

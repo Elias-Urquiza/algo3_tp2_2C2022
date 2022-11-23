@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class TestAtaque {
+public class TestObjetivo {
     @Test
     public void unAtaqueTerrestreAUnaConstruccionSeRealizaCorrectamente(){
         int esperado = 40;

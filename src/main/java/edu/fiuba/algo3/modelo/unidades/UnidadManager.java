@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import javafx.geometry.Pos;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,5 +26,11 @@ public class UnidadManager {
         agresor.atacar(victima);
     }
 
+    public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion){
+        unaUnidad.setPosicion(nuevaPosicion); //posicion x-y invalida entiendo no ocurriria. Problema debemos cheuqear
+                                              //que no haya una consstruccion u otra unidad.
+                                              //Y ver si la unidad vuela o no por si puede o no ir a un aerea espacial  o no.
+                                              //de ser la unidad aerea hay que pensar que hacemos con
+    }
 
 }

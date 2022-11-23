@@ -1,9 +1,11 @@
-package edu.fiuba.algo3.entrega_2;
+package edu.fiuba.algo3.entrega_2.Unidades.Zerg;
 
 import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
 import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
+import edu.fiuba.algo3.modelo.unidades.Aire;
+import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.Test;
 
@@ -26,4 +28,16 @@ public class TestZerling {
 
         assert(afirmacion1 && afirmacion2);
     }
+
+    @Test
+    public void recibeDanioSoloTerrestre(){
+        Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
+        Aire aire = new Aire(20);
+        int esperado = 0;
+
+        int resultado = zerling1.recibirDanio(20, aire);
+
+        assertEquals(esperado, resultado);
+    }
+
 }
