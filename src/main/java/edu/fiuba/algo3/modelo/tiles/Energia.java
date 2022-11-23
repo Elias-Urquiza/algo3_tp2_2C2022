@@ -26,7 +26,11 @@ public class Energia {
 
     public void construir(LinkedList list, ConstruccionProtoss construccionProtoss, Posicion posicion) {
         if (posicion.equals(this.pos)) {
-            list.add(construccionProtoss);
+            try {
+                construccionProtoss.chequearCorrelatividad(list);
+            }catch (RuntimeException e){
+                throw e;
+            }
         }
     }
 

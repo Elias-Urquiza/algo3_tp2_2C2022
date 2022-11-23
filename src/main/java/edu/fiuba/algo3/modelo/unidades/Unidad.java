@@ -16,7 +16,7 @@ public abstract class Unidad implements Objetivo {
     protected LinkedList<Ataque> ataques;
     protected Ataque superficie;
 
-    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango) {
+    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficie) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -31,6 +31,8 @@ public abstract class Unidad implements Objetivo {
         this.rango = rango;
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
+        this.superficie = superficie;
+        this.ataques = new LinkedList<>();
     }
 
     @Override

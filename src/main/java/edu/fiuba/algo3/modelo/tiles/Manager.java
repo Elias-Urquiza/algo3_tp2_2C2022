@@ -142,10 +142,8 @@ public class Manager {
         for(Energia e : energias) {
             e.construir(construccionProtoss, protoss, pos);
         }
-
-        if(size == construccionProtoss.size()) {
-            throw new RuntimeException("No esta energizada esta posicion");
-        }
+        if(size == construccionProtoss.size())
+            throw new RuntimeException("Este piso no esta energizado");
     }
 
     public void destruirProtoss(Posicion pos) {
@@ -179,11 +177,14 @@ public class Manager {
         int size = construccionesZerg.size();
 
         for(Moho m : moho) {
-            m.construir(construccionesZerg, zerg, pos);
+            try {
+                m.construir(construccionesZerg, zerg, pos);
+            }catch (RuntimeException err2){
+                throw err2;
+            }
         }
-
         if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un moho en la posicion");
+            throw new RuntimeException("Este piso no tiene moho");
     }
 
     /*

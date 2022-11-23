@@ -17,7 +17,9 @@ public class VidaZerg extends Vida {
         }
         return vidaPreDanio - puntosDeVida;
     }
+/*
 
+ */
     @Override
     public int curar(int curacionZerg) {
         final int vidaPreCuracion = puntosDeVida;

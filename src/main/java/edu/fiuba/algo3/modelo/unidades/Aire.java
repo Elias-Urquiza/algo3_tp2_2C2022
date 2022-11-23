@@ -8,8 +8,8 @@ public class Aire implements Ataque {
         this.danio = danio;
     }
     @Override
-    public void atacar(Objetivo objetivo) {
-        objetivo.recibirDanio(danio, this);
+    public int atacar(Objetivo objetivo) {
+        return objetivo.recibirDanio(danio, this);
     }
 
     @Override

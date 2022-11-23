@@ -11,8 +11,8 @@ import java.util.LinkedList;
 public abstract class UnidadProtoss extends Unidad {
     private VidaProtoss vida;
 
-    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango) {
-        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango);
+    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficie) {
+        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficie);
         this.vida = new VidaProtoss(puntosDeVidaMaximo, escudoMaximo);
     }
 
