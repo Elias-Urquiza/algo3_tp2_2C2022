@@ -46,6 +46,10 @@ public abstract class Unidad implements Objetivo {
         return danio;
     }
 
+    public Posicion getPosicion(){
+        return pos;
+    }
+
     public void setPosicion(Posicion nuevaPosicion){
         pos = nuevaPosicion;
     }

@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.tiles.Vacio;
 import javafx.geometry.Pos;
 
 import java.util.HashMap;
@@ -18,10 +19,8 @@ public class UnidadManager {
     }
 
     public void crearUnidad(Unidad unidad) {
-
         unidad.agregate(unidades);// se filtra por tierra-aire y por proto-zerg.
     }
-
     public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
         agresor.atacar(victima);
     }
@@ -32,5 +31,22 @@ public class UnidadManager {
                                               //Y ver si la unidad vuela o no por si puede o no ir a un aerea espacial  o no.
                                               //de ser la unidad aerea hay que pensar que hacemos con
     }
+
+    public  boolean posicionOcupada(Posicion pos){
+        boolean afirmacion =  true;
+
+        LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
+        for (Unidad u : zergs)
+            afirmacion = (u.getPosicion() ).equals(pos);
+        if(!afirmacion) return afirmacion;
+
+        LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
+        for (Unidad u : protoss)
+            afirmacion = (u.getPosicion() ).equals(pos);
+        if(!afirmacion) return afirmacion;
+
+        return afirmacion;
+    }
+
 
 }

@@ -7,6 +7,9 @@ import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.UnidadManager;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import javafx.geometry.Pos;
 
 import java.util.LinkedList;
@@ -14,6 +17,9 @@ import java.util.Objects;
 
 public class Manager {
     FloorManager floorManager;
+
+    UnidadManager unidadManager;
+
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
@@ -39,7 +45,7 @@ public class Manager {
         this.maxY = dimensionY;
         this.idPilones = 0;
         floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae,dimensionX, dimensionY);
-
+        unidadManager = new UnidadManager();
 
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
@@ -190,6 +196,75 @@ public class Manager {
         if(size == construccionesZerg.size())
             throw new RuntimeException("Este piso no tiene moho");
     }
+
+
+    /*
+    *i  j -->
+    *¦  -1----
+    *   --C---
+    *   ------
+    *
+    * */
+
+    public void crearUnidad(Posicion posConstruccion, Unidad unidad){
+        Posicion pos;
+        boolean afirmacion;
+
+        for(int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+
+                afirmacion = true;
+
+                try {
+                    pos = posConstruccion.incrementar(i, j, maxX, maxY);
+                }catch (RuntimeException e){
+                    continue;
+                }
+
+                for (ConstruccionZerg z :  construccionesZerg) {
+                   afirmacion = ( z.getPosicion() ).equals(pos);
+                }if (!afirmacion) continue;
+
+                for (ConstruccionProtoss p :  construccionProtoss) {
+                    afirmacion = ( p.getPosicion() ).equals(pos);
+                }if (!afirmacion) continue;
+
+                for (ExtraeRecurso r :  construccionQueExtrae) {
+                    afirmacion = ( r.getPosicion() ).equals(pos);
+                }if (!afirmacion) continue;
+
+                for (Volcan v :  volcanes) {
+                    afirmacion = ( v.getPos() ).equals(pos);
+                }if (!afirmacion) continue;
+
+                for (Cristales c :  cristales) {
+                    afirmacion = ( c.getPos() ).equals(pos);
+                }if (!afirmacion) continue;
+
+                // CREO QUE SOLO FALTA VERIFICAR CON LAS TILES DE VACIO
+                afirmacion = unidadManager.posicionOcupada(pos);
+                if(!afirmacion) continue;
+
+                unidadManager.crearUnidad(unidad);
+
+            }
+        }
+    }
+
+
+
+    //hacemos que haya vacio en un radio de 3 al rededor de esa pos
+    public void ponerVacio(Posicion posCentro){
+        int posX = posCentro.getX();
+        int posY = posCentro.getY();
+
+
+    }
+
+    public void moverUnidad(Posicion pos, Unidad unidad){
+        //chequear las posiciones
+    }
+
 
     /*
     public void printMohos() {
