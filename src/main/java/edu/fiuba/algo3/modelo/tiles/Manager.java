@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.lang.Math;
 
 public class Manager {
     FloorManager floorManager;

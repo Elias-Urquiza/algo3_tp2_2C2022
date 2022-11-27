@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.unidades;
 
-public class Tierra implements Ataque {
+import edu.fiuba.algo3.modelo.Posicion;
+
+public class Tierra implements Ataque, Movimiento {
 
     private static String nombre = "tierra";
     private int danio;
