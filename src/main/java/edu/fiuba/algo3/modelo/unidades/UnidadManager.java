@@ -25,11 +25,8 @@ public class UnidadManager {
         agresor.atacar(victima);
     }
 
-    public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion){
-        unaUnidad.setPosicion(nuevaPosicion); //posicion x-y invalida entiendo no ocurriria. Problema debemos cheuqear
-                                              //que no haya una consstruccion u otra unidad.
-                                              //Y ver si la unidad vuela o no por si puede o no ir a un aerea espacial  o no.
-                                              //de ser la unidad aerea hay que pensar que hacemos con
+    public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){
+        unaUnidad.movete(nuevaPosicion, esVacio);
     }
 
     public  boolean posicionOcupada(Posicion pos){

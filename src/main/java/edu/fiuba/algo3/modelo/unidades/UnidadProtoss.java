@@ -11,14 +11,14 @@ import java.util.LinkedList;
 public abstract class UnidadProtoss extends Unidad {
     private VidaProtoss vida;
 
-    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficie) {
-        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficie);
+    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
+        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie);
         this.vida = new VidaProtoss(puntosDeVidaMaximo, escudoMaximo);
     }
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-        if (superficie.equals(tipoDeAtaque)) {
+        if (superficieAtaque.equals(tipoDeAtaque)) {
             return vida.daniar(danio);
         }
         return 0;

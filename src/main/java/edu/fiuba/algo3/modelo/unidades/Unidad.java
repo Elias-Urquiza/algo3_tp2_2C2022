@@ -14,9 +14,12 @@ public abstract class Unidad implements Objetivo {
     private int tiempoDeConstruccion;
     private int rango;
     protected LinkedList<Ataque> ataques;
-    protected Ataque superficie;
+    protected Ataque superficieAtaque;
 
-    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficie) {
+    protected Movimiento superficie;
+
+
+    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -31,6 +34,7 @@ public abstract class Unidad implements Objetivo {
         this.rango = rango;
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
+        this.superficieAtaque = superficieAtaque;
         this.superficie = superficie;
         this.ataques = new LinkedList<>();
     }
@@ -48,6 +52,10 @@ public abstract class Unidad implements Objetivo {
 
     public Posicion getPosicion(){
         return pos;
+    }
+
+    public void movete(Posicion pos, Boolean esVacio){
+        this.pos = superficie.moverse(esVacio, pos, this.pos);
     }
 
     public void setPosicion(Posicion nuevaPosicion){

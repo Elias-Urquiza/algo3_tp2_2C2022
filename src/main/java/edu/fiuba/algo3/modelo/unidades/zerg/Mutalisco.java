@@ -12,7 +12,7 @@ public class Mutalisco extends UnidadZerg {
 
     public Mutalisco(Economia economia, Posicion pos) {
 
-        super(120, 100, 100, economia, pos, 7, 3, new Aire(0));
+        super(120, 100, 100, economia, pos, 7, 3, new Aire(0), new Aire(0));
         ataques.add(new Aire(9));
         ataques.add(new Tierra(9));
     }

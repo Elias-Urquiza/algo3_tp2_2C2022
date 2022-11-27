@@ -12,7 +12,7 @@ public class Hidralisco extends UnidadZerg {
 
     public Hidralisco(Economia economia, Posicion pos) {
 
-        super(80, 75, 25, economia, pos, 4, 4, new Tierra(0));
+        super(80, 75, 25, economia, pos, 4, 4, new Tierra(0), new Tierra(0));
         ataques.add(new Aire(10));
         ataques.add(new Tierra(10));
     }

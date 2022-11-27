@@ -18,6 +18,11 @@ public class Aire implements Ataque {
     }
 
     @Override
+    public Posicion moverse(Boolean esVacio, Posicion posNueva, Posicion posVieja){
+        return posNueva;
+    }
+
+    @Override
     public String getNombre() {
         return nombre;
     }

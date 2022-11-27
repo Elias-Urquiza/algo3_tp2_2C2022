@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class Scout extends UnidadProtoss {
     public Scout(Economia economia, Posicion posicion) {
-        super(150, 100, 300, 150, economia, posicion, 9, 4, new Tierra(0));
+        super(150, 100, 300, 150, economia, posicion, 9, 4, new Aire(0),new Aire(0));
         ataques.add(new Aire(14));
         ataques.add(new Tierra(8));
     }

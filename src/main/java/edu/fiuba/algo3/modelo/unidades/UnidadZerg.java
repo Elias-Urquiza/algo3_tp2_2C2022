@@ -10,14 +10,15 @@ import java.util.LinkedList;
 
 public abstract class UnidadZerg extends Unidad {
     private VidaZerg vida;
-    public UnidadZerg(int puntosDeVidaMaximo, int costoMineral, int costoGas, Economia economia, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficie) {
-        super(economia, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficie);
+
+    public UnidadZerg(int puntosDeVidaMaximo, int costoMineral, int costoGas, Economia economia, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
+        super(economia, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie);
         this.vida = new VidaZerg(puntosDeVidaMaximo);
     }
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-        if (superficie.equals(tipoDeAtaque)) {
+        if (superficieAtaque.equals(tipoDeAtaque)) {
             return vida.daniar(danio);
         }
         return 0;//podemos poner una constante

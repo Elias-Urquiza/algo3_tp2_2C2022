@@ -267,19 +267,6 @@ public class FloorManager {
                 throw new RuntimeException("Ya hay un Moho en esa posicion");
             }
         }
-
-        for (Cristales c: cristales){
-            Posicion posicionCristales = c.getPos();
-            if(posicionCristales.equals(posicion)){
-                throw new RuntimeException("Ya hay un cristal en esa posicion");
-            }
-        }
-
-        for (Volcan v: volcanes){
-            Posicion posicionVolcan = v.getPos();
-            if(posicionVolcan.equals(posicion)){
-                throw new RuntimeException("Ya hay un volcan en esa posicion");
-            }
-        }
+        buscarCoincidenciasVolcanYCristales(posicion);
     }
 }

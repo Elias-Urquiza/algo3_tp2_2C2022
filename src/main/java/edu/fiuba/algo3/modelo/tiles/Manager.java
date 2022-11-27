@@ -19,7 +19,6 @@ public class Manager {
     FloorManager floorManager;
 
     UnidadManager unidadManager;
-
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
@@ -28,6 +27,9 @@ public class Manager {
     LinkedList<Volcan> volcanes;
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
+
+    LinkedList<Vacio> tilesDeVacios;
+
     int maxX;
     int maxY;
     int idPilones;
@@ -46,16 +48,67 @@ public class Manager {
         this.idPilones = 0;
         floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae,dimensionX, dimensionY);
         unidadManager = new UnidadManager();
+        this.tilesDeVacios = new LinkedList<>();
+
+        ponerVacio(tilesDeVacios, dimensionX, dimensionY);
 
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
-                tilesVacias.add(new TileVacia(new Posicion(i, j)));
+                Posicion pos = new Posicion(i,j);
+                if(sinVacio(pos,dimensionX, dimensionY))
+                    tilesVacias.add(new TileVacia(pos) );
             }
         }
 
     }
 
+    private boolean sinVacio(Posicion pos, int dimensionX, int dimensionY){
+        int centroX = dimensionX/2;
+        int centroY = dimensionY/2;
+        int offset = calcularOffset(dimensionX);
+        boolean ocupado = false;
+        boolean libre =true;
+
+        // si pos.getX < (centro-offset) || pos.getX > (centro+offset) => return libre
+        // si pos.getY < (centro-offset) || pos.getY > (centro+offset) => return libre
+
+        for(int i=centroX-offset; i < centroX + offset; i++) {
+            for (int j=centroY-offset; j< centroY + offset ;j++) {
+                if(pos.equals(new Posicion(i, j)))
+                    return ocupado;
+            }
+        }
+
+        return libre;
+    }
+
+    private boolean conVacio(Posicion pos, int dimensionX, int dimensionY) {
+        return !sinVacio(pos, dimensionX, dimensionY);
+    }
+
+    private void ponerVacio(LinkedList<Vacio> vacios, int dimensionX, int dimensionY){
+        int centroX = dimensionX/2;
+        int centroY = dimensionY/2;
+        int offset = calcularOffset(dimensionX);
+
+        for(int i=centroX-offset; i < centroX + offset; i++) {
+            for (int j=centroY-offset; j< centroY + offset ;j++) {
+                vacios.add( new Vacio( new Posicion(i,j) ) );
+            }
+        }
+    }
+
+    private int calcularOffset(int dimensionX){
+        if(dimensionX <= 20)
+            return 0;
+
+        return (int) Math.ceil(dimensionX/10);
+    }
+
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
+
+        if(conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
 
         criadero.setFloorManager(floorManager);
         int size = construccionesZerg.size();
@@ -76,6 +129,11 @@ public class Manager {
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
+
+        if(conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+
         pilon.setFloorManager(floorManager);
         int size = construccionProtoss.size();
         pilon.setID(idPilones);
@@ -96,6 +154,11 @@ public class Manager {
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
+
+        if(conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
 
@@ -113,6 +176,10 @@ public class Manager {
 
 
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
+
+        if(conVacio(pos, maxX, maxY))
+            throw new RuntimeException("La posicion es un espacio aereo");
+
 
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
@@ -141,6 +208,9 @@ public class Manager {
 
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
+        if(conVacio(pos, maxX, maxY))
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         floorManager.buscarCoincidencias(pos);
 
         int size = construccionProtoss.size();
@@ -168,7 +238,6 @@ public class Manager {
 
     }
 
-
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
 
@@ -181,8 +250,11 @@ public class Manager {
     }
 
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
-        floorManager.buscarCoincidencias(pos);
 
+        if(conVacio(pos, maxX, maxY))
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+        floorManager.buscarCoincidencias(pos);
 
         int size = construccionesZerg.size();
 
@@ -197,15 +269,6 @@ public class Manager {
             throw new RuntimeException("Este piso no tiene moho");
     }
 
-
-    /*
-    *i  j -->
-    *¦  -1----
-    *   --C---
-    *   ------
-    *
-    * */
-
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
         Posicion pos;
         boolean afirmacion;
@@ -213,37 +276,21 @@ public class Manager {
         for(int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
 
-                afirmacion = true;
+                afirmacion = false;
 
                 try {
                     pos = posConstruccion.incrementar(i, j, maxX, maxY);
+                    floorManager.buscarCoincidenciasUnidades(pos);
                 }catch (RuntimeException e){
                     continue;
                 }
 
-                for (ConstruccionZerg z :  construccionesZerg) {
-                   afirmacion = ( z.getPosicion() ).equals(pos);
-                }if (!afirmacion) continue;
-
-                for (ConstruccionProtoss p :  construccionProtoss) {
-                    afirmacion = ( p.getPosicion() ).equals(pos);
-                }if (!afirmacion) continue;
-
-                for (ExtraeRecurso r :  construccionQueExtrae) {
-                    afirmacion = ( r.getPosicion() ).equals(pos);
-                }if (!afirmacion) continue;
-
-                for (Volcan v :  volcanes) {
-                    afirmacion = ( v.getPos() ).equals(pos);
-                }if (!afirmacion) continue;
-
-                for (Cristales c :  cristales) {
-                    afirmacion = ( c.getPos() ).equals(pos);
-                }if (!afirmacion) continue;
+                if(conVacio(pos, maxX, maxY))
+                    continue;
 
                 // CREO QUE SOLO FALTA VERIFICAR CON LAS TILES DE VACIO
                 afirmacion = unidadManager.posicionOcupada(pos);
-                if(!afirmacion) continue;
+                if(afirmacion) continue;
 
                 unidadManager.crearUnidad(unidad);
 
@@ -257,14 +304,17 @@ public class Manager {
     public void ponerVacio(Posicion posCentro){
         int posX = posCentro.getX();
         int posY = posCentro.getY();
-
-
     }
 
-    public void moverUnidad(Posicion pos, Unidad unidad){
-        //chequear las posiciones
-    }
+    public void moverUnidad(Posicion pos, Unidad unidad) {
 
+        try {
+            floorManager.buscarCoincidenciasUnidades(pos);
+        }catch (RuntimeException e){
+            return;
+        }
+        unidadManager.moverUnidad(unidad, pos, conVacio(pos,maxX,maxY));
+    }
 
     /*
     public void printMohos() {
@@ -304,11 +354,19 @@ public class Manager {
     }*/
 
     public void agregarCristales(Posicion pos) {
+
+        if(conVacio(pos, maxX, maxY))
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         cristales.add(new Cristales(pos));
         floorManager.quitarTilesVaciasParaCristales();
     }
 
     public void agregarVolcanes(Posicion pos) {
+
+        if(conVacio(pos, maxX, maxY))
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         volcanes.add(new Volcan(pos));
         floorManager.quitarTilesVaciasParaVolcanes();
     }
