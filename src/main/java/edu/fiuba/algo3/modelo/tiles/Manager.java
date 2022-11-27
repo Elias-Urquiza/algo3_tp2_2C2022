@@ -18,7 +18,6 @@ import java.lang.Math;
 
 public class Manager {
     FloorManager floorManager;
-
     UnidadManager unidadManager;
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
