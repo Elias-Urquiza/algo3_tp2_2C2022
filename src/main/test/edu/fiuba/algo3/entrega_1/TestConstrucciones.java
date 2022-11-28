@@ -19,7 +19,7 @@ public class TestConstrucciones {
 
     private FloorManager fm = new FloorManager( (new LinkedList<Moho>()), new LinkedList<Cristales>(),new LinkedList< Volcan >(), new LinkedList<Energia>(),
             new LinkedList< TileVacia >(), new LinkedList<ConstruccionZerg>(), new LinkedList<ConstruccionProtoss>(),
-            new LinkedList<ExtraeRecurso>(),20, 20);
+            new LinkedList<ExtraeRecurso>(), new LinkedList<Vacio>(),20, 20);
 
     @Test
     public void construirLuegoDeConstruirYsinTenerMineralsLanzaUnaExcepcion(){

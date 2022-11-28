@@ -16,6 +16,8 @@ public class FloorManager {
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
+
+    LinkedList<Vacio> vacios;
     private int maxX;
     private int maxY;
 
@@ -24,7 +26,7 @@ public class FloorManager {
     public FloorManager(LinkedList<Moho> moho, LinkedList<Cristales> cristales,
                         LinkedList<Volcan> volcanes, LinkedList<Energia> energias,
                         LinkedList<TileVacia> tilesVacias, LinkedList<ConstruccionZerg> construccionZerg,
-                        LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> construccionQueExtrae, int maxX, int maxY) {
+                        LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> construccionQueExtrae, LinkedList<Vacio> vacios, int maxX, int maxY) {
 
         this.moho = moho;
         this.cristales = cristales;
@@ -34,10 +36,58 @@ public class FloorManager {
         this.construccionesZerg = construccionZerg;
         this.construccionProtoss =construccionProtoss;
         this.construccionQueExtrae = construccionQueExtrae;
+        this.vacios = vacios;
         this.maxY= maxY;
         this.maxX= maxX;
     }
 
+    public boolean sinVacio(Posicion pos, int dimensionX, int dimensionY){
+        int centroX = dimensionX/2;
+        int centroY = dimensionY/2;
+        int offset = calcularOffset(dimensionX);
+        boolean ocupado = false;
+        boolean libre =true;
+
+        // si pos.getX < (centro-offset) || pos.getX > (centro+offset) => return libre
+        // si pos.getY < (centro-offset) || pos.getY > (centro+offset) => return libre
+
+        for(int i=centroX-offset; i < centroX + offset +1; i++) {
+            for (int j=centroY-offset; j< centroY + offset +1;j++) {
+                if(pos.equals(new Posicion(i, j)))
+                    return ocupado;
+            }
+        }
+
+        return libre;
+    }
+
+    public boolean conVacio(Posicion pos, int dimensionX, int dimensionY) {
+        return !sinVacio(pos, dimensionX, dimensionY);
+    }
+
+    public void ponerVacio(LinkedList<Vacio> vacios, int dimensionX, int dimensionY){
+        int centroX = dimensionX/2;
+        int centroY = dimensionY/2;
+        int offset = calcularOffset(dimensionX);
+
+        for(int i=centroX-offset; i < centroX + offset + 1; i++) {
+            for (int j=centroY-offset; j< centroY + offset + 1;j++) {
+                vacios.add( new Vacio( new Posicion(i,j) ) );
+            }
+        }
+    }
+
+    public int calcularOffset(int dimensionX){
+        if(dimensionX <= 20)
+            return -1;
+
+        return (int) Math.ceil(dimensionX/10);
+    }
+
+    public void hayVacio(Posicion pos, int maxX, int maxY){
+        if (conVacio(pos, maxX, maxY))
+            throw new RuntimeException("vacio pa no podes hacer nada");
+    }
 
     public void quitarTilesVaciasParaMoho(){
         for(Moho m : moho){
@@ -102,10 +152,11 @@ public class FloorManager {
                 Posicion posAgregar = new Posicion(i, j);
                 try {
                     buscarCoincidenciasMoho(posAgregar);
+                    hayVacio(posAgregar, maxX, maxY);
                     Moho mohoNew = new Moho(posAgregar);
                     moho.add(mohoNew);
                 } catch (RuntimeException e) {
-                    System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
+                   // System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
 
                 }
             }
@@ -143,7 +194,6 @@ public class FloorManager {
     }
 
     public void energizar(Posicion pos, int id) {
-        //hacer que energice segun acordado
         int posicion_x = pos.getX() - 3;
         if (posicion_x < 0)
             posicion_x = 0;   // aca hay que ver como hacer pra el cso del borde de coordenadas
@@ -166,10 +216,11 @@ public class FloorManager {
                 Posicion posAgregar = new Posicion(i, j);
                 try{
                     buscarCoincidenciasEnergia(posAgregar);
+                    hayVacio(posAgregar, maxX, maxY);
                     Energia energia = new Energia(posAgregar, id);
                     energias.add(energia);
                 }catch (RuntimeException e) {
-                    System.out.println(String.format("DEBUG: La energia no se expandio en la pos %s porque hay una un mineral o moho", posAgregar));
+                    //System.out.println(String.format("DEBUG: La energia no se expandio en la pos %s porque hay una un mineral o moho", posAgregar));
                 }
            }
         }
@@ -205,14 +256,18 @@ public class FloorManager {
             contador = 0;
         }
     }
-
-    public void buscarCoincidencias(Posicion posicion){
-        for (ConstruccionProtoss c: construccionProtoss){
+    public void buscarCoincidenciasProtoss(Posicion posicion) {
+        for (ConstruccionProtoss c : construccionProtoss) {
             Posicion posicionProtoss = c.getPosicion();
-            if(posicionProtoss.equals(posicion)){
+            if (posicionProtoss.equals(posicion)) {
                 throw new RuntimeException("Ya hay una construccion en esa posicion");
             }
         }
+    }
+
+    public void buscarCoincidencias(Posicion posicion){
+
+        buscarCoincidenciasProtoss(posicion);
 
         for (ConstruccionZerg c: construccionesZerg){
             Posicion posicionZerg = c.getPosicion();
@@ -227,15 +282,10 @@ public class FloorManager {
                 throw new RuntimeException("Ya hay una construccion en esa posicion");
             }
         }
+
     }
 
-    public  void buscarCoincidenciasMoho(Posicion posicion) {
-        for (ConstruccionProtoss c : construccionProtoss) {
-            Posicion posicionProtoss = c.getPosicion();
-            if (posicionProtoss.equals(posicion)) {
-                throw new RuntimeException("Ya hay una construccion en esa posicion");
-            }
-        }
+    public  void buscarCoincidenciasDelMoho(Posicion posicion) {
 
         for (Moho m : moho) {
             Posicion posicionMoho = m.getPos();
@@ -243,30 +293,16 @@ public class FloorManager {
                 throw new RuntimeException("Ya hay un Moho en esa posicion");
             }
         }
+    }
 
-        for (Cristales c : cristales) {
-            Posicion posicionCristales = c.getPos();
-            if (posicionCristales.equals(posicion)) {
-                throw new RuntimeException("Ya hay un cristal en esa posicion");
-            }
-        }
-
-        for (Volcan v : volcanes) {
-            Posicion posicionVolcan = v.getPos();
-            if (posicionVolcan.equals(posicion)) {
-                throw new RuntimeException("Ya hay un volcan en esa posicion");
-            }
-        }
+    public  void buscarCoincidenciasMoho(Posicion posicion) {
+        buscarCoincidenciasProtoss(posicion);
+        buscarCoincidenciasVolcanYCristales(posicion);
+        buscarCoincidenciasDelMoho(posicion);
     }
 
     public void buscarCoincidenciasEnergia(Posicion posicion){
-
-        for (Moho m: moho) {
-            Posicion posicionMoho = m.getPos();
-            if (posicionMoho.equals(posicion)) {
-                throw new RuntimeException("Ya hay un Moho en esa posicion");
-            }
-        }
+        buscarCoincidenciasDelMoho(posicion);
         buscarCoincidenciasVolcanYCristales(posicion);
     }
 
@@ -287,7 +323,7 @@ public class FloorManager {
     }
 
     public void buscarCoincidenciasUnidades (Posicion pos) throws RuntimeException {
-        buscarCoincidenciasMoho(pos);
+        buscarCoincidencias(pos);
         buscarCoincidenciasVolcanYCristales(pos);
     }
 }

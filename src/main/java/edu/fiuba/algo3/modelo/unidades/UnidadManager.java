@@ -8,6 +8,8 @@ import javafx.geometry.Pos;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+
+
 public class UnidadManager {
 
     final HashMap<TipoDeUnidades, LinkedList> unidades;
@@ -18,8 +20,9 @@ public class UnidadManager {
         unidades.put(TipoDeUnidades.ZERG, new LinkedList<Unidad>());
     }
 
-    public void crearUnidad(Unidad unidad) {
-        unidad.agregate(unidades);// se filtra por tierra-aire y por proto-zerg.
+    public void crearUnidad(Unidad unidad, Posicion pos) {
+        unidad.setPosicion(pos);
+        unidad.agregate(unidades);// se filtra por proto-zerg.
     }
     public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
         agresor.atacar(victima);
@@ -30,19 +33,21 @@ public class UnidadManager {
     }
 
     public  boolean posicionOcupada(Posicion pos){
-        boolean afirmacion =  true;
+        boolean afirmacion =  false;
+        boolean ocupado = false;
 
         LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
-        for (Unidad u : zergs)
-            afirmacion = (u.getPosicion() ).equals(pos);
-        if(!afirmacion) return afirmacion;
-
+        //System.out.println(zergs);
+        for (Unidad u : zergs) {
+            afirmacion = (u.getPosicion()).equals(pos);
+            if (afirmacion)  ocupado = true;
+        }
         LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
-        for (Unidad u : protoss)
-            afirmacion = (u.getPosicion() ).equals(pos);
-        if(!afirmacion) return afirmacion;
-
-        return afirmacion;
+        for (Unidad u : protoss) {
+            afirmacion = (u.getPosicion()).equals(pos);
+            if (afirmacion)  ocupado = true;
+        }
+        return ocupado;
     }
 
 

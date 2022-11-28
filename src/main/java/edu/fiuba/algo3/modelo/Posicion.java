@@ -24,7 +24,7 @@ public class Posicion {
     }
 
     public Posicion incrementar(int incrementoX, int incrementoY, int maxX, int maxY){
-        if((this.x)+incrementoX < 0 || (this.y)+incrementoY < 0  || (this.y)+incrementoY >= maxY || (this.x)+incrementoX >= maxX  || (x == x+incrementoX && y == y + incrementoY)){
+        if((this.x)+incrementoX < 0 || (this.y)+incrementoY < 0  || (this.y)+incrementoY >= maxY || (this.x)+incrementoX >= maxX){
             throw new RuntimeException("Esa posicion invalida");
         }
         Posicion posicionNueva = new Posicion( (this.x)+incrementoX, (this.y)+incrementoY ) ;
