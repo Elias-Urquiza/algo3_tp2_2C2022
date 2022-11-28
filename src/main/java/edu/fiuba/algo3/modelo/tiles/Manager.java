@@ -301,10 +301,9 @@ public class Manager {
 
     public void evolucionar(UnidadZerg unidad){
         
+        unidadManager.chequeoEvolucion(unidad);
 
 
-
-        //unidadManager.crearUnidad(unidad);
     }
 
 

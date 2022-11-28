@@ -45,5 +45,10 @@ public class UnidadManager {
         return afirmacion;
     }
 
+    public void chequeoEvolucion(UnidadZerg unidad){
+        //unidad.chequearCorrelatividad();
+
+    }
+
 
 }

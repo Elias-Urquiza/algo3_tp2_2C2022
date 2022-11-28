@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.TipoDeUnidades;
 import edu.fiuba.algo3.modelo.VidaZerg;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,6 +24,23 @@ public abstract class UnidadZerg extends Unidad {
             return vida.daniar(danio);
         }
         return 0;//podemos poner una constante
+    }
+
+    public void chequearCorrelatividad(LinkedList<UnidadZerg> lista) {
+        boolean match = false;
+        boolean afirmacion = false;
+
+        for (UnidadZerg u : lista) {
+            match = correlativity.stream().anyMatch(any -> any.equals(u.getClass()));
+            if(match)
+                afirmacion = true;
+        }
+        if (afirmacion || correlativity.isEmpty())
+            lista.add(this);
+        else
+            throw new RuntimeException("No existe su correlativa");
+
+
     }
 
     @Override
