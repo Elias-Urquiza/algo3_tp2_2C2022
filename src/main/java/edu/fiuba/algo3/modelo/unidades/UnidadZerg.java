@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 public abstract class UnidadZerg extends Unidad {
     private VidaZerg vida;
+    protected LinkedList<Class> correlativity;
 
     public UnidadZerg(int puntosDeVidaMaximo, int costoMineral, int costoGas, Economia economia, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
         super(economia, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie);

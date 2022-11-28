@@ -19,6 +19,8 @@ public abstract class Unidad implements Objetivo {
     protected Movimiento superficie;
 
 
+
+
     public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
         try {
             if (costoGas != 0){
