@@ -9,6 +9,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.UnidadManager;
+import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import javafx.geometry.Pos;
 
@@ -296,6 +297,14 @@ public class Manager {
 
             }
         }
+    }
+
+    public void evolucionar(UnidadZerg unidad){
+        
+
+
+
+        //unidadManager.crearUnidad(unidad);
     }
 
 
