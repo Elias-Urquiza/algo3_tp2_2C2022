@@ -272,6 +272,12 @@ public class Manager {
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
         Posicion pos;
         boolean afirmacion;
+/*
+        try {
+            unidad.chequearCorrelatividad
+        }catch (RuntimeException e){
+
+        }*/ //Esto es para verificar la correlativa de unidad como en construir zerg
 
         for(int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {

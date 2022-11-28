@@ -3,6 +3,8 @@ package edu.fiuba.algo3.modelo.unidades.zerg;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
+import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.unidades.*;
 
 import java.util.HashMap;
@@ -14,6 +16,8 @@ public class Zerling extends UnidadZerg {
 
         super(35, 25, 0, economia, pos, 2, 1, new Tierra(0), new Tierra(0));
         ataques.add(new Tierra(4));
+
+        correlatividad.add(ReservaDeReproduccion.class);
     }
 
     @Override

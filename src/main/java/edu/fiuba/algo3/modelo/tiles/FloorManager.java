@@ -290,4 +290,7 @@ public class FloorManager {
         buscarCoincidenciasMoho(pos);
         buscarCoincidenciasVolcanYCristales(pos);
     }
+
+
+
 }
