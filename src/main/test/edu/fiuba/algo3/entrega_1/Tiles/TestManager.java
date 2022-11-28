@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -770,7 +771,7 @@ public class TestManager {
         );
         assertEquals("No se puede construir en esta posicion", exception.getMessage());
     }
-
+/*
     @Test
     public void construirUnCriaderoSobreUnCristalLanzaExcepcion() {
         Posicion pos0 = new Posicion(10,10);
@@ -782,5 +783,18 @@ public class TestManager {
                 () -> manager.construirCriaderoEn(pos0, criadero1)
         );
         assertEquals("No se puede construir en esta posicion", exception.getMessage());
-    }
+    }*/
+/*
+    @Test
+    public void UnidadseCreEnUnaPosicionCorrecta() {
+        Posicion pos0 = new Posicion(10,10);
+        //ReservaDeReproduccion reserva = new ReservaDeReproduccion(economia, pos0);
+        Zerling zerling = new Zerling(economia, pos0);
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.crearUnidad(pos0, zerling)
+        );
+    }*/
 }
+
+
