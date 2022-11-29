@@ -1,7 +1,9 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
+import edu.fiuba.algo3.modelo.unidades.Tierra;
 
 import java.util.LinkedList;
 
@@ -12,6 +14,9 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     protected int tiempoDeConstruccion;
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
+
+    protected LinkedList<Class> correlativity;
+    protected Tierra superficie;
 
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
@@ -33,11 +38,16 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         this.pos = pos;
         this.energizado = energizado;
         this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
+        this.correlativity = new LinkedList<>();
+        this.superficie = new Tierra(0);
     }
 
     @Override
-    public int recibirDanio(int danio) {
-       return vida.daniar(danio);
+    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
+       if(tipoDeAtaque.equals(superficie)) {
+           return vida.daniar(danio);
+       }
+       return 0;
     }
 
     public int curar() {
@@ -60,6 +70,22 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         return afirmacion;
     }
 
+    public void chequearCorrelatividad(LinkedList<ConstruccionProtoss> lista) {
+        boolean match = false;
+        boolean afirmacion = false;
+
+        for (ConstruccionProtoss p : lista) {
+            match = correlativity.stream().anyMatch(any -> any.equals(p.getClass()));
+            if(match)
+                afirmacion = true;
+        }
+
+        if (afirmacion || correlativity.isEmpty())
+            lista.add(this);
+        else
+            throw new RuntimeException("No existe su correlativa");
+
+    }
 
     public void pasarTurno() {
         return;

@@ -4,6 +4,8 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.unidades.Ataque;
+import edu.fiuba.algo3.modelo.unidades.Tierra;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class TestConstruccionProtoss {
     private static final Economia mockEconomia = new MockEconomia();
     private ConstruccionProtoss constr;
+    private static Ataque terrestre = new Tierra(0);
 
     @BeforeEach
     public void initEach() {
@@ -20,24 +23,24 @@ public class TestConstruccionProtoss {
 
     @Test
     public void danioUnaConstruccionProtossSinSacarleElEscudoYNoPierdeVida() {
-        Assertions.assertEquals(0, constr.recibirDanio(50));
+        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre));
     }
 
     @Test
     public void danioUnaConstruccionProtossSacandoleElEscudoYPierdeVida() {
-        Assertions.assertEquals(50, constr.recibirDanio(100));
+        Assertions.assertEquals(50, constr.recibirDanio(100, terrestre));
     }
 
     @Test
     public void curarUnaConstruccionProtossSoloLeRegeneraElEscudo() {
-        Assertions.assertEquals(150, constr.recibirDanio(200));
+        Assertions.assertEquals(150, constr.recibirDanio(200, terrestre));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }
 
     @Test
     public void curarUnaConstruccionProtossConEscudoMaximoNoLoCura() {
-        Assertions.assertEquals(0, constr.recibirDanio(50));
+        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }

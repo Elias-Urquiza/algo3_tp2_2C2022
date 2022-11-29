@@ -7,13 +7,18 @@ import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.UnidadManager;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import javafx.geometry.Pos;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.lang.Math;
 
 public class Manager {
     FloorManager floorManager;
+    UnidadManager unidadManager;
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
@@ -22,6 +27,9 @@ public class Manager {
     LinkedList<Volcan> volcanes;
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
+
+    LinkedList<Vacio> tilesDeVacios;
+
     int maxX;
     int maxY;
     int idPilones;
@@ -38,18 +46,28 @@ public class Manager {
         this.maxX = dimensionX;
         this.maxY = dimensionY;
         this.idPilones = 0;
-        floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae,dimensionX, dimensionY);
+        floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae, tilesDeVacios, dimensionX, dimensionY);
+        unidadManager = new UnidadManager();
+        this.tilesDeVacios = new LinkedList<>();
 
+        floorManager.ponerVacio(tilesDeVacios, dimensionX, dimensionY);
 
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
-                tilesVacias.add(new TileVacia(new Posicion(i, j)));
+                Posicion pos = new Posicion(i,j);
+                if(floorManager.sinVacio(pos,dimensionX, dimensionY))
+                    tilesVacias.add(new TileVacia(pos) );
             }
         }
 
     }
 
+
+
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
 
         criadero.setFloorManager(floorManager);
         int size = construccionesZerg.size();
@@ -70,6 +88,11 @@ public class Manager {
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+
         pilon.setFloorManager(floorManager);
         int size = construccionProtoss.size();
         pilon.setID(idPilones);
@@ -90,6 +113,11 @@ public class Manager {
     }
 
     public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
 
@@ -107,6 +135,10 @@ public class Manager {
 
 
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
 
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
@@ -135,17 +167,22 @@ public class Manager {
 
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         floorManager.buscarCoincidencias(pos);
 
         int size = construccionProtoss.size();
 
         for(Energia e : energias) {
-            e.construir(construccionProtoss, protoss, pos);
+            try {
+                e.construir(construccionProtoss, protoss, pos);
+            } catch (RuntimeException err1) {
+                throw err1;
+            }
         }
-
-        if(size == construccionProtoss.size()) {
-            throw new RuntimeException("No esta energizada esta posicion");
-        }
+        if(size == construccionProtoss.size())
+            throw new RuntimeException("Este piso no esta energizado");
     }
 
     public void destruirProtoss(Posicion pos) {
@@ -160,7 +197,6 @@ public class Manager {
 
     }
 
-
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
 
@@ -173,17 +209,62 @@ public class Manager {
     }
 
     public void construirZerg(Posicion pos, ConstruccionZerg zerg) {
-        floorManager.buscarCoincidencias(pos);
 
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
+        floorManager.buscarCoincidencias(pos);
 
         int size = construccionesZerg.size();
 
         for(Moho m : moho) {
-            m.construir(construccionesZerg, zerg, pos);
+            try {
+                m.construir(construccionesZerg, zerg, pos);
+            }catch (RuntimeException err2){
+                throw err2;
+            }
         }
-
         if(size == construccionesZerg.size())
-            throw new RuntimeException("No hay un moho en la posicion");
+            throw new RuntimeException("Este piso no tiene moho");
+    }
+
+    public void crearUnidad(Posicion posConstruccion, Unidad unidad){
+        Posicion pos;
+        boolean afirmacion;
+        boolean accionRealizada = false;
+
+        for(int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+
+                pos = posConstruccion.incrementar(i, j, maxX, maxY);
+
+                try {
+                    floorManager.buscarCoincidenciasUnidades(pos);
+                }catch (RuntimeException e){
+                    continue;
+                }
+
+                if(floorManager.conVacio(pos, maxX, maxY) )
+                    continue;
+
+                if(unidadManager.posicionOcupada(pos))
+                    continue;
+
+                if(!accionRealizada) {
+                    unidadManager.crearUnidad(unidad, pos);
+                    accionRealizada = true;
+                }
+            }
+        }
+    }
+
+    public void moverUnidad(Posicion pos, Unidad unidad) {
+        try {
+            floorManager.buscarCoincidenciasUnidades(pos);
+        }catch (RuntimeException e){
+            return;
+        }
+        unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
     }
 
     /*
@@ -224,11 +305,19 @@ public class Manager {
     }*/
 
     public void agregarCristales(Posicion pos) {
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         cristales.add(new Cristales(pos));
         floorManager.quitarTilesVaciasParaCristales();
     }
 
     public void agregarVolcanes(Posicion pos) {
+
+        if(floorManager.conVacio(pos, maxX, maxY) )
+            throw new RuntimeException("La posicion es un espacio aereo");
+
         volcanes.add(new Volcan(pos));
         floorManager.quitarTilesVaciasParaVolcanes();
     }
@@ -242,8 +331,5 @@ public class Manager {
 
         for (ExtraeRecurso extrae : construccionQueExtrae)
             extrae.pasarTurno();
-
-
-
     }
 }

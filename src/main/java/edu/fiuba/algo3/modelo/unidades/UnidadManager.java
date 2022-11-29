@@ -1,31 +1,54 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.tiles.Vacio;
+import javafx.geometry.Pos;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
+
+
 public class UnidadManager {
-    // no se verifica que el usuario ataque a su enemigo, puede potencialmente atacarse asi mismo.
-/*
-    private LinkedList<Objetivo> objetivosAereos;
 
-    private LinkedList<Objetivo> objetivosTerrestres;
+    final HashMap<TipoDeUnidades, LinkedList> unidades;
 
-    public void crearUnidadProtoss(Posicion pos, UnidadProtoss unidad) {
-        unidadesProtoss.add(unidad);
+    public UnidadManager(){
+        unidades = new HashMap<>();
+        unidades.put(TipoDeUnidades.PROTOSS, new LinkedList<Unidad>());
+        unidades.put(TipoDeUnidades.ZERG, new LinkedList<Unidad>());
     }
 
-    public void crearUnidadZerg(Posicion pos, UnidadZerg unidad) {
-        unidadesZerg.add(unidad);
+    public void crearUnidad(Unidad unidad, Posicion pos) {
+        unidad.setPosicion(pos);
+        unidad.agregate(unidades);// se filtra por proto-zerg.
+    }
+    public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
+        agresor.atacar(victima);
     }
 
-    public void ataqueTerrestre(Unidad atacanteTerrestre, Objetivo unObjetivo){
-
+    public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){
+        unaUnidad.movete(nuevaPosicion, esVacio);
     }
 
-    public void ataqueAereo(Unidad atacanteAereo, Objetivo unObjetivo){
+    public  boolean posicionOcupada(Posicion pos){
+        boolean afirmacion =  false;
+        boolean ocupado = false;
 
+        LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
+        //System.out.println(zergs);
+        for (Unidad u : zergs) {
+            afirmacion = (u.getPosicion()).equals(pos);
+            if (afirmacion)  ocupado = true;
+        }
+        LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
+        for (Unidad u : protoss) {
+            afirmacion = (u.getPosicion()).equals(pos);
+            if (afirmacion)  ocupado = true;
+        }
+        return ocupado;
     }
-*/
+
 
 }

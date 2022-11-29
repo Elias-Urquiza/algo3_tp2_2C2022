@@ -1,9 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 public interface Ataque {
-
-    void ataqueTerrestre(Objetivo unObjetivo);
-
-    void ataqueAereo(Objetivo unObjetivo);
-
+    int atacar(Objetivo unObjetivo);
+    boolean equals(Ataque ataque);
+    String getNombre();
 }

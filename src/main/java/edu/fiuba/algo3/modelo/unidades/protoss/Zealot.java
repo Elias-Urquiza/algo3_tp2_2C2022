@@ -2,26 +2,21 @@ package edu.fiuba.algo3.modelo.unidades.protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.unidades.Ataque;
-import edu.fiuba.algo3.modelo.unidades.Objetivo;
-import edu.fiuba.algo3.modelo.unidades.UnidadProtoss;
+import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.unidades.*;
 
-public class Zealot extends UnidadProtoss implements Ataque {
+import java.util.HashMap;
+import java.util.LinkedList;
+
+public class Zealot extends UnidadProtoss  {
     public Zealot(Economia economia, Posicion pos) {
-        super(100, 60, 100, 0, economia, pos, 4, 1);
-    }
 
-    public void atacar(Objetivo unObjetivo) {
-
-    }
-
-    @Override
-    public void ataqueTerrestre(Objetivo unObjetivo) {
-
+        super(100, 60, 100, 0, economia, pos, 4, 1, new Tierra(0), new Tierra(0));
+        ataques.add(new Tierra(8));
     }
 
     @Override
-    public void ataqueAereo(Objetivo unObjetivo) {
-
+    public void agregate(HashMap<TipoDeUnidades, LinkedList> listas) {
+        listas.get(TipoDeUnidades.PROTOSS).add(this);
     }
 }

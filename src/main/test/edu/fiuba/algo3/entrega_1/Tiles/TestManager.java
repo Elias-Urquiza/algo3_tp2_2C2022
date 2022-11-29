@@ -4,10 +4,7 @@ import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
-import edu.fiuba.algo3.modelo.buildings.zerg.Espiral;
-import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
-import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
+import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +47,7 @@ public class TestManager {
             for (int j = posicion_y; j < (topeY); j++) {
                 if (i != 5 || j != 5) {//para que no construya sobre el criadero
                     try {
-                        manager.construirZerg(new Posicion(i, j), new Espiral(economia, new Posicion(i, j)));
+                        manager.construirZerg(new Posicion(i, j), new ReservaDeReproduccion(economia, new Posicion(i, j)));
                     } catch (RuntimeException e) {
                         afirmacion = false;
                     }
@@ -82,7 +79,7 @@ public class TestManager {
                 if (i != 3 || j != 3) {//para que no construya sobre el criadero
                    try{
                         pos = new Posicion(i,j);
-                        manager.construirZerg(pos, new Guarida(economia, pos));
+                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
                     } catch (RuntimeException e) {
                         afirmacion = false;
                     }
@@ -116,7 +113,7 @@ public class TestManager {
                 if (i != 3 || j != 17) {//para que no construya sobre el criadero
                     try {
                         pos = new Posicion(i,j);
-                        manager.construirZerg(pos, new Guarida(economia, pos));
+                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
                     } catch (RuntimeException e) {
                         afirmacion = false;
                     }
@@ -150,7 +147,7 @@ public class TestManager {
                 if (i != 17 || j != 3) {//para que no construya sobre el criadero
                     try {
                         pos =new Posicion(i,j);
-                        manager.construirZerg(pos, new Guarida(economia, pos));
+                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
                     } catch (RuntimeException e) {
                         afirmacion = false;
                     }
@@ -227,7 +224,7 @@ public class TestManager {
                 if (i != 17 || j != 17) {//para que no construya sobre el criadero
                     try {
                         pos =new Posicion(i, j);
-                        manager.construirZerg(pos, new Guarida(economia, pos));
+                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
                     } catch (RuntimeException e) {
                         afirmacion = false;
                     }
@@ -443,7 +440,7 @@ public class TestManager {
                 RuntimeException.class,
                 () -> manager.construirProtoss(pos2, new Acceso(economia, pos2))
         );
-        assertEquals("No esta energizada esta posicion", exception.getMessage());
+        assertEquals("Este piso no esta energizado", exception.getMessage());
     }
 
     @Test

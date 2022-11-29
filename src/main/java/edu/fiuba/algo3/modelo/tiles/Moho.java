@@ -15,10 +15,13 @@ public class Moho {
     }
 
     public void construir(LinkedList list, ConstruccionZerg construccionZerg, Posicion posicion) {
-        if (!pos.equals(posicion)) {
-            return;
+        if (posicion.equals(this.pos)) {
+            try {
+                construccionZerg.chequearCorrelatividad(list);
+            } catch (RuntimeException e){
+                throw e;
+            }
         }
-        list.add(construccionZerg);
     }
 
     public void pasarTurno(LinkedList<Moho> mohos) {

@@ -14,6 +14,7 @@ public class Guarida extends ConstruccionZerg implements Construccion, Turno {
     public Guarida(Economia economia, Posicion pos){
         super(1250, 200, 100, 12, economia, pos);
         turnosActivo = 0;
+        correlativity.add(ReservaDeReproduccion.class);
     }
 
     public void usar() {
