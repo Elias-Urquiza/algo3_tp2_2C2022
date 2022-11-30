@@ -263,7 +263,7 @@ public class Manager {
         unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
     }
 
-    public void unidadAtaca(Unidad unaUnidad, Objetivo unObjetivo){
+    public void unidadAtaca(Unidad unaUnidad, Unidad unObjetivo){
         unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
     }
 

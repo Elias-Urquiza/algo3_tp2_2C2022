@@ -24,7 +24,8 @@ public class UnidadManager  {
         unidad.setPosicion(pos);
         unidad.agregate(unidades);// se filtra por proto-zerg.
     }
-    public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
+    public void ejecutarComandoDeDaniar(Unidad agresor, Unidad victima){
+        agresor.verificarRango(agresor, victima.getPosicion());
         agresor.atacar(victima);
     }
 

@@ -4,10 +4,13 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.TipoDeUnidades;
 import edu.fiuba.algo3.modelo.Turno;
+import java.lang.Math;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 public abstract class Unidad implements Objetivo, Turno {
 
@@ -42,7 +45,7 @@ public abstract class Unidad implements Objetivo, Turno {
     @Override
     public abstract int recibirDanio(int danio, Ataque tipoDeAtaque);
 
-    public int atacar(Objetivo objetivo) {
+    public int atacar(Unidad objetivo) {
 
         if(turnos < tiempoDeConstruccion)
             throw new RuntimeException("Unidad todavia en preparacion");
@@ -52,6 +55,15 @@ public abstract class Unidad implements Objetivo, Turno {
             danio += ataque.atacar(objetivo);
         }
         return danio;
+    }
+    public void verificarRango(Unidad unidadAtacante, Posicion posicionVictima){
+        Posicion posicionAtacante = unidadAtacante.getPosicion();
+        int distanciaX= posicionVictima.getX() - posicionAtacante.getX();
+        int distanciaY= posicionVictima.getY() - posicionAtacante.getY();
+        int distanciaAbosoluta = abs(distanciaX) + abs(distanciaY);
+        if(distanciaAbosoluta > unidadAtacante.rango){
+            throw new RuntimeException();
+        }
     }
 
     public Posicion getPosicion(){
