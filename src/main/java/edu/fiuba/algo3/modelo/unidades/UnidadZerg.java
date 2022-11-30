@@ -26,22 +26,7 @@ public abstract class UnidadZerg extends Unidad {
         return 0;//podemos poner una constante
     }
 
-    public void chequearCorrelatividad(LinkedList<UnidadZerg> lista) {
-        boolean match = false;
-        boolean afirmacion = false;
 
-        for (UnidadZerg u : lista) {
-            match = correlativity.stream().anyMatch(any -> any.equals(u.getClass()));
-            if(match)
-                afirmacion = true;
-        }
-        if (afirmacion || correlativity.isEmpty())
-            lista.add(this);
-        else
-            throw new RuntimeException("No existe su correlativa");
-
-
-    }
 
     @Override
     public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);

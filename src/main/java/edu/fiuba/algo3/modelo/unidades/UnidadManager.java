@@ -45,10 +45,24 @@ public class UnidadManager {
         return afirmacion;
     }
 
-    public void chequeoEvolucion(UnidadZerg unidad){
-        //unidad.chequearCorrelatividad();
+    public void chequeoEvolucion(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
 
+        LinkedList<Unidad> lista = unidades.get(TipoDeUnidades.ZERG);
+        Unidad zergAEliminar = null;
+        Posicion posUnidadVieja = unidadAEvolucionar.getPosicion();
+        boolean encontrado = false;
+
+        for (Unidad zerg : lista ) {
+            if (zerg.getPosicion().equals(posUnidadVieja) && !encontrado) {
+                zergAEliminar = zerg;
+                unidadEvolucionada.setPosicion(posUnidadVieja);
+                encontrado =true;
+            }
+        }
+
+        if(encontrado)
+            lista.remove(zergAEliminar);
+        else
+            throw new RuntimeException("La unidad que se desea evolucionar no existe");
     }
-
-
 }

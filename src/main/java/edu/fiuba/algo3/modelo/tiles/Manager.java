@@ -299,14 +299,9 @@ public class Manager {
         }
     }
 
-    public void evolucionar(UnidadZerg unidad){
-        
-        unidadManager.chequeoEvolucion(unidad);
-
-
+    public void evolucionar(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
+        unidadManager.chequeoEvolucion(unidadAEvolucionar, unidadEvolucionada);
     }
-
-
 
     //hacemos que haya vacio en un radio de 3 al rededor de esa pos
     public void ponerVacio(Posicion posCentro){
