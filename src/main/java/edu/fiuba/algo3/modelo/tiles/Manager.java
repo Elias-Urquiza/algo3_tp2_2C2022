@@ -250,6 +250,10 @@ public class Manager {
         }
     }
 
+    public void evolucionar(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
+        unidadManager.chequeoEvolucion(unidadAEvolucionar, unidadEvolucionada);
+    }
+
     public void moverUnidad(Posicion pos, Unidad unidad) {
         try {
             floorManager.buscarCoincidenciasUnidades(pos);
