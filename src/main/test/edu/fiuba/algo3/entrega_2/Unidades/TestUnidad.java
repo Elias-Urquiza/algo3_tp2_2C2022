@@ -11,10 +11,11 @@ import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUnidad {
 
@@ -129,4 +130,43 @@ public class TestUnidad {
 
         assert(posEsperada.equals(bicho7.getPosicion()));
     }
+
+    @Test
+    public void unaUnidadParaLaCualPasoSuTiempoDeCreacionSePuedeMover(){
+        Posicion pos0 = new Posicion(3,3);
+        Posicion pos1 = new Posicion(4,4);
+
+        Unidad bicho1 = new Zerling(economia, pos0);
+
+        bicho1.pasarTurno();
+        bicho1.pasarTurno();
+
+        assertDoesNotThrow( () -> bicho1.movete(pos1, false));
+    }
+    @Test
+    public void unaUnidadParaLaCualPasoSuTiempoDeCreacionPuedeAtacar(){
+        Posicion pos0 = new Posicion(3,3);
+        Posicion pos1 = new Posicion(4,4);
+
+        Unidad bicho1 = new Zerling(economia, pos0);
+
+        bicho1.pasarTurno();
+        bicho1.pasarTurno();
+
+        assertDoesNotThrow( () -> bicho1.atacar(new Pilon(economia, pos1) ) );
+    }
+
+    @Test
+    public void unaUnidadParaLaCualNoPasoSuTiempoDeCreacionNoFunciona(){
+        Posicion pos0 = new Posicion(3,3);
+        Posicion pos1 = new Posicion(4,4);
+
+        Unidad bicho1 = new Zerling(economia, pos0);
+
+        Assertions.assertThrows( RuntimeException.class, () -> bicho1.movete(pos1, false) );
+    }
+
+
+
+
 }

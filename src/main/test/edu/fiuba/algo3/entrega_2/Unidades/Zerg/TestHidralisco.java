@@ -19,8 +19,11 @@ public class TestHidralisco {
         int esperado = 10;
         Hidralisco hidralisco1 = new Hidralisco(new MockEconomia(), new Posicion(1,1));
         Hidralisco hidralisco2 = new Hidralisco(new MockEconomia(), new Posicion(1,2));
+        for (int i = 0; i < 4; i++) {
+           hidralisco1.pasarTurno();
+           hidralisco2.pasarTurno();
 
-
+        }
         int resultado1 = hidralisco1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
         int resultado2 = hidralisco2.atacar(hidralisco1);
 
@@ -35,7 +38,8 @@ public class TestHidralisco {
         int esperado = 10;
         Hidralisco hidralisco1 = new Hidralisco(new MockEconomia(), new Posicion(1,1));
         Mutalisco mutalisco = new Mutalisco(new MockEconomia(), new Posicion(1,2));
-
+        for (int i = 0; i < 4; i++)
+            hidralisco1.pasarTurno();
         int resultado1 = hidralisco1.atacar(mutalisco);
 
         assertEquals(esperado, resultado1);
@@ -46,6 +50,9 @@ public class TestHidralisco {
         Hidralisco hidralisco = new Hidralisco(new MockEconomia(), new Posicion(1,1));
         Aire aire = new Aire(20);
         int esperado = 0;
+        for (int i = 0; i < 4; i++)
+            hidralisco.pasarTurno();
+
 
         int resultado = hidralisco.recibirDanio(20, aire);
 

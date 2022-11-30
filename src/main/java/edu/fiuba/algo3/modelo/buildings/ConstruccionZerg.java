@@ -17,6 +17,8 @@ public class ConstruccionZerg implements Turno, Objetivo {
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
+
+    private int turnos;
     private static final int CURACION_ZERG = 100;
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
@@ -44,6 +46,7 @@ public class ConstruccionZerg implements Turno, Objetivo {
         this.tiempoDeConstruccion = tiempoDeConstruccion;
         this.correlativity = new LinkedList<>();
         superficie = new Tierra(0);
+        this.turnos = 0;
     }
 
     public int curar() {
@@ -90,5 +93,6 @@ public class ConstruccionZerg implements Turno, Objetivo {
     }
 
     public void pasarTurno() {
+        turnos++;
     }
 }

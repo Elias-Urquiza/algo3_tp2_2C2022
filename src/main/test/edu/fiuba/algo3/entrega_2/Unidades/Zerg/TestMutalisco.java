@@ -20,6 +20,8 @@ public class TestMutalisco {
         Mutalisco unidad1 = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Zerling unidad2 = new Zerling(new MockEconomia(), new Posicion(1,2));
 
+        for (int i = 0; i < 7; i++)
+            unidad1.pasarTurno();
 
         int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
         int resultado2 = unidad1.atacar(unidad2);
@@ -35,6 +37,8 @@ public class TestMutalisco {
         int esperado = 9;
         Mutalisco mutalisco1 = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Mutalisco mutalisco2 = new Mutalisco(new MockEconomia(), new Posicion(1,2));
+        for (int i = 0; i < 7; i++)
+            mutalisco1.pasarTurno();
 
         int resultado1 = mutalisco1.atacar(mutalisco2);
 
@@ -46,6 +50,9 @@ public class TestMutalisco {
         Mutalisco mutalisco = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Tierra tierra = new Tierra(20);
         int esperado = 0;
+
+        for (int i = 0; i < 7; i++)
+            mutalisco.pasarTurno();
 
         int resultado = mutalisco.recibirDanio(20, tierra);
 

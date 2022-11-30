@@ -18,8 +18,10 @@ public class TestZerling {
         int esperado = 4;
         Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
         Zerling zerling2 = new Zerling(new MockEconomia(), new Posicion(1,2));
-
-
+        for (int i = 0; i < 2; i++) {
+            zerling1.pasarTurno();
+            zerling2.pasarTurno();
+        }
         int resultado1 = zerling1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
         int resultado2 = zerling2.atacar(zerling2);
 
@@ -34,10 +36,9 @@ public class TestZerling {
         Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
         Aire aire = new Aire(20);
         int esperado = 0;
-
+        zerling1.pasarTurno();zerling1.pasarTurno();
         int resultado = zerling1.recibirDanio(20, aire);
 
         assertEquals(esperado, resultado);
     }
-
 }

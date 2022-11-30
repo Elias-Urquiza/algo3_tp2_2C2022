@@ -21,8 +21,6 @@ public class FloorManager {
     private int maxX;
     private int maxY;
 
-
-
     public FloorManager(LinkedList<Moho> moho, LinkedList<Cristales> cristales,
                         LinkedList<Volcan> volcanes, LinkedList<Energia> energias,
                         LinkedList<TileVacia> tilesVacias, LinkedList<ConstruccionZerg> construccionZerg,

@@ -18,6 +18,8 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     protected LinkedList<Class> correlativity;
     protected Tierra superficie;
 
+    private int turnos;
+
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 
@@ -40,6 +42,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
         this.correlativity = new LinkedList<>();
         this.superficie = new Tierra(0);
+        this.turnos = 0;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     }
 
     public void pasarTurno() {
-        return;
+        turnos++;
     }
 
     public Posicion getPosicion() {
