@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -783,4 +784,11 @@ public class TestManager {
         );
         assertEquals("No se puede construir en esta posicion", exception.getMessage());
     }
+/*
+    @Test
+    public void evolucionarSinNingunZanganoLanzaExcepcion(){
+        Posicion pos = new Posicion(3, 3);
+        Zerling unidad1 = new Zerling(economia, pos);
+        manager.construirZerg(pos);
+    }*/
 }
