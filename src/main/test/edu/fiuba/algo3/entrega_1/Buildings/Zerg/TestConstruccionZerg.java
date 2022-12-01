@@ -14,27 +14,28 @@ public class TestConstruccionZerg {
 
     private ConstruccionZerg construccionZerg;
     private static final Economia mockEconomia = new MockEconomia();
-    private static Ataque terrestre = new Tierra(0);
+    private static Ataque terrestre = new Tierra(0, 100);
+    private Posicion posicionMock  = new Posicion(3, 3);
 
 
     @Test
     public void danioUnaConstruccionZergYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre, posicionMock));
     }
 
     @Test
     public void danioUnaConstruccionZergPorMasDeLaVidaMaximaYElDanioEsCorrecto() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre));
-        Assertions.assertEquals(900, construccionZerg.recibirDanio(1000, terrestre));
+        Assertions.assertEquals(100, construccionZerg.recibirDanio(100, terrestre, posicionMock));
+        Assertions.assertEquals(900, construccionZerg.recibirDanio(1000, terrestre, posicionMock));
     }
 
     @Test
     public void curoUnaConstruccionZergYLaCuracionEsLaCorrecta() {
         construccionZerg = new ConstruccionZerg(1000, 10, 10, 10, mockEconomia, new Posicion(0,0));
-        Assertions.assertEquals(20, construccionZerg.recibirDanio(20, terrestre));
-        Assertions.assertEquals(70, construccionZerg.recibirDanio(70, terrestre));
+        Assertions.assertEquals(20, construccionZerg.recibirDanio(20, terrestre, posicionMock));
+        Assertions.assertEquals(70, construccionZerg.recibirDanio(70, terrestre, posicionMock));
         Assertions.assertEquals(90, construccionZerg.curar());
     }
 

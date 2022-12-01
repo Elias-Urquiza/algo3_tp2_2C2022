@@ -23,7 +23,7 @@ public class TestMutalisco {
         for (int i = 0; i < 7; i++)
             unidad1.pasarTurno();
 
-        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
+        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 1,0)));
         int resultado2 = unidad1.atacar(unidad2);
 
         boolean afirmacion1 = esperado == resultado2;
@@ -48,13 +48,13 @@ public class TestMutalisco {
     @Test
     public void recibeDanioSoloAereo(){
         Mutalisco mutalisco = new Mutalisco(new MockEconomia(), new Posicion(1,1));
-        Tierra tierra = new Tierra(20);
+        Tierra tierra = new Tierra(20, 100);
         int esperado = 0;
 
         for (int i = 0; i < 7; i++)
             mutalisco.pasarTurno();
 
-        int resultado = mutalisco.recibirDanio(20, tierra);
+        int resultado = mutalisco.recibirDanio(20, tierra, new Posicion(1, 1));
 
         assertEquals(esperado, resultado);
     }

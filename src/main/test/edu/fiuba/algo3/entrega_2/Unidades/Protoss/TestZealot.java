@@ -20,7 +20,7 @@ public class TestZealot {
         Zerling unidad2 = new Zerling(new MockEconomia(), new Posicion(1,2));
         for (int i = 0; i < 4; i++)
             unidad1.pasarTurno();
-        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
+        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 1,0)));
         int resultado2 = unidad1.atacar(unidad2);
 
         boolean afirmacion1 = esperado == resultado2;
@@ -32,11 +32,11 @@ public class TestZealot {
     @Test
     public void recibeDanioSoloTerrestre(){
         Zealot unidad = new Zealot(new MockEconomia(), new Posicion(1,1));
-        Aire aire = new Aire(20);
+        Aire aire = new Aire(20, 100);
         int esperado = 0;
         for (int i = 0; i < 4; i++)
             unidad.pasarTurno();
-        int resultado = unidad.recibirDanio(20, aire);
+        int resultado = unidad.recibirDanio(20, aire, new Posicion(3, 3));
 
         assertEquals(esperado, resultado);
     }

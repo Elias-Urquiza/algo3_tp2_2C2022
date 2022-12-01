@@ -47,11 +47,11 @@ public class TestDragon {
     @Test
     public void recibeDanioSoloTerrestre(){
         Dragon unidad = new Dragon(new MockEconomia(), new Posicion(1,1));
-        Aire aire = new Aire(20);
+        Aire aire = new Aire(20, 100);
         int esperado = 0;
         for (int i = 0; i < 9; i++)
             unidad.pasarTurno();
-        int resultado = unidad.recibirDanio(20, aire);
+        int resultado = unidad.recibirDanio(20, aire, new Posicion(3, 3));
 
         assertEquals(esperado, resultado);
     }
