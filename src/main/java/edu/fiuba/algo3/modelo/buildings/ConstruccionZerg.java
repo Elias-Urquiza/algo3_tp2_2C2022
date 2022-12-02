@@ -45,7 +45,7 @@ public class ConstruccionZerg implements Turno, Objetivo {
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
         this.correlativity = new LinkedList<>();
-        superficie = new Tierra(0);
+        superficie = new Tierra(0, 0);
         this.turnos = 0;
     }
 
@@ -54,8 +54,8 @@ public class ConstruccionZerg implements Turno, Objetivo {
     }
 
     @Override
-    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-        if(tipoDeAtaque.equals(superficie)) {
+    public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
+        if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
             return vida.daniar(danio);
         }
         return 0;

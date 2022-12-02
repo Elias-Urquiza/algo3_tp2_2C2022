@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class TestConstruccionProtoss {
     private static final Economia mockEconomia = new MockEconomia();
     private ConstruccionProtoss constr;
-    private static Ataque terrestre = new Tierra(0);
+    private static Ataque terrestre = new Tierra(0, 10000);
 
     @BeforeEach
     public void initEach() {
@@ -23,24 +23,24 @@ public class TestConstruccionProtoss {
 
     @Test
     public void danioUnaConstruccionProtossSinSacarleElEscudoYNoPierdeVida() {
-        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre));
+        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre, new Posicion(3,3)));
     }
 
     @Test
     public void danioUnaConstruccionProtossSacandoleElEscudoYPierdeVida() {
-        Assertions.assertEquals(50, constr.recibirDanio(100, terrestre));
+        Assertions.assertEquals(50, constr.recibirDanio(100, terrestre, new Posicion(3,3)));
     }
 
     @Test
     public void curarUnaConstruccionProtossSoloLeRegeneraElEscudo() {
-        Assertions.assertEquals(150, constr.recibirDanio(200, terrestre));
+        Assertions.assertEquals(150, constr.recibirDanio(200, terrestre, new Posicion(3,3)));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }
 
     @Test
     public void curarUnaConstruccionProtossConEscudoMaximoNoLoCura() {
-        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre));
+        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre, new Posicion(3,3) ));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }

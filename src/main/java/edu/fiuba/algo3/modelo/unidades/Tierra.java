@@ -6,13 +6,15 @@ public class Tierra implements Ataque, Movimiento {
 
     private static String nombre = "tierra";
     private int danio;
-    public Tierra(int danio){
+    private int rango;
+    public Tierra(int danio, int rango){
         this.danio = danio;
+        this.rango = rango;
     }
 
     @Override
-    public int atacar(Objetivo objetivo) {
-        return objetivo.recibirDanio(danio, this);
+    public int atacar(Objetivo objetivo, Posicion posicionDeAtacante) {
+        return objetivo.recibirDanio(danio, this, posicionDeAtacante);
     }
 
     @Override
@@ -26,6 +28,11 @@ public class Tierra implements Ataque, Movimiento {
     @Override
     public boolean equals(Ataque ataque) {
         return nombre.equals(ataque.getNombre());
+    }
+
+    @Override
+    public boolean inRange(Posicion posicionAtacante, Posicion posicionObjetivo) {
+        return posicionObjetivo.estaEnRangoDe(posicionAtacante, rango);
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class Unidad implements Objetivo, Turno {
 
-    private Posicion pos;
+    protected Posicion pos;
     private int tiempoDeConstruccion;
     private int rango;
     protected LinkedList<Ataque> ataques;
@@ -40,7 +40,7 @@ public abstract class Unidad implements Objetivo, Turno {
     }
 
     @Override
-    public abstract int recibirDanio(int danio, Ataque tipoDeAtaque);
+    public abstract int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion pos);
 
     public int atacar(Objetivo objetivo) {
 
@@ -49,7 +49,7 @@ public abstract class Unidad implements Objetivo, Turno {
 
         int danio = 0;
         for (Ataque ataque : ataques) {
-            danio += ataque.atacar(objetivo);
+            danio += ataque.atacar(objetivo, pos);
         }
         return danio;
     }

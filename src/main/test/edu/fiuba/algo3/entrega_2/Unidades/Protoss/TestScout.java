@@ -46,11 +46,11 @@ public class TestScout {
     @Test
     public void recibeDanioSoloAereo(){
         Scout unidad = new Scout(new MockEconomia(), new Posicion(1,1));
-        Tierra tierra = new Tierra(20);
+        Tierra tierra = new Tierra(20, 100);
         int esperado = 0;
         for (int i = 0; i < 9; i++)
             unidad.pasarTurno();
-        int resultado = unidad.recibirDanio(20, tierra);
+        int resultado = unidad.recibirDanio(20, tierra, new Posicion(3, 3));
 
         assertEquals(esperado, resultado);
     }
