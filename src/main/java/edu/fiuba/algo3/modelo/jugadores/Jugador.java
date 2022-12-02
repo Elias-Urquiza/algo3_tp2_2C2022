@@ -11,6 +11,14 @@ public class Jugador {
         this.color = color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
     // TODO Comportamiento? Tal vez sirva como clase a la que la UI delega comportamiento como
     //  "display color", "display nombre", etc.
 

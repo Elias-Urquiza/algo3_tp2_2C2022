@@ -375,7 +375,7 @@ public class Manager {
 
     private void crearBaseZerg(Posicion pos) {
         crearBaseNormal(pos);
-        // Agregar criadero zerg en el medio ?
+        // Agregar criadero zerg en el medio ? ci
 
     }
 
