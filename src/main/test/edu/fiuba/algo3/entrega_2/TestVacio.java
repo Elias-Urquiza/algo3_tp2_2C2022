@@ -12,7 +12,7 @@ import edu.fiuba.algo3.modelo.tiles.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestVacio {
 
@@ -22,13 +22,17 @@ public class TestVacio {
 
     @BeforeEach
     public void initEach() {
-//16 - 24
-        Posicion posCriadero = new Posicion(25, 25);
-        Posicion posPilon = new Posicion(15, 15);
+
+        Posicion posCriadero = new Posicion(26, 14);
+        Posicion posPilon = new Posicion(14, 14);
+        Posicion posCriadero2 = new Posicion(26, 26);
+        Posicion posPilon2 = new Posicion(14, 26);
 
         manager = new Manager(40, 40);
         manager.construirCriaderoEn(posCriadero, new Criadero(economia, posCriadero));
         manager.construirPilonEn(posPilon, new Pilon(economia, posPilon));
+        manager.construirCriaderoEn(posCriadero2, new Criadero(economia, posCriadero2));
+        manager.construirPilonEn(posPilon2, new Pilon(economia, posPilon2));
 
         for (int i = 0; i < 5; i++) {
             manager.pasarTurno();
@@ -39,35 +43,41 @@ public class TestVacio {
     @Test
     public void dadaUnaTileVaciaNoSePuedeConstruirNadaSobreElla(){
 
-        Posicion pos;
-        int esperado = 4;
-        int resultado = 0;
 
-        try {
-            pos = new Posicion(23,23);
-            manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
-        }catch (RuntimeException e){
-            resultado++;
-        }
-        try {
-            pos = new Posicion(18, 19);
-            manager.construirProtoss(pos, new Acceso(economia, pos));
-        }catch (RuntimeException e){
-            resultado++;
-        }
-        try {
-            pos = new Posicion(20,20);
-            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
-        }catch (RuntimeException e){
-            resultado++;
-        }
-        try {
-            pos = new Posicion(19, 19);
-            manager.construirPilonEn(pos, new Pilon(economia, pos));
-        }catch (RuntimeException e){
-            resultado++;
-        }
+        final Posicion pos1 = new Posicion(16,16);
 
-        assertEquals(esperado, resultado);
+        final RuntimeException exception1 = assertThrows(
+                RuntimeException.class,
+                 () -> manager.construirProtoss(pos1, new Acceso(economia, pos1) )
+        );
+        boolean afirmacion1 = "La posicion es un espacio aereo" ==  exception1.getMessage();
+
+        final Posicion pos2 = new Posicion(16,24);
+
+        final RuntimeException exception2 = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirProtoss(pos2, new Acceso(economia, pos2) )
+        );
+        boolean afirmacion2 = "La posicion es un espacio aereo" ==  exception2.getMessage();
+
+        final Posicion pos3 = new Posicion(24,16);
+
+        final RuntimeException exception3 = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirZerg(pos3, new ReservaDeReproduccion(economia, pos3) )
+        );
+        boolean afirmacion3 = "La posicion es un espacio aereo" ==  exception3.getMessage();
+
+
+        final Posicion pos4 = new Posicion(24,24);
+
+        final RuntimeException exception4 = assertThrows(
+                RuntimeException.class,
+                () -> manager.construirZerg(pos4, new ReservaDeReproduccion(economia, pos4) )
+        );
+        boolean afirmacion4 = "La posicion es un espacio aereo" ==  exception4.getMessage();
+
+
+        assert(afirmacion1 && afirmacion2 && afirmacion3 && afirmacion4);
     }
 }

@@ -20,8 +20,10 @@ public class TestMutalisco {
         Mutalisco unidad1 = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Zerling unidad2 = new Zerling(new MockEconomia(), new Posicion(1,2));
 
+        for (int i = 0; i < 7; i++)
+            unidad1.pasarTurno();
 
-        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
+        int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 1,0)));
         int resultado2 = unidad1.atacar(unidad2);
 
         boolean afirmacion1 = esperado == resultado2;
@@ -35,6 +37,8 @@ public class TestMutalisco {
         int esperado = 9;
         Mutalisco mutalisco1 = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Mutalisco mutalisco2 = new Mutalisco(new MockEconomia(), new Posicion(1,2));
+        for (int i = 0; i < 7; i++)
+            mutalisco1.pasarTurno();
 
         int resultado1 = mutalisco1.atacar(mutalisco2);
 
@@ -44,10 +48,13 @@ public class TestMutalisco {
     @Test
     public void recibeDanioSoloAereo(){
         Mutalisco mutalisco = new Mutalisco(new MockEconomia(), new Posicion(1,1));
-        Tierra tierra = new Tierra(20);
+        Tierra tierra = new Tierra(20, 100);
         int esperado = 0;
 
-        int resultado = mutalisco.recibirDanio(20, tierra);
+        for (int i = 0; i < 7; i++)
+            mutalisco.pasarTurno();
+
+        int resultado = mutalisco.recibirDanio(20, tierra, new Posicion(1, 1));
 
         assertEquals(esperado, resultado);
     }

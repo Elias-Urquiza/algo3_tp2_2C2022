@@ -33,7 +33,7 @@ public class Zangano extends ConstruccionZerg implements Construccion, Turno, Ex
 
     @Override
     public void pasarTurno() {
-        curar();
+
     }
 
     @Override

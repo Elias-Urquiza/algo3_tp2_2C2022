@@ -18,9 +18,11 @@ public class TestZerling {
         int esperado = 4;
         Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
         Zerling zerling2 = new Zerling(new MockEconomia(), new Posicion(1,2));
-
-
-        int resultado1 = zerling1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
+        for (int i = 0; i < 2; i++) {
+            zerling1.pasarTurno();
+            zerling2.pasarTurno();
+        }
+        int resultado1 = zerling1.atacar(new Guarida(new MockEconomia(), new Posicion( 1,0)));
         int resultado2 = zerling2.atacar(zerling2);
 
         boolean afirmacion1 = esperado == resultado2;
@@ -32,12 +34,11 @@ public class TestZerling {
     @Test
     public void recibeDanioSoloTerrestre(){
         Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
-        Aire aire = new Aire(20);
+        Aire aire = new Aire(20, 10000000);
         int esperado = 0;
-
-        int resultado = zerling1.recibirDanio(20, aire);
+        zerling1.pasarTurno();zerling1.pasarTurno();
+        int resultado = zerling1.recibirDanio(20, aire, new Posicion(3, 3));
 
         assertEquals(esperado, resultado);
     }
-
 }

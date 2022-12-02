@@ -18,6 +18,8 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     protected LinkedList<Class> correlativity;
     protected Tierra superficie;
 
+    private int turnos;
+
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 
@@ -39,12 +41,13 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         this.energizado = energizado;
         this.vida = new VidaProtoss(puntosDeVidaMaxima, escudoMaximo);
         this.correlativity = new LinkedList<>();
-        this.superficie = new Tierra(0);
+        this.superficie = new Tierra(0, 0);
+        this.turnos = 0;
     }
 
     @Override
-    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-       if(tipoDeAtaque.equals(superficie)) {
+    public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
+       if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
            return vida.daniar(danio);
        }
        return 0;
@@ -88,7 +91,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     }
 
     public void pasarTurno() {
-        return;
+        turnos++;
     }
 
     public Posicion getPosicion() {

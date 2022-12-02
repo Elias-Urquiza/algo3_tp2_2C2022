@@ -18,7 +18,7 @@ public class CriaderoActivo extends Criadero {
 
         fm = new FloorManager( (new LinkedList<Moho>()), new LinkedList<Cristales>(),new LinkedList<Volcan>(), new LinkedList<Energia>(),
                                 new LinkedList< TileVacia >(), new LinkedList<ConstruccionZerg>(), new LinkedList<ConstruccionProtoss>(),
-                                new LinkedList<ExtraeRecurso>(),20, 20);
+                                new LinkedList<ExtraeRecurso>(),new LinkedList<Vacio>(),20, 20);
 
         setFloorManager(fm);
         pasarTurno();
