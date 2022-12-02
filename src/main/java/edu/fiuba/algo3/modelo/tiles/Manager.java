@@ -332,4 +332,55 @@ public class Manager {
         for (ExtraeRecurso extrae : construccionQueExtrae)
             extrae.pasarTurno();
     }
+
+
+    public void crearBases(){
+        Posicion posBase1 = new Posicion(maxX-5,maxY-5);
+        Posicion posBase2 = new Posicion(5,5);
+        Posicion centro = new Posicion(0,0);
+
+        // Crear bases Zerg
+        crearBaseZerg(posBase1);
+        // Crear base Protoss
+        crearBaseProtoss(posBase2);
+
+        // Crear varias bases desplegadas de forma equidistante al centro
+        // recordar que hay un vacio en el centro del mapa que es proporcional al tamanio
+        // TODO
+        Integer offsetDelCentro = floorManager.calcularOffset(maxX) + 5;
+        for (int i = offsetDelCentro; i < maxX-10; i = i + 20) {
+            Posicion offsetX = new Posicion(i,0);
+            Posicion offsetY = new Posicion(0,i);
+            crearBaseNormal(centro.add(offsetX));
+            crearBaseNormal(centro.add(offsetY));
+            crearBaseNormal(centro.subtract(offsetX));
+            crearBaseNormal(centro.subtract(offsetY));
+        }
+    }
+
+    private void crearBaseNormal(Posicion pos) {
+        Posicion offsetX = new Posicion(1,0);
+        Posicion offsetY = new Posicion(0,1);
+
+        // Agrego muchos cristales alrededor del centro
+        agregarCristales(pos.add(offsetX));
+        agregarCristales(pos.subtract(offsetX));
+        agregarCristales(pos.add(offsetX).add(offsetY));
+        agregarCristales(pos.subtract(offsetX).subtract(offsetY));
+        agregarCristales(pos.add(offsetY));
+
+        // Agrego un volcan al norte del centro
+        agregarVolcanes(pos.subtract(offsetY));
+    }
+
+    private void crearBaseZerg(Posicion pos) {
+        crearBaseNormal(pos);
+        // Agregar criadero zerg en el medio ?
+
+    }
+
+    private void crearBaseProtoss(Posicion pos) {
+        crearBaseNormal(pos);
+        // Agregar algo protoss en el medio ?
+    }
 }

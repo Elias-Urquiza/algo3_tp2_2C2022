@@ -2,11 +2,10 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 public abstract class Unidad implements Objetivo {
 
@@ -62,5 +61,5 @@ public abstract class Unidad implements Objetivo {
         pos = nuevaPosicion;
     }
 
-    public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);
+    public abstract void agregate(HashMap<Raza, LinkedList> listas);
 }

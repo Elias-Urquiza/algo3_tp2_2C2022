@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.unidades.protoss;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.*;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class Scout extends UnidadProtoss {
     }
 
     @Override
-    public void agregate(HashMap<TipoDeUnidades, LinkedList> listas) {
-        listas.get(TipoDeUnidades.PROTOSS).add(this);
+    public void agregate(HashMap<Raza, LinkedList> listas) {
+        listas.get(Raza.PROTOSS).add(this);
     }
 }
