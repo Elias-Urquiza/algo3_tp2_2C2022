@@ -17,7 +17,7 @@ public class Devorador extends UnidadZerg {
 
         super(200, 150, 50, economia, pos, 4, 5, new Aire(0, 0), new Aire(0, 0));
 
-        ataques.add(new Aire(15));
+
         correlativity.add(Mutalisco.class);
 
         ataques.add(new Aire(15, 5));

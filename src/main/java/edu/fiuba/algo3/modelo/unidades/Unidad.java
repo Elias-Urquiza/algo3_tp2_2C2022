@@ -3,8 +3,6 @@ package edu.fiuba.algo3.modelo.unidades;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
-
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
 import edu.fiuba.algo3.modelo.Turno;
 
 

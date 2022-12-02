@@ -49,18 +49,18 @@ public class UnidadManager  {
     }
 
     public void hacerPasarDeTurno(){
-        LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
+        LinkedList<Unidad> zergs= unidades.get(Raza.ZERG);
         for (Unidad u :zergs)
             u.pasarTurno();
 
-        LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
+        LinkedList<Unidad> protoss= unidades.get(Raza.PROTOSS);
         for (Unidad u :protoss)
             u.pasarTurno();
     }
 
     public void chequeoEvolucion(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
 
-        LinkedList<Unidad> lista = unidades.get(TipoDeUnidades.ZERG);
+        LinkedList<Unidad> lista = unidades.get(Raza.ZERG);
         Unidad zergAEliminar = null;
         Posicion posUnidadVieja = unidadAEvolucionar.getPosicion();
         boolean encontrado = false;

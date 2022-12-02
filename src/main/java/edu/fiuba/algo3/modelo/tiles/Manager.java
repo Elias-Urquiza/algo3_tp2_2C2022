@@ -257,9 +257,6 @@ public class Manager {
         unidadManager.chequeoEvolucion(unidadAEvolucionar, unidadEvolucionada);
     }
 
-
-    }
-
     public void moverUnidad(Posicion pos, Unidad unidad) {
         try {
             floorManager.buscarCoincidenciasUnidades(pos);

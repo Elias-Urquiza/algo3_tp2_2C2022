@@ -17,7 +17,6 @@ public class Guardian extends UnidadZerg {
 
         super(100, 50, 100, economia, pos, 4, 10, new Aire(0, 0),new Aire(0, 0));
 
-        ataques.add(new Tierra(25));
         correlativity.add(Mutalisco.class);
         ataques.add(new Tierra(25, 10));
     }
