@@ -24,6 +24,8 @@ public abstract class UnidadProtoss extends Unidad {
         return 0;
     }
 
+
+
     @Override
     public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);
 }
