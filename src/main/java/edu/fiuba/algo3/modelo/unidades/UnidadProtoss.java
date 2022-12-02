@@ -17,12 +17,14 @@ public abstract class UnidadProtoss extends Unidad {
     }
 
     @Override
-    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-        if (superficieAtaque.equals(tipoDeAtaque)) {
+    public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
+        if (superficieAtaque.equals(tipoDeAtaque) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
             return vida.daniar(danio);
         }
         return 0;
     }
+
+
 
     @Override
     public abstract void agregate(HashMap<Raza, LinkedList> listas);

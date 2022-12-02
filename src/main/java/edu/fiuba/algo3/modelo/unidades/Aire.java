@@ -6,17 +6,25 @@ public class Aire implements Ataque, Movimiento {
 
     private static String nombre = "Aire";
     private int danio;
-    public Aire(int danio){
+    private int rango;
+    public Aire(int danio, int rango){
+        this.rango = rango;
         this.danio = danio;
     }
+
     @Override
-    public int atacar(Objetivo objetivo) {
-        return objetivo.recibirDanio(danio, this);
+    public int atacar(Objetivo objetivo, Posicion atacante) {
+        return objetivo.recibirDanio(danio, this, atacante);
     }
 
     @Override
     public boolean equals(Ataque ataque){
         return nombre.equals(ataque.getNombre());
+    }
+
+    @Override
+    public boolean inRange(Posicion posicionAtacante, Posicion posicionObjetivo) {
+        return posicionObjetivo.estaEnRangoDe(posicionAtacante, rango);
     }
 
     @Override

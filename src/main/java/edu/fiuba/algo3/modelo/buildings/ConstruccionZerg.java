@@ -17,6 +17,8 @@ public class ConstruccionZerg implements Turno, Objetivo {
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
+
+    private int turnos;
     private static final int CURACION_ZERG = 100;
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
@@ -43,7 +45,8 @@ public class ConstruccionZerg implements Turno, Objetivo {
         this.pos = pos;
         this.tiempoDeConstruccion = tiempoDeConstruccion;
         this.correlativity = new LinkedList<>();
-        superficie = new Tierra(0);
+        superficie = new Tierra(0, 0);
+        this.turnos = 0;
     }
 
     public int curar() {
@@ -51,8 +54,8 @@ public class ConstruccionZerg implements Turno, Objetivo {
     }
 
     @Override
-    public int recibirDanio(int danio, Ataque tipoDeAtaque) {
-        if(tipoDeAtaque.equals(superficie)) {
+    public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
+        if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
             return vida.daniar(danio);
         }
         return 0;
@@ -90,5 +93,6 @@ public class ConstruccionZerg implements Turno, Objetivo {
     }
 
     public void pasarTurno() {
+        turnos++;
     }
 }

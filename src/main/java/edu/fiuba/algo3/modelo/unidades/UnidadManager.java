@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 
 
-public class UnidadManager {
+public class UnidadManager  {
 
     final HashMap<Raza, LinkedList> unidades;
 
@@ -48,5 +48,35 @@ public class UnidadManager {
         return ocupado;
     }
 
+    public void hacerPasarDeTurno(){
+        LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
+        for (Unidad u :zergs)
+            u.pasarTurno();
+
+        LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
+        for (Unidad u :protoss)
+            u.pasarTurno();
+    }
+
+    public void chequeoEvolucion(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
+
+        LinkedList<Unidad> lista = unidades.get(TipoDeUnidades.ZERG);
+        Unidad zergAEliminar = null;
+        Posicion posUnidadVieja = unidadAEvolucionar.getPosicion();
+        boolean encontrado = false;
+
+        for (Unidad zerg : lista ) {
+            if (zerg.getPosicion().equals(posUnidadVieja) && !encontrado) {
+                zergAEliminar = zerg;
+                unidadEvolucionada.setPosicion(posUnidadVieja);
+                encontrado =true;
+            }
+        }
+
+        if(encontrado)
+            lista.remove(zergAEliminar);
+        else
+            throw new RuntimeException("La unidad que se desea evolucionar no existe");
+    }
 
 }

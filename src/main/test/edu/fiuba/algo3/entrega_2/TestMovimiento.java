@@ -52,7 +52,8 @@ public class TestMovimiento {
         Posicion posFinal =new Posicion(4,4);
 
         Scout scout = new Scout(economia, posInicial);
-
+        for (int i = 0; i < 9; i++)
+            scout.pasarTurno();
         scout.movete(posFinal, true);
 
         assert(scout.getPosicion().equals(posFinal));
@@ -65,6 +66,9 @@ public class TestMovimiento {
         Posicion posFinal =new Posicion(4,4);
 
         Scout scout = new Scout(economia, posInicial);
+
+        for (int i = 0; i < 9; i++)
+            scout.pasarTurno();
 
         scout.movete(posFinal, false);
 
@@ -80,6 +84,9 @@ public class TestMovimiento {
 
         Dragon dragon = new Dragon(economia, posInicial);
 
+        for (int i = 0; i < 6; i++)
+            dragon.pasarTurno();
+
         dragon.movete(posFinal, true);
 
         assert( !(dragon.getPosicion().equals(posFinal)) );
@@ -92,6 +99,8 @@ public class TestMovimiento {
         Posicion posFinal =new Posicion(4,4);
 
         Dragon dragon = new Dragon(economia, posInicial);
+        for (int i = 0; i < 6; i++)
+            dragon.pasarTurno();
 
         dragon.movete(posFinal, false);
 
@@ -108,6 +117,10 @@ public class TestMovimiento {
         Guarida guarida = new Guarida(economia, posInicial);
         manager.construirZerg(posInicial, guarida);
         Unidad  mutalisco = new Mutalisco(economia, posInicial);
+
+        for (int i = 0; i < 7; i++)
+            mutalisco.pasarTurno();
+
         manager.crearUnidad(posInicial,mutalisco);
 
         manager.moverUnidad(posFinal ,mutalisco);
@@ -124,6 +137,8 @@ public class TestMovimiento {
         Unidad  zerling = new Zerling(economia, posInicial);
         manager.crearUnidad(posInicial,zerling);
 
+        zerling.pasarTurno();zerling.pasarTurno();
+
         assertDoesNotThrow( () -> manager.moverUnidad(posFinal ,zerling) );
     }
 
@@ -137,6 +152,8 @@ public class TestMovimiento {
         PuertoEstelar puertoEstelar = new PuertoEstelar(economia, posInicial);
         manager.construirProtoss(posInicial, puertoEstelar);
         Unidad  scout = new Scout(economia, posInicial);
+        for (int i = 0; i < 9; i++)
+            scout.pasarTurno();
         manager.crearUnidad(posInicial, scout);
 
         manager.moverUnidad(posFinal, scout);
@@ -152,6 +169,9 @@ public class TestMovimiento {
 
         Unidad  dragon = new Dragon(economia, posInicial);
         manager.crearUnidad(posInicial,dragon);
+
+        for (int i = 0; i < 6; i++)
+            dragon.pasarTurno();
 
         assertDoesNotThrow( () -> manager.moverUnidad(posFinal ,dragon) );
     }

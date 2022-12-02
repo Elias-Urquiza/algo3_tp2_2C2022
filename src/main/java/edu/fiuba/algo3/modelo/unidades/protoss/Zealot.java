@@ -11,8 +11,8 @@ import java.util.LinkedList;
 public class Zealot extends UnidadProtoss  {
     public Zealot(Economia economia, Posicion pos) {
 
-        super(100, 60, 100, 0, economia, pos, 4, 1, new Tierra(0), new Tierra(0));
-        ataques.add(new Tierra(8));
+        super(100, 60, 100, 0, economia, pos, 4, 1, new Tierra(0, 0), new Tierra(0, 0));
+        ataques.add(new Tierra(8, 1));
     }
 
     @Override

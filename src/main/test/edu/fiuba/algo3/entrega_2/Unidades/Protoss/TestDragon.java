@@ -20,6 +20,9 @@ public class TestDragon {
         Dragon unidad1 = new Dragon(new MockEconomia(), new Posicion(1,1));
         Zerling unidad2 = new Zerling(new MockEconomia(), new Posicion(1,2));
 
+        for (int i = 0; i < 6; i++)
+            unidad1.pasarTurno();
+
         int resultado1 = unidad1.atacar(new Guarida(new MockEconomia(), new Posicion( 3,3)));
         int resultado2 = unidad1.atacar(unidad2);
 
@@ -34,7 +37,8 @@ public class TestDragon {
         int esperado = 20;
         Dragon unidad1 = new Dragon(new MockEconomia(), new Posicion(1,1));
         Mutalisco unidad2 = new Mutalisco(new MockEconomia(), new Posicion(1,2));
-
+        for (int i = 0; i < 6; i++)
+            unidad1.pasarTurno();
         int resultado1 = unidad1.atacar(unidad2);
 
         assertEquals(esperado, resultado1);
@@ -43,10 +47,11 @@ public class TestDragon {
     @Test
     public void recibeDanioSoloTerrestre(){
         Dragon unidad = new Dragon(new MockEconomia(), new Posicion(1,1));
-        Aire aire = new Aire(20);
+        Aire aire = new Aire(20, 100);
         int esperado = 0;
-
-        int resultado = unidad.recibirDanio(20, aire);
+        for (int i = 0; i < 9; i++)
+            unidad.pasarTurno();
+        int resultado = unidad.recibirDanio(20, aire, new Posicion(3, 3));
 
         assertEquals(esperado, resultado);
     }

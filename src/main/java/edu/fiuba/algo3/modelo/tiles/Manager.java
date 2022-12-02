@@ -1,20 +1,21 @@
 package edu.fiuba.algo3.modelo.tiles;
 
-import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.unidades.Objetivo;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.UnidadManager;
+import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import javafx.geometry.Pos;
 
+
 import java.util.LinkedList;
 import java.util.Objects;
-import java.lang.Math;
 
 public class Manager {
     FloorManager floorManager;
@@ -27,9 +28,7 @@ public class Manager {
     LinkedList<Volcan> volcanes;
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
-
     LinkedList<Vacio> tilesDeVacios;
-
     int maxX;
     int maxY;
     int idPilones;
@@ -61,8 +60,6 @@ public class Manager {
         }
 
     }
-
-
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
 
@@ -132,7 +129,6 @@ public class Manager {
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un mineral en la posicion");
     }
-
 
     public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
 
@@ -230,7 +226,6 @@ public class Manager {
 
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
         Posicion pos;
-        boolean afirmacion;
         boolean accionRealizada = false;
 
         for(int i = -1; i < 2; i++) {
@@ -258,6 +253,13 @@ public class Manager {
         }
     }
 
+    public void evolucionar(UnidadZerg unidadAEvolucionar, UnidadZerg unidadEvolucionada){
+        unidadManager.chequeoEvolucion(unidadAEvolucionar, unidadEvolucionada);
+    }
+
+
+    }
+
     public void moverUnidad(Posicion pos, Unidad unidad) {
         try {
             floorManager.buscarCoincidenciasUnidades(pos);
@@ -265,6 +267,10 @@ public class Manager {
             return;
         }
         unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
+    }
+
+    public void unidadAtaca(Unidad unaUnidad, Objetivo unObjetivo){
+        unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
     }
 
     /*
@@ -331,6 +337,8 @@ public class Manager {
 
         for (ExtraeRecurso extrae : construccionQueExtrae)
             extrae.pasarTurno();
+
+        unidadManager.hacerPasarDeTurno();
     }
 
 
