@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaZerg;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
@@ -29,5 +29,5 @@ public abstract class UnidadZerg extends Unidad {
 
 
     @Override
-    public abstract void agregate(HashMap<TipoDeUnidades, LinkedList> listas);
+    public abstract void agregate(HashMap<Raza, LinkedList> listas);
 }

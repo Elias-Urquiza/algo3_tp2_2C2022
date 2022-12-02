@@ -1,9 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
-import edu.fiuba.algo3.modelo.tiles.Vacio;
-import javafx.geometry.Pos;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,12 +10,12 @@ import java.util.LinkedList;
 
 public class UnidadManager  {
 
-    final HashMap<TipoDeUnidades, LinkedList> unidades;
+    final HashMap<Raza, LinkedList> unidades;
 
     public UnidadManager(){
         unidades = new HashMap<>();
-        unidades.put(TipoDeUnidades.PROTOSS, new LinkedList<Unidad>());
-        unidades.put(TipoDeUnidades.ZERG, new LinkedList<Unidad>());
+        unidades.put(Raza.PROTOSS, new LinkedList<Unidad>());
+        unidades.put(Raza.ZERG, new LinkedList<Unidad>());
     }
 
     public void crearUnidad(Unidad unidad, Posicion pos) {
@@ -36,13 +34,13 @@ public class UnidadManager  {
         boolean afirmacion =  false;
         boolean ocupado = false;
 
-        LinkedList<Unidad> zergs= unidades.get(TipoDeUnidades.ZERG);
+        LinkedList<Unidad> zergs= unidades.get(Raza.ZERG);
         //System.out.println(zergs);
         for (Unidad u : zergs) {
             afirmacion = (u.getPosicion()).equals(pos);
             if (afirmacion)  ocupado = true;
         }
-        LinkedList<Unidad> protoss= unidades.get(TipoDeUnidades.PROTOSS);
+        LinkedList<Unidad> protoss= unidades.get(Raza.PROTOSS);
         for (Unidad u : protoss) {
             afirmacion = (u.getPosicion()).equals(pos);
             if (afirmacion)  ocupado = true;

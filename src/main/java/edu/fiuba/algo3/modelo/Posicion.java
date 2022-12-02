@@ -17,6 +17,14 @@ public class Posicion {
         return other.getX() == x && other.getY() == y;
     }
 
+    public Posicion add(Posicion pos) {
+        return new Posicion(this.getX()+pos.getX(), this.getY()+pos.getY());
+    }
+
+    public Posicion subtract(Posicion pos) {
+        return new Posicion(this.getX()-pos.getX(), this.getY()-pos.getY());
+    }
+
     public int getX() {
         return x;
     }

@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.unidades.zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.TipoDeUnidades;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.Aire;
 import edu.fiuba.algo3.modelo.unidades.Tierra;
 import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
@@ -23,7 +23,7 @@ public class Guardian extends UnidadZerg {
     }
 
     @Override
-    public void agregate(HashMap<TipoDeUnidades, LinkedList> listas) {
-        listas.get(TipoDeUnidades.ZERG).add(this);
+    public void agregate(HashMap<Raza, LinkedList> listas) {
+        listas.get(Raza.ZERG).add(this);
     }
 }
