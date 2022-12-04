@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.buildings.protoss;
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.tiles.Energia;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
@@ -15,6 +12,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     private static final int TIEMPO_CONSTRUCCION = 5;
     private FloorManager floorManager;
+    private Suministros suministrosProtoss;
 
     private int id;
 
@@ -23,6 +21,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
         turnosActivo = 0;
         this.id = 0;
         this.floorManager = null;
+        this.suministrosProtoss = null;
     }
 
 
@@ -50,6 +49,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
         if (pos.equals(this.pos)) {
             floorManager.desenergizar(pos, id);
+            suministrosProtoss.disminuirMaximo(5);
             afirmacion = true;
         }
         return afirmacion;
@@ -60,6 +60,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     }
 
     public void setFloorManager(FloorManager floorManager) {this.floorManager = floorManager;}
+    public void setSuministrosProtoss(Suministros sum) {this.suministrosProtoss = sum;}
 
     @Override
     public void desactivar() {

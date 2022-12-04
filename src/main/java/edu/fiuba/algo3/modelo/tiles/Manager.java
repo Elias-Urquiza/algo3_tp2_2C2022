@@ -2,18 +2,18 @@ package edu.fiuba.algo3.modelo.tiles;
 
 import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.UnidadManager;
 import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
-import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
-import javafx.geometry.Pos;
 
-
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -29,6 +29,7 @@ public class Manager {
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
     LinkedList<Vacio> tilesDeVacios;
+    HashMap<Raza, Suministros> suminstrosHashMap;
     int maxX;
     int maxY;
     int idPilones;
@@ -48,7 +49,10 @@ public class Manager {
         floorManager = new FloorManager(moho, cristales, volcanes, energias, tilesVacias, construccionesZerg, construccionProtoss, construccionQueExtrae, tilesDeVacios, dimensionX, dimensionY);
         unidadManager = new UnidadManager();
         this.tilesDeVacios = new LinkedList<>();
-
+        HashMap<Raza, Suministros> suministros = new HashMap<>();
+        suministros.put(Raza.ZERG, new Suministros());
+        suministros.put(Raza.PROTOSS, new Suministros());
+        this.suminstrosHashMap = suministros;
         floorManager.ponerVacio(tilesDeVacios, dimensionX, dimensionY);
 
         for (int i = 0; i < maxX; i ++) {
@@ -67,6 +71,7 @@ public class Manager {
             throw new RuntimeException("La posicion es un espacio aereo");
 
         criadero.setFloorManager(floorManager);
+        criadero.setSuministrosZerg(suminstrosHashMap.get(Raza.ZERG));
         int size = construccionesZerg.size();
 
         floorManager.buscarCoincidencias(pos);
@@ -82,6 +87,7 @@ public class Manager {
                 throw new RuntimeException("No se puede construir en esta posicion");
 
         }
+        suminstrosHashMap.get(Raza.ZERG).aumentarMaxSuminstros(5);
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
@@ -91,6 +97,7 @@ public class Manager {
 
 
         pilon.setFloorManager(floorManager);
+        pilon.setSuministrosProtoss(suminstrosHashMap.get(Raza.PROTOSS));
         int size = construccionProtoss.size();
         pilon.setID(idPilones);
 
@@ -106,6 +113,7 @@ public class Manager {
             if(size == construccionProtoss.size())
                 throw new RuntimeException("No se puede construir en esta posicion");
         }
+        suminstrosHashMap.get(Raza.PROTOSS).aumentarMaxSuminstros(5);
         idPilones  ++;
     }
 
@@ -246,8 +254,12 @@ public class Manager {
                     continue;
 
                 if(!accionRealizada) {
-                    unidadManager.crearUnidad(unidad, pos);
-                    accionRealizada = true;
+                    try {
+                        unidadManager.crearUnidad(unidad, pos, suminstrosHashMap);
+                        accionRealizada = true;
+                    } catch(RuntimeException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
                 }
             }
         }

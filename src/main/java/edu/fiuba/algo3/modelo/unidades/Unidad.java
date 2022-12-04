@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.Turno;
 
@@ -14,12 +15,14 @@ public abstract class Unidad implements Objetivo, Turno {
     protected Posicion pos;
     private int tiempoDeConstruccion;
     private int rango;
+    protected int suministro;
     protected LinkedList<Ataque> ataques;
     protected Ataque superficieAtaque;
     private int turnos;
     protected Movimiento superficie;
 
-    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
+    public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie,
+                  int suministro) {
         try {
             if (costoGas != 0){
                 economia.gastarGasVespeno(costoGas);
@@ -37,6 +40,7 @@ public abstract class Unidad implements Objetivo, Turno {
         this.superficie = superficie;
         this.ataques = new LinkedList<>();
         this.turnos = 0;
+        this.suministro = suministro;
     }
 
     @Override
@@ -69,7 +73,7 @@ public abstract class Unidad implements Objetivo, Turno {
         pos = nuevaPosicion;
     }
 
-    public abstract void agregate(HashMap<Raza, LinkedList> listas);
+    public abstract void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros);
 
     public void pasarTurno(){
         turnos++;

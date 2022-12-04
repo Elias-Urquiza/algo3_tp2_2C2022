@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaZerg;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
@@ -13,8 +14,9 @@ public abstract class UnidadZerg extends Unidad {
     private VidaZerg vida;
     protected LinkedList<Class> correlativity;
 
-    public UnidadZerg(int puntosDeVidaMaximo, int costoMineral, int costoGas, Economia economia, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
-        super(economia, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie);
+    public UnidadZerg(int puntosDeVidaMaximo, int costoMineral, int costoGas, Economia economia, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie,
+                      int suministro) {
+        super(economia, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie, suministro);
         this.vida = new VidaZerg(puntosDeVidaMaximo);
     }
 
@@ -29,5 +31,12 @@ public abstract class UnidadZerg extends Unidad {
 
 
     @Override
-    public abstract void agregate(HashMap<Raza, LinkedList> listas);
+    public void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros)  {
+        try {
+            suministros.get(Raza.ZERG).suministrar(suministro);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles");
+        }
+        listas.get(Raza.ZERG).add(this);
+    }
 }
