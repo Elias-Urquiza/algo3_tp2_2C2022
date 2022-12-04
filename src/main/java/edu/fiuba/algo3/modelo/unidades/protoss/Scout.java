@@ -10,13 +10,9 @@ import java.util.LinkedList;
 
 public class Scout extends UnidadProtoss {
     public Scout(Economia economia, Posicion posicion) {
-        super(150, 100, 300, 150, economia, posicion, 9, 4, new Aire(0, 0),new Aire(0, 0));
+        super(150, 100, 300, 150, economia, posicion, 9, 4, new Aire(0, 0),new Aire(0, 0),
+                4);
         ataques.add(new Aire(14, 4));
         ataques.add(new Tierra(8, 4));
-    }
-
-    @Override
-    public void agregate(HashMap<Raza, LinkedList> listas) {
-        listas.get(Raza.PROTOSS).add(this);
     }
 }

@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -782,5 +783,39 @@ public class TestManager {
                 () -> manager.construirCriaderoEn(pos0, criadero1)
         );
         assertEquals("No se puede construir en esta posicion", exception.getMessage());
+    }
+
+    @Test
+    public void llenarElLimiteDeUnidadesEIntentarConstruirMasUnidadesTiraError() {
+        // Setup to reach 200 max limit -> if limit is changed, test will fail.
+        for(int i = 5; i < 15; i++) {
+            for(int j = 5; j < 10; j++) {
+                Posicion pos = new Posicion(i, j);
+                manager.crearUnidad(pos, new Scout(economia, pos));
+            }
+        }
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.crearUnidad(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
+        );
+        assertEquals("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles", exception.getMessage());
+    }
+
+    @Test
+    public void noLlenarElLimiteConUnPilonYDestruirElPilonYaNoTeDejaConstruir() {
+        // Setup to reach 200 max limit -> if limit is changed, test will fail.
+        manager.construirPilonEn(new Posicion(0,0), new Pilon(economia, new Posicion(0,0)));
+        for(int i = 5; i < 15; i++) {
+            for(int j = 5; j < 10; j++) {
+                Posicion pos = new Posicion(i, j);
+                manager.crearUnidad(pos, new Scout(economia, pos));
+            }
+        }
+        manager.destruirProtoss(new Posicion(0, 0));
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> manager.crearUnidad(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
+        );
+        assertEquals("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles", exception.getMessage());
     }
 }

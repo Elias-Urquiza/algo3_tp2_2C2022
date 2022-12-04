@@ -12,14 +12,9 @@ public class Mutalisco extends UnidadZerg {
 
     public Mutalisco(Economia economia, Posicion pos) {
 
-        super(120, 100, 100, economia, pos, 7, 3, new Aire(0, 0), new Aire(0, 0));
+        super(120, 100, 100, economia, pos, 7, 3, new Aire(0, 0), new Aire(0, 0),
+                4);
         ataques.add(new Aire(9, 3));
         ataques.add(new Tierra(9, 3));
-    }
-
-
-    @Override
-    public void agregate(HashMap<Raza, LinkedList> listas) {
-        listas.get(Raza.ZERG).add(this);
     }
 }

@@ -1,10 +1,7 @@
 package edu.fiuba.algo3.modelo.buildings.zerg;
 
 
-import edu.fiuba.algo3.modelo.Construccion;
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.tiles.Energia;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
@@ -18,6 +15,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     private int numeroDeLarvas;
     private int turnosActivo;
     private int expansion;
+    private Suministros suministrosZerg;
 
 
     // TODO incluir atributo de ubicacion ?
@@ -45,6 +43,9 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     }
 
     public void setFloorManager(FloorManager floorManager){ this.floorManager = floorManager; }
+    public void setSuministrosZerg(Suministros suministros) {
+        this.suministrosZerg = suministros;
+    }
 
     public int preguntarTurno(){
         return turnosActivo;
@@ -65,6 +66,18 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
         curar();
 
+    }
+
+    @Override
+    public Boolean destruir(Posicion pos) {
+        boolean afirmacion = false;
+
+        if (pos.equals(this.pos)) {
+            afirmacion = true;
+            suministrosZerg.disminuirMaximo(5);
+        }
+
+        return afirmacion;
     }
 
 

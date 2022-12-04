@@ -3,6 +3,8 @@ package edu.fiuba.algo3.entrega_2.Unidades;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.UnidadManager;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
@@ -12,6 +14,8 @@ import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,13 +27,16 @@ public class TestRango {
     private final Mutalisco sacoDeBoxAereoZerg = new Mutalisco(economia, new Posicion(4,4));
     private final Zealot sacoDeBoxTerrestreProtoss = new Zealot(economia, new Posicion(6,6));
     private final Scout sacoDeBoxAereoProtoss = new Scout(economia, new Posicion(8,8));
+    private HashMap<Raza, Suministros> mockSuministros = new HashMap<Raza, Suministros>();
 
     @BeforeEach
     public void initEach() {
-        unidadManager.crearUnidad(sacoDeBoxTerrestreZerg, new Posicion(3,3));
-        unidadManager.crearUnidad(sacoDeBoxAereoZerg, new Posicion(4,4));
-        unidadManager.crearUnidad(sacoDeBoxTerrestreProtoss, new Posicion(6,6));
-        unidadManager.crearUnidad(sacoDeBoxAereoProtoss, new Posicion(8,8));
+        mockSuministros.put(Raza.PROTOSS, new Suministros());
+        mockSuministros.put(Raza.ZERG, new Suministros());
+        unidadManager.crearUnidad(sacoDeBoxTerrestreZerg, new Posicion(3,3), mockSuministros);
+        unidadManager.crearUnidad(sacoDeBoxAereoZerg, new Posicion(4,4), mockSuministros);
+        unidadManager.crearUnidad(sacoDeBoxTerrestreProtoss, new Posicion(6,6), mockSuministros);
+        unidadManager.crearUnidad(sacoDeBoxAereoProtoss, new Posicion(8,8), mockSuministros);
     }
 
 

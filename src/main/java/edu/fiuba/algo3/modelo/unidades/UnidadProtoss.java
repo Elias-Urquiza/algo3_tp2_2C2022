@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaProtoss;
 
@@ -11,8 +12,9 @@ import java.util.LinkedList;
 public abstract class UnidadProtoss extends Unidad {
     private VidaProtoss vida;
 
-    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie) {
-        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie);
+    public UnidadProtoss(int puntosDeVidaMaximo, int escudoMaximo, int costoMineral, int costoGas, Economia econ, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie,
+                         int suministro) {
+        super(econ, costoMineral, costoGas, pos, tiempoDeConstruccion, rango, superficieAtaque, superficie, suministro);
         this.vida = new VidaProtoss(puntosDeVidaMaximo, escudoMaximo);
     }
 
@@ -27,5 +29,12 @@ public abstract class UnidadProtoss extends Unidad {
 
 
     @Override
-    public abstract void agregate(HashMap<Raza, LinkedList> listas);
+    public void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros) throws RuntimeException {
+        try {
+            suministros.get(Raza.PROTOSS).suministrar(suministro);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles");
+        }
+        listas.get(Raza.PROTOSS).add(this);
+    }
 }

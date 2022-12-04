@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 
 import java.util.HashMap;
@@ -18,9 +19,9 @@ public class UnidadManager  {
         unidades.put(Raza.ZERG, new LinkedList<Unidad>());
     }
 
-    public void crearUnidad(Unidad unidad, Posicion pos) {
+    public void crearUnidad(Unidad unidad, Posicion pos, HashMap<Raza, Suministros> suministros) throws RuntimeException {
         unidad.setPosicion(pos);
-        unidad.agregate(unidades);// se filtra por proto-zerg.
+        unidad.agregate(unidades, suministros);// se filtra por proto-zerg.
     }
     public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
         agresor.atacar(victima);
