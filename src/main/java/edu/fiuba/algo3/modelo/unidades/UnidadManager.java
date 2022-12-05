@@ -23,8 +23,10 @@ public class UnidadManager  {
         unidad.setPosicion(pos);
         unidad.agregate(unidades, suministros);// se filtra por proto-zerg.
     }
+
     public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
         agresor.atacar(victima);
+        victima.morirUnidad(unidades);
     }
 
     public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){

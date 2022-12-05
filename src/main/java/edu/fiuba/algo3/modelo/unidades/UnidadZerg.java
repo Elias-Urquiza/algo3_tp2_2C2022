@@ -28,7 +28,16 @@ public abstract class UnidadZerg extends Unidad {
         return 0;//podemos poner una constante
     }
 
+    @Override
+    public void morirUnidad(HashMap<Raza, LinkedList> unidades){
+        LinkedList<Unidad> zergs = unidades.get(Raza.ZERG);
+        vida.eliminarUnidad(zergs, this);
+    }
 
+    @Override
+    public void morirConstruccion(){
+
+    }
 
     @Override
     public void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros)  {

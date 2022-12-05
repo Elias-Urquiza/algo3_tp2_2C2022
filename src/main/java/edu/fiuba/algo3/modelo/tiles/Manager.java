@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
@@ -70,6 +71,9 @@ public class Manager {
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
 
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
+
         criadero.setFloorManager(floorManager);
         criadero.setSuministrosZerg(suminstrosHashMap.get(Raza.ZERG));
         int size = construccionesZerg.size();
@@ -95,6 +99,9 @@ public class Manager {
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
 
+
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
 
         pilon.setFloorManager(floorManager);
         pilon.setSuministrosProtoss(suminstrosHashMap.get(Raza.PROTOSS));
@@ -123,6 +130,9 @@ public class Manager {
             throw new RuntimeException("La posicion es un espacio aereo");
 
 
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
+
         floorManager.buscarCoincidencias(pos);
         int size = construccionQueExtrae.size();
 
@@ -142,6 +152,9 @@ public class Manager {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
+
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
 
 
         floorManager.buscarCoincidencias(pos);
@@ -174,6 +187,9 @@ public class Manager {
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
 
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
+
         floorManager.buscarCoincidencias(pos);
 
         int size = construccionProtoss.size();
@@ -192,7 +208,7 @@ public class Manager {
     public void destruirProtoss(Posicion pos) {
         int size = construccionProtoss.size();
 
-        construccionProtoss.removeIf(construccion -> (construccion.destruir(pos) ) );
+        construccionProtoss.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
 
         floorManager.desactivarEstructurasProtoss();
         if(size == construccionProtoss.size()) {
@@ -204,7 +220,7 @@ public class Manager {
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
 
-        construccionesZerg.removeIf(construccion -> (construccion.destruir(pos) ) );
+        construccionesZerg.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
 
         if(size == construccionesZerg.size()) {
             throw new RuntimeException("No hay nada para destruir");
@@ -216,6 +232,9 @@ public class Manager {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
+
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
 
         floorManager.buscarCoincidencias(pos);
 
@@ -278,51 +297,22 @@ public class Manager {
         unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
     }
 
-    public void unidadAtaca(Unidad unaUnidad, Objetivo unObjetivo){
+    public void unidadAtacaUnidad(Unidad unaUnidad, Unidad unObjetivo){
         unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
     }
 
-    /*
-    public void printMohos() {
-        char[][] matrix = new char[maxX][maxY];
-        for (int i =0; i < maxX; i++ ){
-            for(int j =0; j < maxY; j++ ){
-                matrix[i][j]='-';
-            }
-        }
-        for(Moho m : moho){
-            matrix[m.getX()][m.getY()] = 'm';
-        }
-        for (int i =0; i < maxX; i++ ){
-            for(int j =0; j < maxY; j++ ){
-                System.out.print(matrix[i][j]);
-            }
-            System.out.println("\n");
-        }
+    public void unidadAtacaConstruccion(Unidad unaUnidad, Estructura unaEstructura){
+        unidadManager.ejecutarComandoDeDaniar(unaUnidad, (Objetivo) unaEstructura);
+        unaEstructura.destruir(construccionesZerg, construccionProtoss ,floorManager);
     }
-
-    public void printEnergias() {
-        char[][] matrix = new char[maxX][maxY];
-        for (int i =0; i < maxX; i++ ){
-            for(int j =0; j < maxY; j++ ){
-                matrix[i][j]='-';
-            }
-        }
-        for(Energia e : energias){
-            matrix[e.getPos().getX()][e.getPos().getY()] = 'e';
-        }
-        for (int i =0; i < maxX; i++ ){
-            for(int j =0; j < maxY; j++ ){
-                System.out.print(matrix[i][j]);
-            }
-            System.out.println("\n");
-        }
-    }*/
 
     public void agregarCristales(Posicion pos) {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
+
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
 
         cristales.add(new Cristales(pos));
         floorManager.quitarTilesVaciasParaCristales();
@@ -332,6 +322,9 @@ public class Manager {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
+
+        if(unidadManager.posicionOcupada(pos))
+            throw new RuntimeException("Posicion ocupada por unidad");
 
         volcanes.add(new Volcan(pos));
         floorManager.quitarTilesVaciasParaVolcanes();

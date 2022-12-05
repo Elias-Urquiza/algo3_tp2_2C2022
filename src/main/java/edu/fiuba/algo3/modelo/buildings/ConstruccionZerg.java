@@ -4,13 +4,16 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.VidaZerg;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
+import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
 import edu.fiuba.algo3.modelo.unidades.Tierra;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
-public class ConstruccionZerg implements Turno, Objetivo {
+public class ConstruccionZerg implements Turno, Objetivo, Estructura {
     private int puntosDeVida;
     private int puntosDeVidaMaxima;
     private VidaZerg vida;
@@ -61,7 +64,14 @@ public class ConstruccionZerg implements Turno, Objetivo {
         return 0;
     }
 
-    public Boolean destruir(Posicion pos) {
+    @Override
+    public void morirUnidad(HashMap<Raza, LinkedList> unidades) {
+        return;
+    }
+
+
+
+    public Boolean sePuedeDestruir(Posicion pos) {
         boolean afirmacion = false;
 
         if (pos.equals(this.pos)) {
@@ -71,11 +81,11 @@ public class ConstruccionZerg implements Turno, Objetivo {
         return afirmacion;
     }
 
-    public void chequearCorrelatividad(LinkedList<ConstruccionZerg> lista) {
+    public void chequearCorrelatividad(LinkedList<Estructura> lista) {
         boolean match = false;
         boolean afirmacion = false;
 
-        for (ConstruccionZerg z : lista) {
+        for (Estructura z : lista) {
             match = correlativity.stream().anyMatch(any -> any.equals(z.getClass()));
             if(match)
                 afirmacion = true;
@@ -95,4 +105,16 @@ public class ConstruccionZerg implements Turno, Objetivo {
     public void pasarTurno() {
         turnos++;
     }
+
+    @Override
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
+        int size = construccionesZerg.size();
+
+        construccionesZerg.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
+
+        if(size == construccionesZerg.size()) {
+            throw new RuntimeException("No hay nada para destruir");
+        }
+    }
+
 }

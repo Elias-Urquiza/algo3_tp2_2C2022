@@ -26,7 +26,14 @@ public abstract class UnidadProtoss extends Unidad {
         return 0;
     }
 
+    public void morirConstruccion(){
 
+    }
+
+    public void morirUnidad(HashMap<Raza, LinkedList> unidades){
+        LinkedList<Unidad> protoss = unidades.get(Raza.PROTOSS);
+        vida.eliminarUnidad(protoss, this);
+    }
 
     @Override
     public void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros) throws RuntimeException {

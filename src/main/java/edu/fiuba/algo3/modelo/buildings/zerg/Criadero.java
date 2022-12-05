@@ -69,7 +69,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     }
 
     @Override
-    public Boolean destruir(Posicion pos) {
+    public Boolean sePuedeDestruir(Posicion pos) {
         boolean afirmacion = false;
 
         if (pos.equals(this.pos)) {

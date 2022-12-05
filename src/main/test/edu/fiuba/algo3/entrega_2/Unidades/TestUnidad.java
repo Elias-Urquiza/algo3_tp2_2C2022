@@ -10,6 +10,7 @@ import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUnidad {
-
 
     private Manager manager;
     private static final Economia economia = new MockEconomia();
@@ -37,12 +37,15 @@ public class TestUnidad {
             manager.pasarTurno();
         }
 
-        manager.construirZerg(new Posicion(3,3), new ReservaDeReproduccion(economia, new Posicion(3,3) ) );
+        manager.construirZerg(new Posicion(3,3), new   ReservaDeReproduccion(economia, new Posicion(3,3) ) );
+        manager.construirProtoss(new Posicion(31,31), new Acceso(economia, new Posicion(31,31)));
 
         for (int i = 0; i < 12; i++) {
             manager.pasarTurno();
         }
+
     }
+
 
     @Test
     public void seCreaUnaUnidadAlLadoDelEdificioQueLaCreaCuandoEnUnRadioDeUnoNoHayNada(){
@@ -166,7 +169,26 @@ public class TestUnidad {
         Assertions.assertThrows( RuntimeException.class, () -> bicho1.movete(pos1, false) );
     }
 
+    @Test
+    public void noSePuedeConstruirUnZergSobreUnaUnidad(){
+        Posicion pos0 = new Posicion(3,3);
+        Posicion pos1 = new Posicion(2,2);
 
+        Unidad bicho1 = new Zerling(economia, pos0);
+        manager.crearUnidad(pos0, bicho1);
 
+        assertThrows( RuntimeException.class , ()-> manager.construirZerg(pos1, new ReservaDeReproduccion(economia,  pos1) ) );
+    }
+
+    @Test
+    public void noSePuedeConstruirUnProtossSobreUnaUnidad(){
+        Posicion pos0 = new Posicion(31,31);
+        Posicion pos1 = new Posicion(30,31);
+
+        Unidad bicho1 = new Dragon(economia, pos0);
+        manager.crearUnidad(pos0, bicho1);
+
+        assertThrows( RuntimeException.class , ()-> manager.construirProtoss(pos1, new Acceso(economia,  pos1) ) );
+    }
 
 }

@@ -1,5 +1,9 @@
 package edu.fiuba.algo3.modelo;
 
+import edu.fiuba.algo3.modelo.unidades.Unidad;
+
+import java.util.LinkedList;
+
 public abstract class Vida {
     public int puntosDeVida;
     public int puntosDeVidaMaxima;
@@ -7,6 +11,10 @@ public abstract class Vida {
     public Vida(int puntosDeVidaMaxima) {
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
         this.puntosDeVida = puntosDeVidaMaxima;
+    }
+
+    public void eliminarUnidad(LinkedList<Unidad> listaUnidades, Unidad aEliminar){
+        listaUnidades.removeIf(unidad -> unidad.getPosicion().equals( aEliminar.getPosicion() ) );
     }
 
     public abstract int daniar(int danio);

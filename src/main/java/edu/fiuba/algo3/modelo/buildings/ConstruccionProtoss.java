@@ -1,25 +1,25 @@
 package edu.fiuba.algo3.modelo.buildings;
 
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
+import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.Objetivo;
 import edu.fiuba.algo3.modelo.unidades.Tierra;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
-public class ConstruccionProtoss implements Turno, Objetivo {
+public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     private VidaProtoss vida;
     protected int costoMineral;
     protected int costoGas;
     protected int tiempoDeConstruccion;
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
-
     protected LinkedList<Class> correlativity;
     protected Tierra superficie;
-
     private int turnos;
-
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 
@@ -53,6 +53,11 @@ public class ConstruccionProtoss implements Turno, Objetivo {
        return 0;
     }
 
+    @Override
+    public void morirUnidad(HashMap<Raza, LinkedList> unidades) {
+        return;
+    }
+
     public int curar() {
         return vida.curar(CURACION_PROTOSS);
     }
@@ -63,7 +68,7 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         energizado = true;
     }//a lo mejor usar interfaz
 
-    public Boolean destruir(Posicion pos) {
+    public Boolean sePuedeDestruir(Posicion pos) {
         boolean afirmacion = false;
 
         if (pos.equals(this.pos)) {
@@ -73,11 +78,11 @@ public class ConstruccionProtoss implements Turno, Objetivo {
         return afirmacion;
     }
 
-    public void chequearCorrelatividad(LinkedList<ConstruccionProtoss> lista) {
+    public void chequearCorrelatividad(LinkedList<Estructura> lista) {
         boolean match = false;
         boolean afirmacion = false;
 
-        for (ConstruccionProtoss p : lista) {
+        for (Estructura p : lista) {
             match = correlativity.stream().anyMatch(any -> any.equals(p.getClass()));
             if(match)
                 afirmacion = true;
@@ -97,4 +102,17 @@ public class ConstruccionProtoss implements Turno, Objetivo {
     public Posicion getPosicion() {
         return pos;
     }
+
+    @Override
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
+        int size = construccionProtoss.size();
+
+        construccionProtoss.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
+
+        floorManager.desactivarEstructurasProtoss();
+        if(size == construccionProtoss.size()) {
+            throw new RuntimeException("No hay nada para destruir");
+        }
+    }
+
 }

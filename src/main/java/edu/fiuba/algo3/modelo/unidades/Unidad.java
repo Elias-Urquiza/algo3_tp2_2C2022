@@ -58,6 +58,10 @@ public abstract class Unidad implements Objetivo, Turno {
         return danio;
     }
 
+    public void morirConstruccion(){
+
+    }
+
     public Posicion getPosicion(){
         return pos;
     }
