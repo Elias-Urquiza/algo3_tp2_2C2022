@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.tiles.Recurso;
 
 public class Asimilador extends ConstruccionProtoss implements Turno, Construccion, ExtraeRecurso {
 
-    private int turnosActivo;
+
 
     private Economia economia;
     private Recurso recurso;
@@ -17,17 +17,17 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
 
     public Asimilador(Economia economiaProto, Posicion pos) {  //Debo agregar una economia a los ytest asimilador
         super(450, 450, 100, 0, 6, economiaProto, pos, true);
-        turnosActivo =0;
+        turnos =0;
         economia = economiaProto;
     }
 
     @Override
     public void pasarTurno(){
         curar();  //Asumo que va sumando de a un por turno
-        if(turnosActivo >= TIEMPO_CONSTRUCCION && energizado){
+        if(turnos >= TIEMPO_CONSTRUCCION && energizado){
             extraer();
         }
-        turnosActivo++;
+        turnos++;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
 
     @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
+        if(turnos < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }

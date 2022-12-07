@@ -8,7 +8,7 @@ import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import java.util.LinkedList;
 
 public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
-    private int turnosActivo;
+
 
     private static final int TIEMPO_CONSTRUCCION = 5;
     private FloorManager floorManager;
@@ -18,7 +18,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     public Pilon(Economia economia, Posicion pos) {
         super(350, 350, 100, 0, 5, economia, pos, true);
-        turnosActivo = 0;
+        turnos = 0;
         this.id = 0;
         this.floorManager = null;
         this.suministrosProtoss = null;
@@ -28,9 +28,9 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     @Override
     public void pasarTurno() {
         curar();
-        turnosActivo++;
+        turnos++;
 
-        if(turnosActivo == tiempoDeConstruccion){
+        if(turnos == tiempoDeConstruccion){
             floorManager.energizar(pos, id);
         }
         //no se como implementar que sume 20 de gas por tiempo, Si el gas es guardado en minerales
@@ -38,7 +38,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
     @Override
     public void usar() {
-        if (turnosActivo < TIEMPO_CONSTRUCCION )
+        if (turnos < TIEMPO_CONSTRUCCION )
             throw new RuntimeException("Edificio en construccion");
     }
 

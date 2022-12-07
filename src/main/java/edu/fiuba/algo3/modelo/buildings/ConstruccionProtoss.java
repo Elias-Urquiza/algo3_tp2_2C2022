@@ -19,7 +19,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
     protected Tierra superficie;
-    private int turnos;
+    protected int turnos;
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
 

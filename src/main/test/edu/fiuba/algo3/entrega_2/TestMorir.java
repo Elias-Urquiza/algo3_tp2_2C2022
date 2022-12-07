@@ -36,7 +36,7 @@ public class TestMorir {
         manager.construirZerg(new Posicion(25,26), new ReservaDeReproduccion(economia, new Posicion(25,26) ) );
         manager.construirProtoss(new Posicion(14,14), new Acceso(economia, new Posicion(14, 14)));
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 15; i++) {
                manager.pasarTurno();
         }
     }

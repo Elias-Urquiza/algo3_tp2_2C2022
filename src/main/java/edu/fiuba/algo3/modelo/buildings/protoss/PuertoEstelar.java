@@ -7,7 +7,7 @@ import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 
 public class PuertoEstelar extends ConstruccionProtoss implements Turno, Construccion {
-    private int turnosActivo;
+
 
     private static final int TIEMPO_CONSTRUCCION = 10;
 
@@ -15,20 +15,20 @@ public class PuertoEstelar extends ConstruccionProtoss implements Turno, Constru
 
     public PuertoEstelar(Economia economia, Posicion pos){
         super(600, 600, 150, 150, 10, economia, pos, true);
-        turnosActivo = 0;
+        turnos = 0;
         correlativity.add(Acceso.class);
     }
     @Override
     public void pasarTurno(){
         curar();
-        turnosActivo ++;
+        turnos ++;
 
     }
 
 
     @Override
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION || !energizado)
+        if(turnos < TIEMPO_CONSTRUCCION || !energizado)
             throw new RuntimeException("Edificio en construccion");
 
     }

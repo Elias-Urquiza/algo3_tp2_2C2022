@@ -106,6 +106,7 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
         turnos++;
     }
 
+
     @Override
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
         int size = construccionesZerg.size();

@@ -93,6 +93,8 @@ public class Manager {
                 throw new RuntimeException("No se puede construir en esta posicion");
 
         }
+
+        criaderos.add(criadero);
         suminstrosHashMap.get(Raza.ZERG).aumentarMaxSuminstros(5);
     }
 
@@ -346,6 +348,9 @@ public class Manager {
             extrae.pasarTurno();
 
         unidadManager.hacerPasarDeTurno();
+
+        floorManager.terminarJuegoZerg();
+        floorManager.terminarJuegoProtoss();
     }
 
 
@@ -398,4 +403,5 @@ public class Manager {
         crearBaseNormal(pos);
         // Agregar algo protoss en el medio ?
     }
+
 }
