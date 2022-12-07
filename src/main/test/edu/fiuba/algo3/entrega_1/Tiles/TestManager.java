@@ -818,4 +818,68 @@ public class TestManager {
         );
         assertEquals("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles", exception.getMessage());
     }
+
+
+    @Test
+    public void seTerminaElJuegoPierdenLosZerg() {
+        Posicion posicion = new Posicion(5,5);
+        Posicion posicion2 = new Posicion(12,12);
+
+        Criadero criadero = new Criadero(economia, posicion );
+        Pilon pilon = new Pilon(economia, posicion2);
+        manager.construirCriaderoEn(posicion, criadero);
+        manager.construirPilonEn(posicion2, pilon);
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+
+        manager.pasarTurno();
+
+        manager.destruirZerg(posicion);
+
+        manager.pasarTurno();
+    }
+
+    @Test
+    public void seTerminaElJuegoPierdenLosProtoss() {
+        Posicion posicion = new Posicion(5,5);
+        Posicion posicion2 = new Posicion(12,12);
+
+        Criadero criadero = new Criadero(economia, posicion );
+        Pilon pilon = new Pilon(economia, posicion2);
+        manager.construirCriaderoEn(posicion, criadero);
+        manager.construirPilonEn(posicion2, pilon);
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+        criadero.pasarTurno();
+
+        manager.pasarTurno();
+
+        manager.destruirProtoss(posicion2);
+
+        manager.pasarTurno();
+    }
+
+    @Test
+    public void seTerminaElJuegoPierdenLosProtossConExtractores() {
+        Posicion posicion = new Posicion(5,5);
+        Posicion posicion2 = new Posicion(12,12);
+
+        manager.agregarVolcanes(posicion);
+        Extractor extractor = new Extractor(economia, posicion);
+
+        manager.agregarCristales(posicion2);
+        NexoMineral nexo = new NexoMineral(economia, posicion2);
+
+        manager.construirEstructuraDeVolcan(posicion, extractor);
+        manager.construirEstructuraDeCristales(posicion2, nexo);
+
+        manager.pasarTurno();
+
+        //manager.elimnar nexo -->
+
+        //manager.pasarTurno();
+    }
 }

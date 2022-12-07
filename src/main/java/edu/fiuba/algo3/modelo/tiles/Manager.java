@@ -221,6 +221,8 @@ public class Manager {
 
     }
 
+
+
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
 

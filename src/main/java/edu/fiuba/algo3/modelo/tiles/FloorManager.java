@@ -4,6 +4,9 @@ import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.buildings.protoss.Asimilador;
+import edu.fiuba.algo3.modelo.buildings.protoss.NexoMineral;
+import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 
 import java.util.LinkedList;
 
@@ -342,11 +345,28 @@ public class FloorManager {
     }
 
     public void terminarJuegoZerg(){
-        
+        int cantidad = construccionesZerg.size();
+        for (ExtraeRecurso ext : construccionQueExtrae){
+            if (ext.getClass() == Extractor.class){
+                cantidad++;
+            }
+        }
+        if(cantidad == 0){
+            System.exit(999);
+        }
+
     }
 
     public void terminarJuegoProtoss(){
-
+        int cantidad = construccionProtoss.size();
+        for (ExtraeRecurso ext : construccionQueExtrae){
+            if (ext.getClass() == Asimilador.class  ||  ext.getClass() == NexoMineral.class){
+                cantidad++;
+            }
+        }
+        if(cantidad == 0){
+            System.exit(888);
+        }
     }
 
 }
