@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 
-public class Zangano extends ConstruccionZerg implements Construccion, Turno, ExtraeRecurso{
+public class Zangano extends ConstruccionZerg implements Turno, ExtraeRecurso{
 
     private int vida;
     private static final int PRODUCCION_POR_ZANGANO=10;
@@ -25,10 +25,6 @@ public class Zangano extends ConstruccionZerg implements Construccion, Turno, Ex
 
     public Posicion getPosicion(){
         return pos;
-    }
-
-    public void usar() {
-        //Se necesita???
     }
 
     @Override

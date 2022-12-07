@@ -324,4 +324,29 @@ public class FloorManager {
         buscarCoincidencias(pos);
         buscarCoincidenciasVolcanYCristales(pos);
     }
+
+    public void construccionTerminada(Posicion posConstruccion){
+        for (ConstruccionZerg c: construccionesZerg){
+            Posicion posicionZerg = c.getPosicion();
+            if(posicionZerg.equals(posConstruccion)){
+                c.construida();
+            }
+        }
+
+        for (ConstruccionProtoss c : construccionProtoss) {
+            Posicion posicionProtoss = c.getPosicion();
+            if (posicionProtoss.equals(posConstruccion)) {
+                c.construida();
+            }
+        }
+    }
+
+    public void terminarJuegoZerg(){
+        
+    }
+
+    public void terminarJuegoProtoss(){
+
+    }
+
 }

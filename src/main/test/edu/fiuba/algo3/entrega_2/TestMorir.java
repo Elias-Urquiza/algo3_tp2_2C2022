@@ -39,10 +39,8 @@ public class TestMorir {
         for (int i = 0; i < 12; i++) {
                manager.pasarTurno();
         }
-
-
-
     }
+
     @Test
     public void unZergAlMatarloSeMuereCorrectamente() {
         Zerling zerling = new Zerling(economia, new Posicion(24, 24));

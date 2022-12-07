@@ -11,6 +11,8 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
     private Economia economia;
     private static final int TIEMPO_CONSTRUCCION = 4;
 
+    private static final int MINERAL_POR_TURNO = 20;
+
     public NexoMineral(Economia economia, Posicion pos){
         super(250, 250, 50, 0, 4, economia, pos, true);
         turnosActivo = 0;
@@ -40,7 +42,7 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
 
     @Override // no hace nada que onda
     public void extraer() {
-        return;
+        economia.ingresarMineral(recurso.extraer(MINERAL_POR_TURNO));
     }
 
     @Override

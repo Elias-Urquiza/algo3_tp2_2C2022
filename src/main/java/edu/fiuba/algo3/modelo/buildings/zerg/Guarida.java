@@ -7,18 +7,16 @@ import edu.fiuba.algo3.modelo.Turno;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 
 public class Guarida extends ConstruccionZerg implements Construccion, Turno {
-    private int turnosActivo;
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
     public Guarida(Economia economia, Posicion pos){
         super(1250, 200, 100, 12, economia, pos);
-        turnosActivo = 0;
         correlativity.add(ReservaDeReproduccion.class);
     }
 
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION){
+        if(turnos < TIEMPO_CONSTRUCCION){
             throw new RuntimeException("Edificio en construccion");
         }
 
@@ -27,6 +25,6 @@ public class Guarida extends ConstruccionZerg implements Construccion, Turno {
     @Override
     public void pasarTurno() {
         curar();
-        turnosActivo++;
+        turnos++;
     }
 }

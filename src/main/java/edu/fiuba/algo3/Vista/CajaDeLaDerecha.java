@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.Vista;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -10,6 +11,9 @@ import javafx.scene.text.Text;
 public class CajaDeLaDerecha extends VBox {
 
     public CajaDeLaDerecha (){
+
+
+        setAlignment(Pos.TOP_RIGHT);
         this.setPadding(new Insets(40));
         this.setSpacing(8);
 

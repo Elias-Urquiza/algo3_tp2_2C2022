@@ -14,14 +14,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ConstruccionZerg implements Turno, Objetivo, Estructura {
-    private int puntosDeVida;
-    private int puntosDeVidaMaxima;
     private VidaZerg vida;
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
 
-    private int turnos;
+    protected int turnos;
     private static final int CURACION_ZERG = 100;
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
@@ -69,7 +67,9 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
         return;
     }
 
-
+    public void construida(){
+        if(turnos < tiempoDeConstruccion) throw new RuntimeException("No se termino de construir el edificio");
+    }
 
     public Boolean sePuedeDestruir(Posicion pos) {
         boolean afirmacion = false;

@@ -117,8 +117,6 @@ public class TestConstrucciones {
         }
         assert(afirmacion);
 
-
-
     }
 
     @Test

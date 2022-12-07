@@ -11,7 +11,7 @@ public class TestsNexoMineral {
 
     private static final Economia mockEconomia = new MockEconomia();
     @Test
-    public void unNexoMineralSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
+    public void unNexoMineralSeVuelveOperativoDespuesDeQuePasenCuatroTurnos(){
 
         NexoMineral nexoMineral = new NexoMineral(mockEconomia, new Posicion(0,0));
         boolean afirmacion = true;

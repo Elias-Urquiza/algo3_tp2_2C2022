@@ -116,6 +116,9 @@ public class TestMovimiento {
 
         Guarida guarida = new Guarida(economia, posInicial);
         manager.construirZerg(posInicial, guarida);
+        for (int i = 0; i < 12; i++)
+            guarida.pasarTurno();
+
         Unidad  mutalisco = new Mutalisco(economia, posInicial);
 
         for (int i = 0; i < 7; i++)
@@ -150,6 +153,10 @@ public class TestMovimiento {
 
         manager.construirProtoss(posAcceso, new Acceso(economia, posAcceso));
         PuertoEstelar puertoEstelar = new PuertoEstelar(economia, posInicial);
+
+        for (int i = 0; i < 10; i++)
+            puertoEstelar.pasarTurno();
+
         manager.construirProtoss(posInicial, puertoEstelar);
         Unidad  scout = new Scout(economia, posInicial);
         for (int i = 0; i < 9; i++)

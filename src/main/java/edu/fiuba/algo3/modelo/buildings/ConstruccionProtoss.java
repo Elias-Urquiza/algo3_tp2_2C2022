@@ -95,6 +95,10 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
 
     }
 
+    public void construida(){
+        if(turnos < tiempoDeConstruccion) throw new RuntimeException("No se termino de construir el edificio");
+    }
+
     public void pasarTurno() {
         turnos++;
     }

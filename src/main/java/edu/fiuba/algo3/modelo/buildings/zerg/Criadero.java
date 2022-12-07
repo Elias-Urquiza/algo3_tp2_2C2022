@@ -13,7 +13,6 @@ import java.util.LinkedList;
 public class Criadero extends ConstruccionZerg implements Turno, Construccion {
 
     private int numeroDeLarvas;
-    private int turnosActivo;
     private int expansion;
     private Suministros suministrosZerg;
 
@@ -27,7 +26,6 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     public Criadero(Economia economia, Posicion pos) {
         super(500, 50, 0, 4, economia, pos);
         numeroDeLarvas = 3;
-        turnosActivo = 0;
         expansion = 0;
         this.floorManager = null;
     }
@@ -36,7 +34,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     public void extraerLarvas(int quitarLarvas) throws RuntimeException {
         if(numeroDeLarvas <= 0 || ( (numeroDeLarvas - quitarLarvas) < 0))
             throw new RuntimeException("Numero de Larvas incorrecto");
-        if (turnosActivo < tiempoDeConstruccion)
+        if (turnos < tiempoDeConstruccion)
             throw new RuntimeException("Edificio en construccion");
 
         numeroDeLarvas -= quitarLarvas;
@@ -48,12 +46,12 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     }
 
     public int preguntarTurno(){
-        return turnosActivo;
+        return turnos;
     }
 
     @Override
     public void pasarTurno() {
-        turnosActivo++;
+        turnos++;
 
         if(numeroDeLarvas < MAX_LARVAS)
             numeroDeLarvas++;

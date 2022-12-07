@@ -9,25 +9,25 @@ import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 public class ReservaDeReproduccion extends ConstruccionZerg implements Construccion, Turno {
 
 
-    private int turnosActivo;
+
 
     private static final int TIEMPO_CONSTRUCCION = 12;
 
     public ReservaDeReproduccion(Economia economia, Posicion pos){
         super(1000, 150, 0, 12, economia, pos);
-        turnosActivo = 0;
+        turnos = 0;
     }
 
     public void evolucionarLarvas(int larvasEvolucionar)throws RuntimeException{
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnos < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
     }
     public void pasarTurno() {
         curar();
-        turnosActivo++;
+        turnos++;
     }
     public void usar() {
-        if(turnosActivo < TIEMPO_CONSTRUCCION)
+        if(turnos < TIEMPO_CONSTRUCCION)
             throw new RuntimeException("Edificio en construccion");
     }
 }

@@ -24,6 +24,7 @@ public class Manager {
     LinkedList<ConstruccionZerg> construccionesZerg;
     LinkedList<ConstruccionProtoss> construccionProtoss;
     LinkedList<ExtraeRecurso> construccionQueExtrae;
+    LinkedList<Criadero> criaderos;
     LinkedList<Moho> moho;
     LinkedList<Cristales> cristales;
     LinkedList<Volcan> volcanes;
@@ -39,6 +40,7 @@ public class Manager {
         this.construccionesZerg =new LinkedList<>();
         this.construccionProtoss = new LinkedList<>();
         this.construccionQueExtrae = new LinkedList<>();
+        this.criaderos = new LinkedList<>();
         this.moho = new LinkedList<>();
         this.cristales = new LinkedList<>();
         this.volcanes  = new LinkedList<>();
@@ -251,9 +253,12 @@ public class Manager {
             throw new RuntimeException("Este piso no tiene moho");
     }
 
+
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
         Posicion pos;
         boolean accionRealizada = false;
+
+        floorManager.construccionTerminada(posConstruccion);
 
         for(int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {

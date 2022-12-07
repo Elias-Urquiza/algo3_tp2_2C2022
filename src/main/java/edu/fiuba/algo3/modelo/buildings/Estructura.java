@@ -9,4 +9,6 @@ public interface Estructura {
 
     void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager);
 
+    void construida();
+
 }
