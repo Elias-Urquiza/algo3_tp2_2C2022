@@ -15,11 +15,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TestConstrucciones {
 
     private FloorManager fm = new FloorManager( (new LinkedList<Moho>()), new LinkedList<Cristales>(),new LinkedList< Volcan >(), new LinkedList<Energia>(),
             new LinkedList< TileVacia >(), new LinkedList<ConstruccionZerg>(), new LinkedList<ConstruccionProtoss>(),
             new LinkedList<ExtraeRecurso>(), new LinkedList<Vacio>(),20, 20);
+
+    private Manager manager = new Manager(20,20);
 
     @Test
     public void construirLuegoDeConstruirYsinTenerMineralsLanzaUnaExcepcion(){
@@ -84,6 +88,7 @@ public class TestConstrucciones {
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
         economia.ingresarMineral(350);
+
         Extractor extractor = new Extractor(economia, new Posicion(0,0));
         extractor.setRecurso(new Volcan(new Posicion(0,0)));
         Criadero criadero = new Criadero(economia, new Posicion(0,0));
@@ -100,24 +105,16 @@ public class TestConstrucciones {
         criadero.pasarTurno();
         criadero.pasarTurno();
 
+        extractor.agregarZangano(manager);
+        extractor.agregarZangano(manager);
 
+            for (int i = 0; i<5 ;i++ ){
+                extractor.pasarTurno();
+            }
 
-        extractor.agregarZangano(criadero);
-        extractor.agregarZangano(criadero);
-
-        for (int i = 0; i<5 ;i++ ){
-            extractor.pasarTurno();
+            economia.ingresarMineral(200);
+            assertDoesNotThrow( () ->  new Guarida(economia, new Posicion(0,0)) );
         }
-
-        try{
-            Guarida guarida = new Guarida(economia, new Posicion(0,0));
-        }
-        catch (RuntimeException e){
-            afirmacion = false;
-        }
-        assert(afirmacion);
-
-    }
 
     @Test
     public void construirSinMineralesProtossLanzaError(){
@@ -139,9 +136,6 @@ public class TestConstrucciones {
             afirmacion = true;
         }
         assert(afirmacion);
-
-
-
     }
 
     @Test

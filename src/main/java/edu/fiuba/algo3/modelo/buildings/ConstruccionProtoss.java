@@ -108,7 +108,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     }
 
     @Override
-    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss,LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
         int size = construccionProtoss.size();
 
         construccionProtoss.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );

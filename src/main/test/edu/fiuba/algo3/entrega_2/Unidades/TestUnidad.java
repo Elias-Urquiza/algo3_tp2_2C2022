@@ -53,7 +53,7 @@ public class TestUnidad {
         Posicion posEsperada = new Posicion(2,2);
         Unidad bicho = new Zerling(economia, posConstruccion);
 
-        manager.crearUnidad(posConstruccion,  bicho);
+        manager.crearZerg(posConstruccion,  bicho);
 
         assert(posEsperada.equals(bicho.getPosicion()));
     }
@@ -86,6 +86,18 @@ public class TestUnidad {
     public void seCreaUnaUnidadAlLadoDelEdificioQueLaCreaCuandoEnUnRadioDeUnoHayOtrasUnidades(){
         Posicion posConstruccionOrigenUnidad = new Posicion(3,3);
         Posicion posEsperada = new Posicion(4,3);
+
+        Posicion posConstruccion1 = new Posicion(1,1);
+        Posicion posConstruccion2 = new Posicion(1,2);
+        Posicion posConstruccion3 = new Posicion(1,3);
+        Posicion posConstruccion4 = new Posicion(1,4);
+
+        manager.construirCriaderoEn(posConstruccion1, new Criadero(economia, posConstruccion1));
+        manager.construirCriaderoEn(posConstruccion2, new Criadero(economia, posConstruccion2));
+        manager.construirCriaderoEn(posConstruccion3, new Criadero(economia, posConstruccion3));
+        manager.construirCriaderoEn(posConstruccion4, new Criadero(economia, posConstruccion4));
+
+
         Unidad bicho1 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho2 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho3 = new Zerling(economia, posConstruccionOrigenUnidad);
@@ -95,14 +107,14 @@ public class TestUnidad {
         Unidad bicho7 = new Zerling(economia, posConstruccionOrigenUnidad);
 
 
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho1);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho2);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho3);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho4);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho5);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho6);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho1);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho2);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho3);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho4);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho5);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho6);
 
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho7);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho7);
 
         assert(posEsperada.equals(bicho7.getPosicion()));
     }
@@ -115,21 +127,27 @@ public class TestUnidad {
         Posicion posConstruccion5 = new Posicion(3,4);
         Posicion posConstruccion7 = new Posicion(4,3);
 
+        Posicion pos1 = new Posicion(1,1);
+        Posicion pos2 = new Posicion(1,2);
+
+        manager.construirCriaderoEn(pos1, new Criadero(economia, pos1));
+        manager.construirCriaderoEn(pos2, new Criadero(economia, pos2));
+
         Unidad bicho1 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho3 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho4 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho6 = new Zerling(economia, posConstruccionOrigenUnidad);
         Unidad bicho7 = new Zerling(economia, posConstruccionOrigenUnidad);
 
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho1);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho1);
         manager.construirZerg(posConstruccion2, new ReservaDeReproduccion(economia, posConstruccion2));
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho3);
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho4);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho3);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho4);
         manager.construirZerg(posConstruccion5, new ReservaDeReproduccion(economia, posConstruccion5) );
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho6);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho6);
         manager.construirZerg(posConstruccion7, new ReservaDeReproduccion(economia, posConstruccion7) );
 
-        manager.crearUnidad(posConstruccionOrigenUnidad, bicho7);
+        manager.crearZerg(posConstruccionOrigenUnidad, bicho7);
 
         assert(posEsperada.equals(bicho7.getPosicion()));
     }
@@ -175,7 +193,7 @@ public class TestUnidad {
         Posicion pos1 = new Posicion(2,2);
 
         Unidad bicho1 = new Zerling(economia, pos0);
-        manager.crearUnidad(pos0, bicho1);
+        manager.crearZerg(pos0, bicho1);
 
         assertThrows( RuntimeException.class , ()-> manager.construirZerg(pos1, new ReservaDeReproduccion(economia,  pos1) ) );
     }
@@ -186,7 +204,7 @@ public class TestUnidad {
         Posicion pos1 = new Posicion(30,31);
 
         Unidad bicho1 = new Dragon(economia, pos0);
-        manager.crearUnidad(pos0, bicho1);
+        manager.crearProtoss(pos0, bicho1);
 
         assertThrows( RuntimeException.class , ()-> manager.construirProtoss(pos1, new Acceso(economia,  pos1) ) );
     }

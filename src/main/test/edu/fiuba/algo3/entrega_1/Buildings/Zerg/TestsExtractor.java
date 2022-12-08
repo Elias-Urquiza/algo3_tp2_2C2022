@@ -5,12 +5,16 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.mocks.CriaderoActivo;
 import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.tiles.Manager;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestsExtractor {
 
     private static final Economia mockEconomia = new MockEconomia();
+
+    private Manager manager = new Manager(20, 20);
+
     @Test
     public void unExtractorSeVuelveOperativoDespuesDeQuePasenSeisTurnos(){
         Extractor unExtractor = new Extractor(mockEconomia, new Posicion(0,0));
@@ -46,7 +50,7 @@ public class TestsExtractor {
             unExtractor.pasarTurno();
 
         try{
-            unExtractor.agregarZangano(criaderoActivo);
+            unExtractor.agregarZangano(manager);
         }catch (RuntimeException e){
             afirmacion = false;
         }
@@ -69,7 +73,7 @@ public class TestsExtractor {
         criaderoActivo.extraerLarvas(3);
 
         try{
-            unExtractor.agregarZangano(criaderoActivo);
+            unExtractor.agregarZangano(manager);
         }catch (RuntimeException e){
             afirmacion = true;
         }
@@ -86,7 +90,7 @@ public class TestsExtractor {
 
         for(int i = 0; i < 6; i++)
             unExtractor.pasarTurno(); // se activa el Extractor.
-        unExtractor.agregarZangano(new CriaderoActivo() );
+        unExtractor.agregarZangano(manager);
 
         unExtractor.pasarTurno();
 
@@ -102,13 +106,12 @@ public class TestsExtractor {
     public void despuesDeUnTurnoElExtractorRecolecto20DeGasSiTieneDosZanganos(){
         Economia economia = new Economia()               ;
         Extractor unExtractor = new Extractor(economia, new Posicion(0,0))  ;
-
         boolean afirmacion = true;
 
         for(int i = 0; i < 6; i++)
             unExtractor.pasarTurno(); // se activa el Extractor.
-        unExtractor.agregarZangano(new CriaderoActivo() );
-        unExtractor.agregarZangano(new CriaderoActivo() );
+        unExtractor.agregarZangano(manager );
+        unExtractor.agregarZangano(manager );
 
         unExtractor.pasarTurno();
 
@@ -129,9 +132,9 @@ public class TestsExtractor {
 
         for(int i = 0; i < 6; i++)
             unExtractor.pasarTurno(); // se activa el Extractor.
-        unExtractor.agregarZangano(new CriaderoActivo() );
-        unExtractor.agregarZangano(new CriaderoActivo() );
-        unExtractor.agregarZangano(new CriaderoActivo() );
+        unExtractor.agregarZangano(manager );
+        unExtractor.agregarZangano(manager );
+        unExtractor.agregarZangano(manager );
 
         unExtractor.pasarTurno();
 
@@ -153,10 +156,10 @@ public class TestsExtractor {
         for(int i = 0; i < 6; i++)
             unExtractor.pasarTurno();
 
-        unExtractor.agregarZangano(criaderoActivo);
-        unExtractor.agregarZangano(criaderoActivo);
-        unExtractor.agregarZangano(criaderoActivo);
-        unExtractor.agregarZangano(new CriaderoActivo());
+        unExtractor.agregarZangano(manager);
+        unExtractor.agregarZangano(manager);
+        unExtractor.agregarZangano(manager);
+        unExtractor.agregarZangano(manager);
 
         unExtractor.pasarTurno();
 

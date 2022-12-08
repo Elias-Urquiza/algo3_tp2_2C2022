@@ -320,6 +320,30 @@ public class FloorManager {
         }
     }
 
+    public void coincidenciasEstructurasZerg(Posicion pos){
+        for (ConstruccionZerg c : construccionesZerg) {
+            Posicion posicionZerg = c.getPosicion();
+            if (posicionZerg.equals(pos)) {
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+    }
+
+    public boolean buscarCoincidenciaParaTileVacia(Posicion pos){
+
+        boolean afirmacion = true;
+
+        try {
+            buscarCoincidenciasProtoss(pos);
+            buscarCoincidenciasVolcanYCristales(pos);
+            coincidenciasEstructurasZerg(pos);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+
+        return afirmacion;
+    }
+
     public void buscarCoincidenciasUnidades (Posicion pos) throws RuntimeException {
         buscarCoincidencias(pos);
         buscarCoincidenciasVolcanYCristales(pos);
@@ -342,7 +366,7 @@ public class FloorManager {
     }
 
     public void terminarJuegoZerg(){
-        
+
     }
 
     public void terminarJuegoProtoss(){

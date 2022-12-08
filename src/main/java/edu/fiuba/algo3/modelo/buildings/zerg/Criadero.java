@@ -15,12 +15,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     private int numeroDeLarvas;
     private int expansion;
     private Suministros suministrosZerg;
-
-
-    // TODO incluir atributo de ubicacion ?
-
     private static final int MAX_LARVAS = 3;
-
     private FloorManager floorManager;
 
     public Criadero(Economia economia, Posicion pos) {
@@ -78,6 +73,12 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
         return afirmacion;
     }
 
+    public void reponerLarva(){
+        if(numeroDeLarvas < 3)
+            numeroDeLarvas++;
+        else
+            throw new RuntimeException("no se pueden reponer una larva");
+    }
 
     @Override
     public void usar() {

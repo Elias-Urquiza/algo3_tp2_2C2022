@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.tiles;
 
+import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.ExtraeRecurso;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
@@ -13,7 +14,6 @@ import edu.fiuba.algo3.modelo.unidades.Objetivo;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.UnidadManager;
 import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -58,15 +58,55 @@ public class Manager {
         this.suminstrosHashMap = suministros;
         floorManager.ponerVacio(tilesDeVacios, dimensionX, dimensionY);
 
+        //if(maxX > 20 && maxY >20)
+        //    crearBases();
+
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
                 Posicion pos = new Posicion(i,j);
-                if(floorManager.sinVacio(pos,dimensionX, dimensionY))
+                if(floorManager.sinVacio(pos,dimensionX, dimensionY) && floorManager.buscarCoincidenciaParaTileVacia(pos) )
                     tilesVacias.add(new TileVacia(pos) );
             }
         }
-
     }
+
+
+    public boolean consumirLarva(){
+        boolean seExtrajo = false;
+
+        for (Criadero c:  criaderos) {
+           if(!seExtrajo) {
+               try {
+                   c.extraerLarvas(1);
+                   // Encontramos larva asi que no buscamos mas
+                   seExtrajo = true;
+               } catch (RuntimeException e) {
+                   // No encontramos una larva asi que pasamos al siguiente criadero
+                   continue;
+               }
+           }
+        }
+        return seExtrajo;
+    }
+
+    public boolean reponerLarva(){
+        boolean seRepuso = false;
+
+        for (Criadero c:  criaderos) {
+            if(!seRepuso) {
+                try {
+                    c.reponerLarva();
+                    // Encontramos larva asi que no buscamos mas
+                    seRepuso = true;
+                } catch (RuntimeException e) {
+                    // No encontramos una larva asi que pasamos al siguiente criadero
+                    continue;
+                }
+            }
+        }
+        return seRepuso;
+    }
+
 
     public void construirCriaderoEn(Posicion pos, Criadero criadero) {
 
@@ -82,18 +122,21 @@ public class Manager {
 
         floorManager.buscarCoincidencias(pos);
 
+        if(!consumirLarva())
+            throw new RuntimeException("no hay larvas para construir");
+
         for (TileVacia t : tilesVacias) {
             t.construir(construccionesZerg, criadero, pos);
         }
         if(size == construccionesZerg.size()) {
-            for(Moho m : moho)//porque puedo tranquilamente construir un criadero sobre moho
+            for (Moho m : moho)//porque puedo tranquilamente construir un criadero sobre moho
                 m.construir(construccionesZerg, criadero, pos);
 
-            if(size == construccionesZerg.size())
+            if (size == construccionesZerg.size()) {
+                reponerLarva();
                 throw new RuntimeException("No se puede construir en esta posicion");
-
+            }
         }
-
         criaderos.add(criadero);
         suminstrosHashMap.get(Raza.ZERG).aumentarMaxSuminstros(5);
     }
@@ -152,7 +195,21 @@ public class Manager {
             throw new RuntimeException("No hay un mineral en la posicion");
     }
 
-    public void construirEstructuraDeVolcan(Posicion pos, ExtraeRecurso extrae){
+    public void construirExtractor(Posicion pos, ExtraeRecurso extrae){
+
+        if(!consumirLarva()) // quitamos una larva
+            throw new RuntimeException("no hay larvas para tu construccion");
+
+        try{
+            construirAsimilador(pos, extrae);
+        }catch (RuntimeException e){
+            reponerLarva(); // volvemos a poner a larva en su lugar en caso de que no se haya podido construir el edificio.
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public void construirAsimilador(Posicion pos, ExtraeRecurso extrae){
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
@@ -242,19 +299,39 @@ public class Manager {
 
         floorManager.buscarCoincidencias(pos);
 
-        int size = construccionesZerg.size();
+        if(!consumirLarva()) // quitamos una larva
+            throw new RuntimeException("no hay larvas para tu construccion");
 
+        int size = construccionesZerg.size();
         for(Moho m : moho) {
             try {
                 m.construir(construccionesZerg, zerg, pos);
             }catch (RuntimeException err2){
+                reponerLarva();
                 throw err2;
             }
         }
-        if(size == construccionesZerg.size())
+        if(size == construccionesZerg.size()){
+            reponerLarva();
             throw new RuntimeException("Este piso no tiene moho");
+        }
     }
 
+    public void crearZerg(Posicion posConstruccion, Unidad unidad){
+        if(!consumirLarva()) // quitamos una larva
+            throw new RuntimeException("no hay larvas para tu unidad");
+
+        try{
+            crearUnidad(posConstruccion, unidad);
+        }catch (RuntimeException e){
+            reponerLarva(); // volvemos a poner a larva en su lugar en caso de que no se haya podido construir el edificio.
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void crearProtoss(Posicion posConstruccion, Unidad unidad){
+        crearUnidad( posConstruccion, unidad);
+    }
 
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
         Posicion pos;
@@ -310,7 +387,7 @@ public class Manager {
 
     public void unidadAtacaConstruccion(Unidad unaUnidad, Estructura unaEstructura){
         unidadManager.ejecutarComandoDeDaniar(unaUnidad, (Objetivo) unaEstructura);
-        unaEstructura.destruir(construccionesZerg, construccionProtoss ,floorManager);
+        unaEstructura.destruir(construccionesZerg, construccionProtoss, construccionQueExtrae ,floorManager);
     }
 
     public void agregarCristales(Posicion pos) {
@@ -319,10 +396,11 @@ public class Manager {
             throw new RuntimeException("La posicion es un espacio aereo");
 
         if(unidadManager.posicionOcupada(pos))
-            throw new RuntimeException("Posicion ocupada por unidad");
+        throw new RuntimeException("Posicion ocupada por unidad");
 
         cristales.add(new Cristales(pos));
         floorManager.quitarTilesVaciasParaCristales();
+
     }
 
     public void agregarVolcanes(Posicion pos) {
@@ -337,6 +415,20 @@ public class Manager {
         floorManager.quitarTilesVaciasParaVolcanes();
     }
 
+    public LinkedList<Posicion> devolverPerimetro (Posicion posCentro){
+        Posicion pos = null;
+        LinkedList<Posicion> perimetro = new LinkedList<>();
+
+        for(int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++){
+                pos = posCentro.incrementar(i, j, maxX, maxY);
+                perimetro.add(pos);
+            }
+        }
+
+        return perimetro;
+    }
+
     public void pasarTurno(){
         for(ConstruccionProtoss protoss :construccionProtoss)
             protoss.pasarTurno();
@@ -347,6 +439,21 @@ public class Manager {
         for (ExtraeRecurso extrae : construccionQueExtrae)
             extrae.pasarTurno();
 
+        for (Cristales c : cristales) {
+            LinkedList <Posicion> perimetro;
+            LinkedList <Zangano>listaZanganos;
+            int numZanganos = 0;
+            // Paso 1) funcion privada que recibe la pos del centro y luego revisa (DONE)
+            perimetro = devolverPerimetro( c.getPos() );
+            // Paso 1.5) Unidad manager revisa cuales tiene num zanganos alrededor
+            listaZanganos = unidadManager.devolverZanganos(perimetro);
+            // Paso 2) le enviamos cant de zanganos a cristal y extrae segun eso...
+            if(listaZanganos.size() > 0)
+                for(Zangano z : listaZanganos)
+                    z.extraerMineral(c);
+
+        }
+
         unidadManager.hacerPasarDeTurno();
 
         floorManager.terminarJuegoZerg();
@@ -356,8 +463,10 @@ public class Manager {
 
     public void crearBases(){
         Posicion posBase1 = new Posicion(maxX-5,maxY-5);
-        Posicion posBase2 = new Posicion(5,5);
+        Posicion posBase2 = new Posicion(9,9);
         Posicion centro = new Posicion(0,0);
+        Economia economiaInicializadora = new Economia();
+        economiaInicializadora.ingresarMineral(300);
 
         // Crear bases Zerg
         crearBaseZerg(posBase1);
@@ -379,8 +488,9 @@ public class Manager {
     }
 
     private void crearBaseNormal(Posicion pos) {
-        Posicion offsetX = new Posicion(1,0);
-        Posicion offsetY = new Posicion(0,1);
+        Posicion offsetX = new Posicion(3,0);
+        Posicion offsetY = new Posicion(0,2);
+
 
         // Agrego muchos cristales alrededor del centro
         agregarCristales(pos.add(offsetX));
@@ -393,15 +503,34 @@ public class Manager {
         agregarVolcanes(pos.subtract(offsetY));
     }
 
-    private void crearBaseZerg(Posicion pos) {
+    private void crearBaseZerg(Posicion pos, Economia economia) {
         crearBaseNormal(pos);
-        // Agregar criadero zerg en el medio ? ci
 
+        Criadero criadero =  new Criadero(economia, pos);
+
+        criadero.setFloorManager(floorManager);
+        criadero.setSuministrosZerg(suminstrosHashMap.get(Raza.ZERG));
+        suminstrosHashMap.get(Raza.ZERG).aumentarMaxSuminstros(5);
+        construccionesZerg.add(criadero);
+        criaderos.add(criadero);
+        for(int i = 0; i<4; i++)
+            criadero.pasarTurno();
     }
 
-    private void crearBaseProtoss(Posicion pos) {
+    private void crearBaseProtoss(Posicion pos, Economia economia) {
         crearBaseNormal(pos);
-        // Agregar algo protoss en el medio ?
+        Pilon pilon = new Pilon(economia,pos);
+        construirPilonEn(pos, new Pilon(economia,pos));
+
+        for(int i = 0; i<5; i++)
+            pilon.pasarTurno();
     }
 
+    public void crearZanganoParaExtractor(Posicion pos, Zangano zangano) {
+        unidadManager.crearUnidad(zangano, pos, suminstrosHashMap);
+    }
+
+    public void destruirZanganosDeExtractor(LinkedList<Zangano> zanganos) {
+        unidadManager.deletearZanganosDelExtractor(zanganos);
+    }
 }

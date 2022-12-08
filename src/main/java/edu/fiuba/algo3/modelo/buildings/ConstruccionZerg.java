@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.buildings;
 
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
-import edu.fiuba.algo3.modelo.VidaZerg;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.unidades.Ataque;
@@ -108,7 +105,7 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
 
     @Override
-    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
         int size = construccionesZerg.size();
 
         construccionesZerg.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );

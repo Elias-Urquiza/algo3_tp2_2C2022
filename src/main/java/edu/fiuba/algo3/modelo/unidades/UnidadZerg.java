@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.unidades;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
+import edu.fiuba.algo3.modelo.buildings.zerg.Zangano;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaZerg;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
@@ -47,5 +48,9 @@ public abstract class UnidadZerg extends Unidad {
             throw new RuntimeException("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles");
         }
         listas.get(Raza.ZERG).add(this);
+    }
+
+    public void agregaZangano(LinkedList<Zangano> zanganos) {
+        return;
     }
 }

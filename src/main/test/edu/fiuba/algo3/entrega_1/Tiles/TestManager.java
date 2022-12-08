@@ -397,7 +397,7 @@ public class TestManager {
         manager.agregarVolcanes(pos2);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirEstructuraDeVolcan(pos1, new Asimilador(economia, pos1))
+                () -> manager.construirAsimilador(pos1, new Asimilador(economia, pos1))
         );
         assertEquals("No hay un volcan en la posicion", exception.getMessage());
     }
@@ -791,12 +791,12 @@ public class TestManager {
         for(int i = 5; i < 15; i++) {
             for(int j = 5; j < 10; j++) {
                 Posicion pos = new Posicion(i, j);
-                manager.crearUnidad(pos, new Scout(economia, pos));
+                manager.crearProtoss(pos, new Scout(economia, pos));
             }
         }
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.crearUnidad(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
+                () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
         );
         assertEquals("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles", exception.getMessage());
     }
@@ -808,13 +808,13 @@ public class TestManager {
         for(int i = 5; i < 15; i++) {
             for(int j = 5; j < 10; j++) {
                 Posicion pos = new Posicion(i, j);
-                manager.crearUnidad(pos, new Scout(economia, pos));
+                manager.crearProtoss(pos, new Scout(economia, pos));
             }
         }
         manager.destruirProtoss(new Posicion(0, 0));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.crearUnidad(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
+                () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
         );
         assertEquals("No puedes construir esta unidad, ya tienes la mayor cantidad de unidades posibles", exception.getMessage());
     }
