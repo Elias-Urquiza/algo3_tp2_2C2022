@@ -46,7 +46,10 @@ public class TestManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
+
+                criadero.pasarTurno();
                 if (i != 5 || j != 5) {//para que no construya sobre el criadero
+
                     try {
                         manager.construirZerg(new Posicion(i, j), new ReservaDeReproduccion(economia, new Posicion(i, j)));
                     } catch (RuntimeException e) {
@@ -77,6 +80,7 @@ public class TestManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
+                criadero.pasarTurno();
                 if (i != 3 || j != 3) {//para que no construya sobre el criadero
                    try{
                         pos = new Posicion(i,j);
@@ -111,6 +115,7 @@ public class TestManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
+                criadero.pasarTurno();
                 if (i != 3 || j != 17) {//para que no construya sobre el criadero
                     try {
                         pos = new Posicion(i,j);
@@ -145,6 +150,7 @@ public class TestManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
+                criadero.pasarTurno();
                 if (i != 17 || j != 3) {//para que no construya sobre el criadero
                     try {
                         pos =new Posicion(i,j);
@@ -222,6 +228,7 @@ public class TestManager {
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
+                criadero.pasarTurno();
                 if (i != 17 || j != 17) {//para que no construya sobre el criadero
                     try {
                         pos =new Posicion(i, j);

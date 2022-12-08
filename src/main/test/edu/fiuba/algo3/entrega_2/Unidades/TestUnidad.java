@@ -29,8 +29,10 @@ public class TestUnidad {
         Posicion posCriadero = new Posicion(5, 5);
         Posicion posPilon = new Posicion(30, 30);
 
+        Criadero criaderoPrincip = new Criadero(economia, posCriadero);
+
         manager = new Manager(40, 40);
-        manager.construirCriaderoEn(posCriadero, new Criadero(economia, posCriadero));
+        manager.construirCriaderoEn(posCriadero, criaderoPrincip);
         manager.construirPilonEn(posPilon, new Pilon(economia, posPilon));
 
         for (int i = 0; i < 5; i++) {
@@ -60,9 +62,12 @@ public class TestUnidad {
 
     @Test
     public void seCreaUnaUnidadAlLadoDelEdificioQueLaCreaCuandoEnUnRadioDeUnoHayConstrucciones(){
+
+
         Posicion posConstruccionOrigenUnidad = new Posicion(3,3);
         Posicion posEsperada = new Posicion(4,3);
         Unidad bicho = new Zerling(economia, posConstruccionOrigenUnidad);
+        manager.pasarTurno();
 
         Posicion posConstruccion1 = new Posicion(2,2);
         Posicion posConstruccion2 = new Posicion(2,3);
@@ -73,12 +78,23 @@ public class TestUnidad {
 
         manager.construirZerg(posConstruccion1, new ReservaDeReproduccion(economia, posConstruccion1) );
         manager.construirZerg(posConstruccion2, new ReservaDeReproduccion(economia, posConstruccion2) );
+
+        manager.pasarTurno();
+        manager.pasarTurno();
+
         manager.construirZerg(posConstruccion3, new ReservaDeReproduccion(economia, posConstruccion3) );
         manager.construirZerg(posConstruccion4, new ReservaDeReproduccion(economia, posConstruccion4) );
+
+        manager.pasarTurno();
+        manager.pasarTurno();
+
         manager.construirZerg(posConstruccion5, new ReservaDeReproduccion(economia, posConstruccion5) );
         manager.construirZerg(posConstruccion6, new ReservaDeReproduccion(economia, posConstruccion6) );
 
-        manager.crearUnidad(posConstruccionOrigenUnidad,  bicho);
+        manager.pasarTurno();
+        manager.pasarTurno();
+
+        manager.crearZerg(posConstruccionOrigenUnidad,  bicho);
         assert(posEsperada.equals(bicho.getPosicion()));
     }
 
