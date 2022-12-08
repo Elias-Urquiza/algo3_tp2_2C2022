@@ -21,21 +21,7 @@ public class TestCorrelatividadEstructuras {
 
     @BeforeEach
     public void initEach() {
-
-        Posicion posCriadero = new Posicion(5, 5);
-        Posicion posPilon = new Posicion(15, 15);
-
-        Criadero criadero = new Criadero(economia, posCriadero);
-
         manager = new Manager(20, 20);
-        manager.construirCriaderoEn(posCriadero,criadero);
-        manager.construirPilonEn(posPilon, new Pilon(economia, posPilon));
-
-        for (int i = 0; i < 10; i++) {
-            manager.pasarTurno();
-        }
-
-
     }
 
 
@@ -73,8 +59,7 @@ public class TestCorrelatividadEstructuras {
     @Test
     public void unEpiralNoSeConstruyeCorrectamenteSiNoExisteUnaGuarida() {
 
-
-        Posicion posEspiral = new Posicion(4, 8);
+        Posicion posEspiral = new Posicion(14, 18);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,

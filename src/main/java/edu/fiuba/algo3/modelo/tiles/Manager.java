@@ -58,16 +58,15 @@ public class Manager {
         this.suminstrosHashMap = suministros;
         floorManager.ponerVacio(tilesDeVacios, dimensionX, dimensionY);
 
-        //if(maxX > 20 && maxY >20)
-        //    crearBases();
-
         for (int i = 0; i < maxX; i ++) {
             for (int j = 0; j < maxY; j++) {
                 Posicion pos = new Posicion(i,j);
-                if(floorManager.sinVacio(pos,dimensionX, dimensionY) && floorManager.buscarCoincidenciaParaTileVacia(pos) )
+                if(floorManager.sinVacio(pos,dimensionX, dimensionY))
                     tilesVacias.add(new TileVacia(pos) );
             }
         }
+
+        crearBases();
     }
 
 
@@ -162,7 +161,7 @@ public class Manager {
 
         if(size == construccionProtoss.size()) {
             for(Energia e : energias)//porque puedo tranquilamente construir un pilon sobre energia
-                e.construir(construccionesZerg, pilon, pos);
+                e.construir(construccionProtoss, pilon, pos);
 
             if(size == construccionProtoss.size())
                 throw new RuntimeException("No se puede construir en esta posicion");
@@ -342,8 +341,11 @@ public class Manager {
         for(int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
 
-                pos = posConstruccion.incrementar(i, j, maxX, maxY);
-
+                try {
+                    pos = posConstruccion.incrementar(i, j, maxX, maxY);
+                }catch (RuntimeException e) {
+                    continue;
+                }
                 try {
                     floorManager.buscarCoincidenciasUnidades(pos);
                 }catch (RuntimeException e){
@@ -421,7 +423,12 @@ public class Manager {
 
         for(int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++){
-                pos = posCentro.incrementar(i, j, maxX, maxY);
+
+                try {
+                    pos = posCentro.incrementar(i, j, maxX, maxY);
+                }catch (RuntimeException e) {
+                    continue;
+                }
                 perimetro.add(pos);
             }
         }
@@ -462,9 +469,9 @@ public class Manager {
 
 
     public void crearBases(){
-        Posicion posBase1 = new Posicion(maxX-5,maxY-5);
-        Posicion posBase2 = new Posicion(9,9);
-        Posicion centro = new Posicion(0,0);
+        Posicion posBase1 = new Posicion(maxX-3,maxY-3);
+        Posicion posBase2 = new Posicion(3,3);
+        Posicion centro   = new Posicion(0,0);
         Economia economiaInicializadora = new Economia();
         economiaInicializadora.ingresarMineral(300);
 
@@ -476,7 +483,7 @@ public class Manager {
         // Crear varias bases desplegadas de forma equidistante al centro
         // recordar que hay un vacio en el centro del mapa que es proporcional al tamanio
         // TODO
-        Integer offsetDelCentro = floorManager.calcularOffset(maxX) + 5;
+        Integer offsetDelCentro = floorManager.calcularOffset(maxX) + 3;
         for (int i = offsetDelCentro; i < maxX-10; i = i + 20) {
             Posicion offsetX = new Posicion(i,0);
             Posicion offsetY = new Posicion(0,i);
@@ -488,7 +495,7 @@ public class Manager {
     }
 
     private void crearBaseNormal(Posicion pos) {
-        Posicion offsetX = new Posicion(3,0);
+        Posicion offsetX = new Posicion(2,0);
         Posicion offsetY = new Posicion(0,2);
 
 

@@ -71,43 +71,57 @@ public class TestFloorManager {
     @Test
     public void cuandoSeMohificaLasEnergiasCorrespondientesSeVan(){
 
+        Posicion pos1 = new Posicion(11,11);
+        Pilon pilon1 = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon1);
 
-        Posicion pos1 = new Posicion(13,13);
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
-        pos1 = new Posicion(0,13);
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
+        pos1 = new Posicion(11,0);
+        Pilon pilon2 = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon2);
+
+        pos1 = new Posicion(0,11);
+        Pilon pilon3 = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon3);
+
         pos1 = new Posicion(0,0);
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
-        pos1 = new Posicion(13,0);
-        manager.construirPilonEn(pos1, new Pilon(economia, pos1));
-        Posicion pos0 = new Posicion(6,6);
+        Pilon pilon4 = new Pilon(economia, pos1);
+        manager.construirPilonEn(pos1, pilon4);
+
+        Posicion pos0 = new Posicion(7,7);
         Criadero criadero = new Criadero(economia, pos0);
         manager.construirCriaderoEn(pos0, criadero);
 
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
+        for( int i = 0; i<5; i++) {
+            pilon1.pasarTurno();pilon2.pasarTurno();pilon3.pasarTurno();pilon4.pasarTurno();
+        }
+
+        for( int i = 0; i<4; i++) {
+            criadero.pasarTurno();
+        }
 
         boolean afirmacion = true;
 
-        int posicion_x = 1;
-        int posicion_y = 1;
+        int posicion_x = 2;
+        int posicion_y = 2;
         int topeX = 12;
         int topeY = 12;
 
         LinkedList<Energia> lista = manager.getEnergias();
-
+        int contador = 0;
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
                 pos0 = new Posicion(i, j);
                 for(Energia e : lista){
-                    if( (e.getPos()).equals(pos0) )
+                    if( (e.getPos()).equals(pos0) ) {
                         afirmacion = false;
+                        System.out.println(String.format("DEBUG: Hay energia en la pos %s" , pos0));
+                        contador++;
+                    }
                 }
             }
         }
-        assert(afirmacion);
+        assertEquals(0, contador);
+        //assert(afirmacion);
     }
 
     @Test
@@ -125,10 +139,10 @@ public class TestFloorManager {
 
         boolean afirmacion = true;
 
-        int posicion_x = 3;
-        int posicion_y = 3;
-        int topeX = 10;
-        int topeY = 10;
+        int posicion_x = 2;
+        int posicion_y = 1;
+        int topeX = 9;
+        int topeY = 8;
 
         LinkedList<TileVacia> lista = manager.getTilesVacias();
 

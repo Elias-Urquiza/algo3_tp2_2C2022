@@ -48,14 +48,14 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     public void pasarTurno() {
         turnos++;
 
-        if(numeroDeLarvas < MAX_LARVAS)
+        if(numeroDeLarvas < MAX_LARVAS) {
             numeroDeLarvas++;
+        }
 
         if(turnos >= tiempoDeConstruccion && turnos%2 == 0) {
             floorManager.mohificar(this.pos, expansion);
             expansion += 1;
         }
-
 
         curar();
 

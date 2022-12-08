@@ -154,7 +154,7 @@ public class FloorManager {
                     Moho mohoNew = new Moho(posAgregar);
                     moho.add(mohoNew);
                 } catch (RuntimeException e) {
-                   // System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
+                   System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque" + e.getMessage(), posAgregar));
 
                 }
             }
@@ -298,10 +298,19 @@ public class FloorManager {
         buscarCoincidenciasVolcanYCristales(posicion);
         buscarCoincidenciasDelMoho(posicion);
     }
-
+    public  void buscarCoincidenciasDeTilesEnergia(Posicion posicion){
+        for (Energia e : energias) {
+            Posicion posicionEnergias = e.getPos();
+            if (posicionEnergias.equals(posicion)) {
+                throw new RuntimeException("Ya hay una energia en esa posicion");
+            }
+        }
+    }
     public void buscarCoincidenciasEnergia(Posicion posicion){
         buscarCoincidenciasDelMoho(posicion);
         buscarCoincidenciasVolcanYCristales(posicion);
+        buscarCoincidenciasDeTilesEnergia(posicion);
+
     }
 
     public void buscarCoincidenciasVolcanYCristales(Posicion posicion){
