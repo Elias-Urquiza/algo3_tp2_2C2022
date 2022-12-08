@@ -153,6 +153,11 @@ public class TestUnidad {
     }
 
     @Test
+    public void siSoloSeTieneUnCriaderoSinLarvasNoSePuedeConstruirAlgo() {
+
+    }
+
+    @Test
     public void unaUnidadParaLaCualPasoSuTiempoDeCreacionSePuedeMover(){
         Posicion pos0 = new Posicion(3,3);
         Posicion pos1 = new Posicion(4,4);

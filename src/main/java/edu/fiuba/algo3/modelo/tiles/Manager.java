@@ -469,9 +469,9 @@ public class Manager {
         economiaInicializadora.ingresarMineral(300);
 
         // Crear bases Zerg
-        crearBaseZerg(posBase1);
+        crearBaseZerg(posBase1, economiaInicializadora);
         // Crear base Protoss
-        crearBaseProtoss(posBase2);
+        crearBaseProtoss(posBase2, economiaInicializadora);
 
         // Crear varias bases desplegadas de forma equidistante al centro
         // recordar que hay un vacio en el centro del mapa que es proporcional al tamanio

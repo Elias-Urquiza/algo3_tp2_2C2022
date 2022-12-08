@@ -408,7 +408,7 @@ public class TestManager {
         Posicion pos2 = new Posicion (5, 5);
         manager.agregarCristales(pos1);
         manager.agregarVolcanes(pos2);
-        assertDoesNotThrow(() -> manager.construirEstructuraDeVolcan(pos2, new Asimilador(economia, pos2)));
+        assertDoesNotThrow(() -> manager.construirAsimilador(pos2, new Asimilador(economia, pos2)));
     }
 
 
@@ -724,7 +724,7 @@ public class TestManager {
         Pilon pilon1 = new Pilon(economia, pos0);
         Extractor extractor = new Extractor(economia, pos0);
         manager.agregarVolcanes(pos0);
-        manager.construirEstructuraDeVolcan(pos0, extractor);
+        manager.construirExtractor(pos0, extractor);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
