@@ -715,6 +715,7 @@ public class TestManager {
                 manager.crearProtoss(pos, new Scout(economia, pos));
             }
         }
+        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
@@ -733,6 +734,7 @@ public class TestManager {
             }
         }
         manager.destruirProtoss(new Posicion(0, 0));
+        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))

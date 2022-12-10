@@ -15,6 +15,7 @@ import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +32,8 @@ public class TestUnidad {
 
         Criadero criaderoPrincip = new Criadero(economia, posCriadero);
 
-        manager = new Manager(40, 40);
+        manager = Mockito.spy(new Manager(40, 40));
+        Mockito.doNothing().when(manager).crearBases();
         manager.construirCriaderoEn(posCriadero, criaderoPrincip);
         manager.construirPilonEn(posPilon, new Pilon(economia, posPilon));
 
@@ -39,7 +41,7 @@ public class TestUnidad {
             manager.pasarTurno();
         }
 
-        manager.construirZerg(new Posicion(3,3), new   ReservaDeReproduccion(economia, new Posicion(3,3) ) );
+        manager.construirZerg(new Posicion(3,3) , new ReservaDeReproduccion(economia, new Posicion(3,3) ) );
         manager.construirProtoss(new Posicion(31,31), new Acceso(economia, new Posicion(31,31)));
 
         for (int i = 0; i < 12; i++) {

@@ -464,10 +464,9 @@ public class Manager {
             perimetro = devolverPerimetro( c.getPos() );
             // Paso 1.5) Unidad manager revisa cuales tiene num zanganos alrededor
             listaZanganos = unidadManager.devolverZanganos(perimetro);
-            // Paso 2) le enviamos cant de zanganos a cristal y extrae segun eso...
-            if(listaZanganos.size() > 0)
-                for(Zangano z : listaZanganos)
-                    z.extraerMineral(c);
+            // Paso 2) le enviamos cant de zanganos a cristal y extrae
+            for(Zangano z : listaZanganos)
+                z.extraerMineral(c);
 
         }
 
