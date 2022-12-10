@@ -497,10 +497,21 @@ public class Manager {
             for (int i = offsetDelCentro; i < maxX - 10; i = i + 10) {
                 int sumarOffsetX = i;
                 int restarOffsetX = i;
-                crearBaseNormal(centro.incrementar(sumarOffsetX, 0, maxX, maxY));
-                crearBaseNormal(centro.incrementar(0, sumarOffsetX, maxX, maxY));
-                crearBaseNormal(centro.incrementar(restarOffsetX, 0, maxX, maxY));
-                crearBaseNormal(centro.incrementar(0, restarOffsetX, maxX, maxY));
+                try {
+                    crearBaseNormal(centro.incrementar(sumarOffsetX, 0, maxX, maxY));
+                } catch (RuntimeException e){}
+
+                try{
+                    crearBaseNormal(centro.incrementar(0, sumarOffsetX, maxX, maxY));
+                }catch (RuntimeException e){}
+
+                try{
+                    crearBaseNormal(centro.incrementar(restarOffsetX, 0, maxX, maxY));
+                }catch(RuntimeException e){}
+
+                try{
+                    crearBaseNormal(centro.incrementar(0, restarOffsetX, maxX, maxY));
+                }catch (RuntimeException e){}
             }
 
         floorManager.quitarEnergiasParaCristalesYVolcanes();

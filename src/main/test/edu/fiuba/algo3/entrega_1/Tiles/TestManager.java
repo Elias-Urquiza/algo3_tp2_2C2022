@@ -9,6 +9,7 @@ import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.LinkedList;
 
@@ -31,63 +32,28 @@ public class TestManager {
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoSinCasoBorde() {
         boolean afirmacion = true;
 
-        int posicion_x = 12;
-        int posicion_y = 12;
-        int topeX = 20;
-        int topeY = 20;
-        int contador = 0;
-
-        for (int i = posicion_x; i < (topeX); i++) {
-            for (int j = posicion_y; j < (topeY); j++) {
-                if (i != 17 || j != 17) {//para que no construya sobre el criadero
-//PROBLEMA CON LARVAS, NO HAY JEJEJE
-                    try {
-                        manager.construirZerg(new Posicion(i, j), new ReservaDeReproduccion(economia, new Posicion(i, j)));
-                    } catch (RuntimeException e) {
-                        afirmacion = false;
-                        contador++;
-                    }
-                }
-            }
+        try {
+            manager.construirZerg(new Posicion(12, 12), new ReservaDeReproduccion(economia, new Posicion(12, 12)));
+        } catch (RuntimeException e) {
+            afirmacion = false;
         }
-        //chequeo que hay moho porque pude construir un edificio zerg en el lugar.
-        //assert (afirmacion);
-        assertEquals(0, contador);
-    }
 
-    @Test
-    public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeArribaIzquierda() {
-        Posicion pos = new Posicion(3,3);
-        Criadero criadero = new Criadero(economia, pos );
-        manager.construirCriaderoEn(pos, criadero );
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        boolean afirmacion = true;
-
-        int posicion_x = 0;// 3 - 5 = 0 --> 0
-        int posicion_y = 0;
-        int topeX = 9;// 3 + 6 = 9
-        int topeY = 9;
-
-        for (int i = posicion_x; i < (topeX); i++) {
-            for (int j = posicion_y; j < (topeY); j++) {
-                criadero.pasarTurno();
-                if (i != 3 || j != 3) {//para que no construya sobre el criadero
-                   try{
-                        pos = new Posicion(i,j);
-                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
-                    } catch (RuntimeException e) {
-                        afirmacion = false;
-                    }
-                }
-            }
+        try{
+            manager.construirZerg(new Posicion(12, 19), new ReservaDeReproduccion(economia, new Posicion(12, 19)));
+        }catch (RuntimeException e) {
+            afirmacion = false;
+        }
+        try{
+            manager.construirZerg(new Posicion(19, 18), new ReservaDeReproduccion(economia, new Posicion(19, 18)));
+        }catch (RuntimeException e) {
+            afirmacion = false;
         }
 
         //chequeo que hay moho porque pude construir un edificio zerg en el lugar.
-        assert (afirmacion);
+        assert(afirmacion);
     }
+
+
 
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeArribaDerecha() {
@@ -135,7 +101,7 @@ public class TestManager {
         criadero.pasarTurno();
 
         boolean afirmacion = true;
-
+        int contador = 0 ;
         int posicion_x = 12;// 3 - 5 = 0 --> 0
         int posicion_y = 0;
         int topeX = 20;// 3 + 6 = 9
@@ -145,18 +111,19 @@ public class TestManager {
             for (int j = posicion_y; j < (topeY); j++) {
                 criadero.pasarTurno();
                 if (i != 17 || j != 3) {//para que no construya sobre el criadero
+
                     try {
-                        pos =new Posicion(i,j);
-                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
+                        pos = new Posicion(i, j);
+                        manager.construirProtoss(pos, new Acceso(economia, pos));
                     } catch (RuntimeException e) {
-                        afirmacion = false;
+                        contador++;
                     }
                 }
             }
         }
 
         //chequeo que hay moho porque pude construir un edificio zerg en el lugar.
-        assert (afirmacion);
+        assertEquals(71, contador);
     }
 
 
@@ -204,53 +171,40 @@ public class TestManager {
 
     @Test
     public void seConstruyeUnCriaderoYElMohoSeExpandeSegunLoEsperadoEnCasoBordeAbajoDerecha() {
-        Posicion pos = new Posicion(17, 17);
-        Criadero criadero = new Criadero(economia, pos );
-        manager.construirCriaderoEn(pos, criadero );
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-
         boolean afirmacion = true;
-
+        Posicion pos;
         int posicion_x = 12;// 3 - 5 = 0 --> 0
         int posicion_y = 12;
         int topeX = 20;// 3 + 6 = 9
         int topeY = 20;
+        int contador = 0;
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
-                criadero.pasarTurno();
-                if (i != 17 || j != 17) {//para que no construya sobre el criadero
                     try {
                         pos =new Posicion(i, j);
-                        manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
+                        manager.construirProtoss(pos, new Acceso(economia, pos));
                     } catch (RuntimeException e) {
-                        afirmacion = false;
+                        contador++;
                     }
                 }
             }
-        }
 
         //chequeo que hay moho porque pude construir un edificio zerg en el lugar.
-        assert (afirmacion);
+        assertEquals(64, contador);
     }
 
 
 
     @Test
     public void seConstruyeUnPilonYSeEnergizaLaZonaCorrespondiente() {
-        Posicion pos = new Posicion(3,3);
-        Pilon pilon = new Pilon(economia, pos);
-        manager.construirPilonEn(pos, pilon);
-        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
         boolean afirmacion = true;
-
+        Posicion pos;
         int posicion_x = 0;// 3 - 3 = 0 --> 0
         int posicion_y = 0;
         int topeX = 7;// 3 + 4 = 7
         int topeY = 7;
+        int contador = 0;
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
@@ -259,14 +213,14 @@ public class TestManager {
                         pos = new Posicion(i, j);
                         manager.construirProtoss(pos, new Acceso(economia, pos));
                     } catch (RuntimeException e) {
-                        afirmacion = false;
+                        contador++;
                     }
                 }
             }
         }
 
         //chequeo que hay moho porque pude construir un edificio zerg en el lugar.
-        assert (afirmacion);
+        assertEquals(5, contador);
     }
 
     @Test
@@ -359,8 +313,8 @@ public class TestManager {
     }
 
     @Test
-    public void seConstruyeUnPilonYSeEnergizaLaZonaAbajoDerecha() {
-        Posicion pos =new Posicion(18, 18);
+    public void seConstruyeUnPilonYSeEnergizaLaZonadeArribaDerecha() {
+        Posicion pos =new Posicion(3, 18);
         Pilon pilon = new Pilon(economia, pos);
         manager.construirPilonEn(pos, pilon);
         pilon.pasarTurno();
@@ -368,14 +322,14 @@ public class TestManager {
 
         boolean afirmacion = true;
 
-        int posicion_x = 15;// 3 - 3 = 0 --> 0
+        int posicion_x = 0 ;// 3 - 3 = 0 --> 0
         int posicion_y = 15;
-        int topeX = 20;// 3 + 4 = 5
+        int topeX =  7;// 3 + 4 = 5
         int topeY = 20;
 
         for (int i = posicion_x; i < (topeX); i++) {
             for (int j = posicion_y; j < (topeY); j++) {
-                if (i != 18 || j != 18) {//para que no construya sobre el criadero
+                if (i != 3 || j != 18) {//para que no construya sobre el criadero
                     try {
                         pos = new Posicion(i, j);
                         manager.construirProtoss(pos, new Acceso(economia, pos));
@@ -404,9 +358,7 @@ public class TestManager {
 
     @Test
     public void intentoConstruirAsimiladorSobreVolcanYPuedo() {
-        Posicion pos1 = new Posicion(10, 10);
-        Posicion pos2 = new Posicion (5, 5);
-        manager.agregarCristales(pos1);
+        Posicion pos2 = new Posicion (6, 6);
         manager.agregarVolcanes(pos2);
         assertDoesNotThrow(() -> manager.construirAsimilador(pos2, new Asimilador(economia, pos2)));
     }
@@ -414,9 +366,7 @@ public class TestManager {
 
     @Test
     public void intentoConstruirNexoMineralSobreVolcanYNoPuedo() {
-        Posicion pos1 = new Posicion(10, 10);
-        Posicion pos2 = new Posicion (5, 5);
-        manager.agregarCristales(pos1);
+        Posicion pos2 = new Posicion (6, 6);
         manager.agregarVolcanes(pos2);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
@@ -428,9 +378,6 @@ public class TestManager {
     @Test
     public void intentoConstruirNexoMineralSobreCristalYPuedo() {
         Posicion pos1 = new Posicion(10, 10);
-        Posicion pos2 = new Posicion (5, 5);
-        manager.agregarCristales(pos1);
-        manager.agregarVolcanes(pos2);
         assertDoesNotThrow(() -> manager.construirEstructuraDeCristales(pos1, new NexoMineral(economia, pos1)));
     }
 
@@ -446,12 +393,7 @@ public class TestManager {
 
     @Test
     public void intentoConstruirProtossDespuesDeUnPilonYNoFalla() {
-        Posicion pos1 = new Posicion(10, 10);
-        Posicion pos3 = new Posicion(12, 12);
-        Pilon pilon = new Pilon(economia, pos1);
-        manager.construirPilonEn(pos1, pilon);
-        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
-
+        Posicion pos3 = new Posicion(6, 6);
         String afirmacion = "Todo ok";
         try {
             manager.construirProtoss(pos3, new Acceso(economia, pos3));
@@ -465,14 +407,9 @@ public class TestManager {
 
     @Test
     public void intentoDestruirUnProtossYEfectivamenteLoDestruye() {
-        Posicion pos1 = new Posicion(10, 10);
-        Posicion pos3 = new Posicion(12, 12);
-        Pilon pilon = new Pilon(economia, pos1);
-        manager.construirPilonEn(pos1, pilon);
-        pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();pilon.pasarTurno();
+        Posicion pos3 = new Posicion(6, 6);
         manager.construirProtoss(pos3, new Acceso(economia, pos3));
         assertDoesNotThrow(() -> manager.destruirProtoss(pos3));
-
     }
 
     @Test
@@ -709,7 +646,7 @@ public class TestManager {
         Pilon pilon1 = new Pilon(economia, pos0);
         Extractor extractor = new Extractor(economia, pos0);
         manager.agregarVolcanes(pos0);
-
+        manager.construirExtractor(pos0, extractor);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.construirPilonEn(pos0, pilon1)
