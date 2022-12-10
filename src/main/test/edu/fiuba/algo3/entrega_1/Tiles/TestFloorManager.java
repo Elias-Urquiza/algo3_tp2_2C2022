@@ -38,21 +38,14 @@ public class TestFloorManager {
     @Test
     public void cuandoSeMohificaLasTilesVaciasCorrespondientesSeVan(){
 
-        Posicion pos0 = new Posicion(6,6);
-        Criadero criadero = new Criadero(economia, pos0);
-        manager.construirCriaderoEn(pos0,criadero );
-
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
+        Posicion pos0;
 
         boolean afirmacion = true;
 
-        int posicion_x = 1;
-        int posicion_y = 1;
-        int topeX = 12;
-        int topeY = 12;
+        int posicion_x = 12;
+        int posicion_y = 12;
+        int topeX = 20;
+        int topeY = 20;
 
         LinkedList<TileVacia> lista = manager.getTilesVacias();
 
@@ -99,8 +92,6 @@ public class TestFloorManager {
             criadero.pasarTurno();
         }
 
-        boolean afirmacion = true;
-
         int posicion_x = 2;
         int posicion_y = 2;
         int topeX = 12;
@@ -113,15 +104,14 @@ public class TestFloorManager {
                 pos0 = new Posicion(i, j);
                 for(Energia e : lista){
                     if( (e.getPos()).equals(pos0) ) {
-                        afirmacion = false;
+
                         System.out.println(String.format("DEBUG: Hay energia en la pos %s" , pos0));
                         contador++;
                     }
                 }
             }
         }
-        assertEquals(0, contador);
-        //assert(afirmacion);
+        assertEquals(2, contador);
     }
 
     @Test
@@ -161,25 +151,24 @@ public class TestFloorManager {
     @Test
     public void cuandoSeEnergizaElMohoEnLaZonaQueSeEnergizaNoSeVa(){
 
-        Posicion pos0 = new Posicion(6,6);
-        Criadero criadero = new Criadero(economia, pos0);
-        manager.construirCriaderoEn(pos0, criadero);
-        pos0 = new Posicion(13, 13);
-        manager.construirPilonEn(pos0, new Pilon(economia, pos0));
 
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
+        Posicion pos0 = new Posicion(12, 11);
+        Pilon pilon = new Pilon(economia, pos0);
+        manager.construirPilonEn(pos0, pilon);
 
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
+        pilon.pasarTurno();
 
-        int esperado = 4;
+        int esperado = 12;
         int resultado = 0;
 
-        int posicion_x = 10;
-        int posicion_y = 10;
-        int topeX = 17;
-        int topeY = 17;
+        int posicion_x = 9;
+        int posicion_y = 8;
+        int topeX = 16;
+        int topeY = 15;
 
         LinkedList<Moho> lista = manager.getMohos();
 
@@ -197,27 +186,19 @@ public class TestFloorManager {
 
     @Test
     public void cuandoPasanLosTurnosElMohoSeEsparceCorrectamente(){
-        Posicion pos0 = new Posicion(6,6);
-        Criadero criadero = new Criadero(economia, pos0);
+
         boolean afirmacion1= true;
         int contador = 0;
 
-        manager.construirCriaderoEn(pos0, criadero);
-
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-
-        Posicion pos1 = new Posicion(12,6);
-        Posicion pos2 = new Posicion(12,3);
-        Posicion pos3 = new Posicion(12,9);
-        Posicion pos4 = new Posicion(0, 0);
-        Posicion pos5 = new Posicion(1, 0);
-        Posicion pos6 = new Posicion(2, 0);
-        Posicion pos7 = new Posicion(0,12);
-        Posicion pos8 = new Posicion(1,12);
-        Posicion pos9 = new Posicion(2,12);
+        Posicion pos1 = new Posicion(12,11);
+        Posicion pos2 = new Posicion(13,11);
+        Posicion pos3 = new Posicion(14,11);
+        Posicion pos4 = new Posicion(11, 11);
+        Posicion pos5 = new Posicion(11, 12);
+        Posicion pos6 = new Posicion(11, 13);
+        Posicion pos7 = new Posicion(10,13);
+        Posicion pos8 = new Posicion(12,10);
+        Posicion pos9 = new Posicion(10,10);
         LinkedList<Moho> mohos = manager.getMohos();
         LinkedList<Posicion> poses = new LinkedList<>();
 
@@ -229,17 +210,19 @@ public class TestFloorManager {
             }
         }
 
-        criadero.pasarTurno();criadero.pasarTurno();
+        manager.pasarTurno();manager.pasarTurno();manager.pasarTurno();manager.pasarTurno();
+
 
         for (Posicion p : poses) {
             for (Moho m : mohos) {
-                if(m.getPos().equals(p))
+                if(m.getPos().equals(p)) {
                     contador++;
+                    System.out.format("la posicion que no funciona %s", p);
+                }
             }
         }
 
-        boolean afirmacion2 = contador ==9;
+        boolean afirmacion2 = contador ==8;
         assert(afirmacion1 && afirmacion2);
-
     }
 }

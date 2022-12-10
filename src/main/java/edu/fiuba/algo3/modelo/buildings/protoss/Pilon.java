@@ -36,6 +36,12 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
         //no se como implementar que sume 20 de gas por tiempo, Si el gas es guardado en minerales
     }
 
+    public void energizarDespuesDeEliminarUnPilon(){
+        if(turnos >= tiempoDeConstruccion){
+            floorManager.energizar(pos, id);
+        }
+    }
+
     @Override
     public void usar() {
         if (turnos < TIEMPO_CONSTRUCCION )
@@ -65,5 +71,9 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     @Override
     public void desactivar() {
         energizado = true;
+    }
+
+    public boolean seQuitaPilon(Posicion pos) {
+        return pos.equals(this.pos);
     }
 }

@@ -10,10 +10,9 @@ import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
-import edu.fiuba.algo3.modelo.unidades.Objetivo;
-import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.UnidadManager;
-import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
+import edu.fiuba.algo3.modelo.unidades.*;
+import javafx.geometry.Pos;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -31,6 +30,7 @@ public class Manager {
     LinkedList<Energia> energias;
     LinkedList<TileVacia> tilesVacias;
     LinkedList<Vacio> tilesDeVacios;
+    LinkedList<Pilon> pilones;
     HashMap<Raza, Suministros> suminstrosHashMap;
     int maxX;
     int maxY;
@@ -46,6 +46,7 @@ public class Manager {
         this.volcanes  = new LinkedList<>();
         this.energias = new LinkedList<>();
         this.tilesVacias = new LinkedList<>();
+        this.pilones = new LinkedList<>();
         this.maxX = dimensionX;
         this.maxY = dimensionY;
         this.idPilones = 0;
@@ -166,6 +167,7 @@ public class Manager {
             if(size == construccionProtoss.size())
                 throw new RuntimeException("No se puede construir en esta posicion");
         }
+        pilones.add(pilon);
         suminstrosHashMap.get(Raza.PROTOSS).aumentarMaxSuminstros(5);
         idPilones  ++;
     }
@@ -269,11 +271,16 @@ public class Manager {
         int size = construccionProtoss.size();
 
         construccionProtoss.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
+        pilones.removeIf(pilon -> pilon.seQuitaPilon(pos) );
 
         floorManager.desactivarEstructurasProtoss();
         if(size == construccionProtoss.size()) {
             throw new RuntimeException("No hay nada para destruir");
         }
+
+       for (Pilon p: pilones){
+            p.energizarDespuesDeEliminarUnPilon();
+       }
 
     }
 
@@ -397,12 +404,13 @@ public class Manager {
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
 
-        if(unidadManager.posicionOcupada(pos))
-        throw new RuntimeException("Posicion ocupada por unidad");
+        try{
+            floorManager.noHayVolcanOVacio(pos);
+            cristales.add(new Cristales(pos));
+            floorManager.quitarTilesVaciasParaCristales();
+        }catch (RuntimeException e){
 
-        cristales.add(new Cristales(pos));
-        floorManager.quitarTilesVaciasParaCristales();
-
+        }
     }
 
     public void agregarVolcanes(Posicion pos) {
@@ -410,11 +418,13 @@ public class Manager {
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
 
-        if(unidadManager.posicionOcupada(pos))
-            throw new RuntimeException("Posicion ocupada por unidad");
+        try {
+            floorManager.noHayVolcanOVacio(pos);
+            volcanes.add(new Volcan(pos));
+            floorManager.quitarTilesVaciasParaVolcanes();
+        }catch (RuntimeException e){
 
-        volcanes.add(new Volcan(pos));
-        floorManager.quitarTilesVaciasParaVolcanes();
+        }
     }
 
     public LinkedList<Posicion> devolverPerimetro (Posicion posCentro){
@@ -467,11 +477,10 @@ public class Manager {
         floorManager.terminarJuegoProtoss();
     }
 
-
     public void crearBases(){
         Posicion posBase1 = new Posicion(maxX-3,maxY-3);
         Posicion posBase2 = new Posicion(3,3);
-        Posicion centro   = new Posicion(0,0);
+        Posicion centro   = new Posicion(maxX/2,maxY/2);
         Economia economiaInicializadora = new Economia();
         economiaInicializadora.ingresarMineral(300);
 
@@ -483,31 +492,69 @@ public class Manager {
         // Crear varias bases desplegadas de forma equidistante al centro
         // recordar que hay un vacio en el centro del mapa que es proporcional al tamanio
         // TODO
-        Integer offsetDelCentro = floorManager.calcularOffset(maxX) + 3;
-        for (int i = offsetDelCentro; i < maxX-10; i = i + 20) {
-            Posicion offsetX = new Posicion(i,0);
-            Posicion offsetY = new Posicion(0,i);
-            crearBaseNormal(centro.add(offsetX));
-            crearBaseNormal(centro.add(offsetY));
-            crearBaseNormal(centro.subtract(offsetX));
-            crearBaseNormal(centro.subtract(offsetY));
-        }
+
+            Integer offsetDelCentro = floorManager.calcularOffset(maxX) + 3;
+            for (int i = offsetDelCentro; i < maxX - 10; i = i + 10) {
+                int sumarOffsetX = i;
+                int restarOffsetX = i;
+                crearBaseNormal(centro.incrementar(sumarOffsetX, 0, maxX, maxY));
+                crearBaseNormal(centro.incrementar(0, sumarOffsetX, maxX, maxY));
+                crearBaseNormal(centro.incrementar(restarOffsetX, 0, maxX, maxY));
+                crearBaseNormal(centro.incrementar(0, restarOffsetX, maxX, maxY));
+            }
+
+        floorManager.quitarEnergiasParaCristalesYVolcanes();
+
     }
 
     private void crearBaseNormal(Posicion pos) {
-        Posicion offsetX = new Posicion(2,0);
-        Posicion offsetY = new Posicion(0,2);
-
+        int sumarOffset = 2;
+        int restarOffset = -2;
+        Posicion posAux = pos;
 
         // Agrego muchos cristales alrededor del centro
-        agregarCristales(pos.add(offsetX));
-        agregarCristales(pos.subtract(offsetX));
-        agregarCristales(pos.add(offsetX).add(offsetY));
-        agregarCristales(pos.subtract(offsetX).subtract(offsetY));
-        agregarCristales(pos.add(offsetY));
+        try {
+            posAux = pos.incrementar(sumarOffset, 0, maxX, maxY);
+            agregarCristales(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
+
+        try {
+            posAux = pos.incrementar(restarOffset, 0, maxX, maxY);
+            agregarCristales(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
+
+        try {
+            posAux = pos.incrementar(sumarOffset, sumarOffset, maxX, maxY);
+            agregarCristales(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
+
+        try {
+            posAux = pos.incrementar(restarOffset, restarOffset, maxX, maxY);
+            agregarCristales(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
+
+        try {
+            posAux = pos.incrementar(0, sumarOffset, maxX, maxY);
+            agregarCristales(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
 
         // Agrego un volcan al norte del centro
-        agregarVolcanes(pos.subtract(offsetY));
+        try {
+            posAux = pos.incrementar(0, restarOffset, maxX, maxY);
+            agregarVolcanes(posAux);
+        }catch (RuntimeException e){
+            System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
+        }
     }
 
     private void crearBaseZerg(Posicion pos, Economia economia) {
