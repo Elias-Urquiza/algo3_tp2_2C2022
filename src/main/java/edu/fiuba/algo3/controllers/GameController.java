@@ -21,7 +21,7 @@ public class GameController {
 
     final Stage pantalla;
     final Manager manager;
-    final PartidaJugadores players;
+    PartidaJugadores players;
 
     public GameController(Stage pantalla) {
 
@@ -38,21 +38,22 @@ public class GameController {
         pantalla.setScene(scene);
         pantalla.show();
 
-        Button botonInicio = (Button) pane.lookup(Ids.STARTGAME.getName());
+        Button botonInicio = (Button) pane.lookup(Ids.STARTGAME.getLookupName());
         botonInicio.setOnAction(any -> {
-            String nombre1 = ((TextField)pane.lookup(Ids.NOMBRE1.getName())).getText();
-            String nombre2 = ((TextField)pane.lookup(Ids.NOMBRE2.getName())).getText();
+            String nombre1 = ((TextField)pane.lookup(Ids.NOMBRE1.getLookupName())).getText();
+            String nombre2 = ((TextField)pane.lookup(Ids.NOMBRE2.getLookupName())).getText();
 
-            Raza raza1 = (Raza)((ComboBox) pane.lookup(Ids.RAZA1.getName())).getSelectionModel().getSelectedItem();
-            Raza raza2 = (Raza)((ComboBox) pane.lookup(Ids.RAZA2.getName())).getSelectionModel().getSelectedItem();
+            Raza raza1 = Raza.valueOf((String)((ComboBox) pane.lookup(Ids.RAZA1.getLookupName())).getSelectionModel().getSelectedItem());
+            Raza raza2 = Raza.valueOf((String)((ComboBox) pane.lookup(Ids.RAZA2.getLookupName())).getSelectionModel().getSelectedItem());
 
-            Color color1 = (Color)((ComboBox) pane.lookup(Ids.COLOR1.getName())).getSelectionModel().getSelectedItem();
-            Color color2 = (Color)((ComboBox) pane.lookup(Ids.COLOR1.getName())).getSelectionModel().getSelectedItem();
+            Color color1 = Color.valueOf((String)((ComboBox) pane.lookup(Ids.COLOR1.getLookupName())).getSelectionModel().getSelectedItem());
+            Color color2 = Color.valueOf((String)((ComboBox) pane.lookup(Ids.COLOR2.getLookupName())).getSelectionModel().getSelectedItem());
             try {
                 players.setJugador(raza1, nombre1, color1);
                 players.setJugador(raza2, nombre2, color2);
             } catch (RuntimeException e) {
                 Popup.display(e.getMessage());
+                players = new PartidaJugadores();
             }
         });
 

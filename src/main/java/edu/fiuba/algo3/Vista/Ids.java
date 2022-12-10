@@ -7,7 +7,8 @@ public enum Ids {
     RAZA2("#RazaPlayer2"),
     STARTGAME("#StartGame"),
     COLOR1("#ColorPlayer1"),
-    COLOR2("#ColorPlayer2");
+    COLOR2("#ColorPlayer2"),
+    TITLELABEL("#TitleLabel");
 
     private final String name;
 
@@ -15,9 +16,13 @@ public enum Ids {
      * @param name
      */
     private Ids(final String name) {
+
         this.name = name;
     }
     public String getName() {
-        return name;
+        return name.substring(1);
     }
+    public String getLookupName() {
+        return name;
+    };
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,19 @@ public class PantallaSeleccionRaza {
         Pane pane = new Pane();
         List<String> razaOptions = getRazaOptions();
         List<String> coloresOptions = getColorOptions();
+
+        label(500, 100, pane, "AlgoStar", Ids.TITLELABEL.getName(), new Font("Arial", 30));
+
         input(100, 400, pane, "Ingrese nombre Jugador1", Ids.NOMBRE1.getName());
         input(500, 400, pane, "Ingrese nombre Jugador2", Ids.NOMBRE2.getName());
 
-        dropdown(100, 500, pane, "Seleccione raza para Jugador1", Ids.RAZA1.getName(), razaOptions);
-        dropdown(500, 500, pane, "Seleccione raza para Jugador2", Ids.RAZA2.getName(), razaOptions);
+        dropdown(100, 450, pane, "Seleccione raza para Jugador1", Ids.RAZA1.getName(), razaOptions);
+        dropdown(500, 450, pane, "Seleccione raza para Jugador2", Ids.RAZA2.getName(), razaOptions);
 
         dropdown(100, 500, pane, "Seleccione color para Jugador1", Ids.COLOR1.getName(), coloresOptions);
         dropdown(500, 500, pane, "Seleccione color para Jugador2", Ids.COLOR2.getName(), coloresOptions);
 
-        button(300, 700, pane, "Iniciar partida", Ids.STARTGAME.getName());
+        button(300, 600, pane, "Iniciar partida", Ids.STARTGAME.getName());
 
         return pane;
     }
@@ -58,6 +62,13 @@ public class PantallaSeleccionRaza {
         pane.getChildren().add(button);
     }
 
+    private void label(int x, int y, Pane pane, String texto, String id, Font font) {
+        Label label = new Label(texto);
+        label.relocate(x, y);
+        label.setId(id);
+        label.setFont(font);
+        pane.getChildren().add(label);
+    }
     private List<String> getRazaOptions() {
         List<String> razas = new ArrayList<>();
         razas.add(Raza.PROTOSS.name());
@@ -72,4 +83,6 @@ public class PantallaSeleccionRaza {
         }
         return colores;
     }
+
+
 }
