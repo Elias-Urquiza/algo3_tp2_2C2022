@@ -27,8 +27,8 @@ public class TestCorrelatividadEstructuras {
 
     @Test
     public void unaGuaridaSeConstruyeCorrectamenteSiYSoloSiYaExisteUnaReserva() {
-        Posicion posReserva = new Posicion(5, 7);
-        Posicion posGuarida = new Posicion(5, 8);
+        Posicion posReserva = new Posicion(14, 17);
+        Posicion posGuarida = new Posicion(14, 18);
         manager.construirZerg(posReserva, new ReservaDeReproduccion(economia, posReserva));
 
         assertDoesNotThrow(() -> manager.construirZerg(posGuarida, new Guarida(economia, posGuarida)));
@@ -36,7 +36,7 @@ public class TestCorrelatividadEstructuras {
 
     @Test
     public void unaGuaridaNoSeConstruyeCorrectamenteSiNoExisteUnaReserva() {
-        Posicion posGuarida = new Posicion(5, 8);
+        Posicion posGuarida = new Posicion(14, 18);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
@@ -47,9 +47,9 @@ public class TestCorrelatividadEstructuras {
 
     @Test
     public void unEspiralSeConstruyeCorrectamenteSiYSoloSiYaExisteUnaGuarida() {
-        Posicion posReserva = new Posicion(5, 7);
-        Posicion posGuarida = new Posicion(5, 8);
-        Posicion posEspiral = new Posicion(4, 8);
+        Posicion posReserva = new Posicion(14, 16);
+        Posicion posGuarida = new Posicion(14, 17);
+        Posicion posEspiral = new Posicion(14, 18);
         manager.construirZerg(posReserva, new ReservaDeReproduccion(economia, posReserva));
         manager.construirZerg(posGuarida, new Guarida(economia, posGuarida));
 
@@ -70,8 +70,8 @@ public class TestCorrelatividadEstructuras {
 
     @Test
     public void unPuertoEstelarSeConstruyeCorrectamenteSiYSoloSiYaExisteUnAcceso() {
-        Posicion posAcceso = new Posicion(15, 17);
-        Posicion posPuertoEstelar = new Posicion(15, 18);
+        Posicion posAcceso = new Posicion(5, 4);
+        Posicion posPuertoEstelar = new Posicion(6, 4);
 
         manager.construirProtoss(posAcceso, new Acceso(economia, posAcceso));
 
@@ -80,7 +80,7 @@ public class TestCorrelatividadEstructuras {
 
     @Test
     public void unPuertoEstelarNoSeConstruyeCorrectamenteSiNoExisteUnAcceso() {
-        Posicion posPuertoEstelar = new Posicion(15, 18);
+        Posicion posPuertoEstelar = new Posicion(5, 4);
 
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,

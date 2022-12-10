@@ -117,7 +117,7 @@ public class TestFloorManager {
     @Test
     public void cuandoSeEnergizaLasTilesVaciasCorrespondientesSeVan(){
 
-        Posicion pos0 = new Posicion(6,6);
+        Posicion pos0 = new Posicion(5,4);
         Pilon pilon = new Pilon(economia, pos0);
         manager.construirPilonEn(pos0, pilon);
 
