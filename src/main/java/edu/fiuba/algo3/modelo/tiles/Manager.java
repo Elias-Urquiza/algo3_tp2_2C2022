@@ -573,8 +573,10 @@ public class Manager {
 
     private void crearBaseProtoss(Posicion pos, Economia economia) {
         crearBaseNormal(pos);
+
         Pilon pilon = new Pilon(economia,pos);
-        construirPilonEn(pos, new Pilon(economia,pos));
+
+        construirPilonEn(pos, pilon);
 
         for(int i = 0; i<5; i++)
             pilon.pasarTurno();
