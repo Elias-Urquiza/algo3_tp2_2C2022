@@ -112,8 +112,6 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss,LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
         LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionProtoss;
         vida.eliminarConstruccion(list, this);
-
-        floorManager.desactivarEstructurasProtoss();
     }
 
 }

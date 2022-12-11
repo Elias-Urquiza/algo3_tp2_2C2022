@@ -5,12 +5,16 @@ import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
+import edu.fiuba.algo3.modelo.unidades.zerg.Hidralisco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -714,65 +718,88 @@ public class TestManager {
 
 
     @Test
-    public void seTerminaElJuegoPierdenLosZerg() {
-        Posicion posicion = new Posicion(5,5);
-        Posicion posicion2 = new Posicion(12,12);
+    public void seTerminaElJuegoPierdenLosProtoss() {
+        Posicion posicion = new Posicion(15,14);
+        Posicion posicion2 = new Posicion(14,14);
+        boolean afirmacion = false;
 
-        Criadero criadero = new Criadero(economia, posicion );
-        Pilon pilon = new Pilon(economia, posicion2);
-        manager.construirCriaderoEn(posicion, criadero);
-        manager.construirPilonEn(posicion2, pilon);
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
+        ReservaDeReproduccion reserva = new ReservaDeReproduccion(economia, posicion);
+        manager.construirZerg(posicion, reserva);
+        for(int i = 0; i<12; i++) reserva.pasarTurno();
 
-        manager.pasarTurno();
+        Guarida guarida = new Guarida(economia, posicion2);
+        manager.construirZerg(posicion2, guarida);
+        for(int i = 0; i<12; i++) guarida.pasarTurno();
 
-        manager.destruirZerg(posicion);
+        Hidralisco hidralisco = new Hidralisco(economia, posicion2);
+        manager.crearZerg(posicion2, hidralisco);
+        hidralisco.pasarTurno();hidralisco.pasarTurno();hidralisco.pasarTurno();hidralisco.pasarTurno();
 
-        manager.pasarTurno();
+        manager.moverUnidad( new Posicion(3,4), hidralisco );
+
+
+        for(int i = 0; i<59; i++)
+            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
+        for(int i = 0; i<1; i++)
+            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
+
+        RuntimeException exception = assertThrows( RuntimeException.class, () -> manager.pasarTurno());
+        assertEquals("Los Zerg han ganado el juego", exception.getMessage());
     }
 
     @Test
-    public void seTerminaElJuegoPierdenLosProtoss() {
-        Posicion posicion = new Posicion(5,5);
-        Posicion posicion2 = new Posicion(12,12);
+    public void seTerminaElJuegoPierdenLosZerg() {
 
-        Criadero criadero = new Criadero(economia, posicion );
-        Pilon pilon = new Pilon(economia, posicion2);
-        manager.construirCriaderoEn(posicion, criadero);
-        manager.construirPilonEn(posicion2, pilon);
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
-        criadero.pasarTurno();
+        Posicion pos = new Posicion(6,6);
+        Acceso acceso = new Acceso(economia, pos);
+        manager.construirProtoss(pos, acceso);
+        acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();
+        acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();
 
-        manager.pasarTurno();
+        Dragon dragon = new Dragon(economia, pos);
+        manager.crearProtoss(pos ,dragon);
+        dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();
 
-        manager.destruirProtoss(posicion2);
+        manager.moverUnidad(new Posicion(17, 16), dragon);
 
-        manager.pasarTurno();
+        for(int i =0; i< 25 ;i++)
+            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        assertEquals("Los Protoss han ganado el juego", exception.getMessage());
+
     }
 
     @Test
     public void seTerminaElJuegoPierdenLosProtossConExtractores() {
-        Posicion posicion = new Posicion(5,5);
-        Posicion posicion2 = new Posicion(12,12);
+        Posicion pos = new Posicion(6,6);
+        Posicion pos1 = new Posicion(17,15);
 
-        manager.agregarVolcanes(posicion);
-        Extractor extractor = new Extractor(economia, posicion);
+        Acceso acceso = new Acceso(economia, pos);
+        manager.construirProtoss(pos, acceso);
+        acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();
+        acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();
 
-        manager.agregarCristales(posicion2);
-        NexoMineral nexo = new NexoMineral(economia, posicion2);
+        Dragon dragon = new Dragon(economia, pos);
+        manager.crearProtoss(pos ,dragon);
+        dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();
 
-        manager.construirEstructuraDeVolcan(posicion, extractor);
-        manager.construirEstructuraDeCristales(posicion2, nexo);
+        manager.moverUnidad(new Posicion(17, 16), dragon);
 
-        manager.pasarTurno();
 
-        //manager.elimnar nexo -->
+        Extractor extractor = new Extractor(economia, pos1);
+        manager.construirExtractor(pos1, extractor);
+        extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();
 
-        //manager.pasarTurno();
+        for(int i =0; i< 25 ;i++)
+            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+
+        assertDoesNotThrow( () -> manager.pasarTurno());
+
+        for(int i =0; i< 38 ;i++)// dragon le pega al extractor (por gil le pasa)
+            manager.unidadAtacaConstruccion(dragon, extractor);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        assertEquals("Los Protoss han ganado el juego", exception.getMessage());
     }
 }

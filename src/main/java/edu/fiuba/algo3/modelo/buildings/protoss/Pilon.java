@@ -2,10 +2,13 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.tiles.Energia;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
 
@@ -17,7 +20,7 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     private int id;
 
     public Pilon(Economia economia, Posicion pos) {
-        super(350, 350, 100, 0, 5, economia, pos, true);
+        super(300, 300, 100, 0, 5, economia, pos, true);
         turnos = 0;
         this.id = 0;
         this.floorManager = null;
@@ -76,4 +79,13 @@ public class Pilon extends ConstruccionProtoss implements Turno, Construccion {
     public boolean seQuitaPilon(Posicion pos) {
         return pos.equals(this.pos);
     }
+
+    @Override
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
+        LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionProtoss;
+        vida.eliminarConstruccion(list, this);
+
+        floorManager.desactivarEstructurasProtoss();
+    }
+
 }

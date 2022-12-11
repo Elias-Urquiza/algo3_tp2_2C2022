@@ -385,7 +385,7 @@ public class FloorManager {
         }
     }
 
-    public void terminarJuegoZerg(){
+    public void terminarJuegoZerg() throws RuntimeException {
         int cantidad = construccionesZerg.size();
         for (ExtraeRecurso ext : construccionQueExtrae){
             if (ext.getClass() == Extractor.class){
@@ -393,11 +393,12 @@ public class FloorManager {
             }
         }
         if(cantidad == 0){
-            System.exit(999);
+            //System.exit(999);
+            throw new RuntimeException("Los Protoss han ganado el juego");
         }
     }
 
-    public void terminarJuegoProtoss(){
+    public void terminarJuegoProtoss() throws RuntimeException {
         int cantidad = construccionProtoss.size();
         for (ExtraeRecurso ext : construccionQueExtrae){
             if (ext.getClass() == Asimilador.class  ||  ext.getClass() == NexoMineral.class){
@@ -405,7 +406,8 @@ public class FloorManager {
             }
         }
         if(cantidad == 0){
-            System.exit(888);
+            //            System.exit(888);
+            throw new RuntimeException("Los Zerg han ganado el juego");
         }
     }
 
