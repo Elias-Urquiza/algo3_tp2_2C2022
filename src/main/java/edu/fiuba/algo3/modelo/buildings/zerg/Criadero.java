@@ -56,9 +56,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
             floorManager.mohificar(this.pos, expansion);
             expansion += 1;
         }
-
         curar();
-
     }
 
     @Override

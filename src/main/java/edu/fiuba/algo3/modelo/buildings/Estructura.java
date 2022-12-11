@@ -12,4 +12,5 @@ public interface Estructura {
 
     void construida();
 
+    Object getPosicion();
 }

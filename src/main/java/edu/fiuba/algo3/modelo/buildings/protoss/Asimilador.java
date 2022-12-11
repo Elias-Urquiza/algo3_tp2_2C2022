@@ -3,10 +3,12 @@ package edu.fiuba.algo3.modelo.buildings.protoss;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Asimilador extends ConstruccionProtoss implements Turno, Construccion, ExtraeRecurso {
 
@@ -27,13 +29,9 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
 
     @Override
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
+        LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  extraeRecursos;
+        vida.eliminarConstruccion(  list, this);
 
-        int size = extraeRecursos.size();
-
-        extraeRecursos.removeIf(construccion -> (construccion.getPosicion().equals(pos) ) );
-        if(size == extraeRecursos.size()) {
-            throw new RuntimeException("No hay nada para destruir");
-        }
     }
 
     @Override

@@ -9,9 +9,10 @@ import edu.fiuba.algo3.modelo.unidades.Tierra;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ConstruccionZerg implements Turno, Objetivo, Estructura {
-    private VidaZerg vida;
+    protected VidaZerg vida;
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
@@ -106,13 +107,8 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
     @Override
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
-        int size = construccionesZerg.size();
-
-        construccionesZerg.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
-
-        if(size == construccionesZerg.size()) {
-            throw new RuntimeException("No hay nada para destruir");
-        }
+        LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionesZerg;
+        vida.eliminarConstruccion(list, this);
     }
 
 }

@@ -36,11 +36,6 @@ public abstract class UnidadZerg extends Unidad {
     }
 
     @Override
-    public void morirConstruccion(){
-
-    }
-
-    @Override
     public void agregate(HashMap<Raza, LinkedList> listas, HashMap<Raza, Suministros> suministros)  {
         try {
             suministros.get(Raza.ZERG).suministrar(suministro);

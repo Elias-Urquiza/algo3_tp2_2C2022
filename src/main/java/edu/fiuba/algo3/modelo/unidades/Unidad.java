@@ -13,12 +13,12 @@ import java.util.LinkedList;
 public abstract class Unidad implements Objetivo, Turno {
 
     protected Posicion pos;
-    private int tiempoDeConstruccion;
+    protected int tiempoDeConstruccion;
     private int rango;
     protected int suministro;
     protected LinkedList<Ataque> ataques;
     protected Ataque superficieAtaque;
-    private int turnos;
+    protected int turnos;
     protected Movimiento superficie;
 
     public Unidad(Economia economia, int costoMineral, int costoGas, Posicion pos, int tiempoDeConstruccion, int rango, Ataque superficieAtaque, Movimiento superficie,

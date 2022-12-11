@@ -465,9 +465,11 @@ public class Manager {
             // Paso 1.5) Unidad manager revisa cuales tiene num zanganos alrededor
             listaZanganos = unidadManager.devolverZanganos(perimetro);
             // Paso 2) le enviamos cant de zanganos a cristal y extrae
-            for(Zangano z : listaZanganos)
-                z.extraerMineral(c);
-
+            if(listaZanganos.size() > 0) {
+                for (Zangano z : listaZanganos)
+                    z.extraerMineral(c);
+                System.out.format("la pos del cristal es: %s", c.getPos());
+            }
         }
 
         unidadManager.hacerPasarDeTurno();
@@ -558,7 +560,6 @@ public class Manager {
             System.out.println(String.format("DEBUG: Quilombo en la pos %s" , posAux));
         }
 
-        // Agrego un volcan al norte del centro
         try {
             posAux = pos.incrementar(0, restarOffset, maxX, maxY);
             agregarVolcanes(posAux);

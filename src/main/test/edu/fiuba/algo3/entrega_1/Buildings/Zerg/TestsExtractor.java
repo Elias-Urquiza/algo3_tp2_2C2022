@@ -2,12 +2,16 @@ package edu.fiuba.algo3.entrega_1.Buildings.Zerg;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.mocks.CriaderoActivo;
 import edu.fiuba.algo3.mocks.MockEconomia;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class TestsExtractor {
 
@@ -170,5 +174,36 @@ public class TestsExtractor {
         }
 
         assert(afirmacion);
+    }
+
+
+
+    @Test
+    public void alEliminarseElExtractorTambienLoHacenSusZanganos() {
+
+        Extractor extractor = new Extractor(mockEconomia, new Posicion(17, 15));
+        manager.construirExtractor(new Posicion(17, 15),  extractor);
+        extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();
+
+        Acceso acceso = new Acceso(mockEconomia, new Posicion(6,6));
+        manager.construirProtoss(new Posicion(6,6), acceso);
+        acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();acceso.pasarTurno();
+
+        Dragon dragon =new Dragon(mockEconomia, new Posicion(6,6));
+        manager.crearProtoss(new Posicion(6,6), dragon);
+        dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();dragon.pasarTurno();
+
+        manager.moverUnidad(new Posicion(17,14), dragon);
+
+        extractor.agregarZangano(manager);
+        extractor.agregarZangano(manager);
+        extractor.agregarZangano(manager);
+
+        for(int i=0; i < 38; i++)
+            manager.unidadAtacaConstruccion(dragon, extractor);
+
+        Extractor extractor2 = new Extractor(mockEconomia, new Posicion(17, 15));
+
+        assertDoesNotThrow( ()->    manager.construirExtractor(new Posicion(17, 15),  extractor2));
     }
 }

@@ -14,8 +14,6 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
     private static final int PRODUCCION_POR_ZANGANO=10;
     private Economia economia;
     private Recurso recurso;
-    private int turnos;
-
 
     public Zangano(Economia economiaZerg, Posicion pos) {
         super(25, 25, 0, economiaZerg, pos, 1, 0, new Tierra(0, 0), new Tierra(0, 0), 1);
@@ -26,11 +24,6 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
 
     public Posicion getPosicion(){
         return pos;
-    }
-
-    @Override
-    public void pasarTurno() {
-        turnos++;
     }
 
     @Override
@@ -50,7 +43,11 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
     }
 
     public void extraerMineral(Cristales cristal){
-        economia.ingresarMineral(cristal.extraer(PRODUCCION_POR_ZANGANO));
+        if(turnos >= tiempoDeConstruccion)
+            economia.ingresarMineral(cristal.extraer(PRODUCCION_POR_ZANGANO));
+    }
+
+    public void construida(){
     }
 
 }

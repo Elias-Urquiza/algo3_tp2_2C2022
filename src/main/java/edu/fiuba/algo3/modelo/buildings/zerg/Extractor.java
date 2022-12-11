@@ -3,15 +3,15 @@ package edu.fiuba.algo3.modelo.buildings.zerg;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
+import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Extractor extends ConstruccionZerg implements Construccion, Turno, ExtraeRecurso {
-
-    private int vida;
     private static final int MAX_LARVAS = 3;
     private static final int PRODUCCION_POR_ZANGANO = 10;
     private LinkedList<Zangano> zanganos;
@@ -54,15 +54,12 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno, 
     @Override
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos,FloorManager floorManager) {
 
-        int size = extraeRecursos.size();
+        LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  extraeRecursos;
+        vida.eliminarConstruccion(  list, this);
 
-        extraeRecursos.removeIf(construccion -> (construccion.getPosicion().equals(pos) ) );
-        if(size == extraeRecursos.size()) {
-            throw new RuntimeException("No hay nada para destruir");
-        }
-        else{
+        if(zanganos.size() > 0)
             manager.destruirZanganosDeExtractor(zanganos);
-        }
+
     }
 
     public Posicion getPosicion(){
