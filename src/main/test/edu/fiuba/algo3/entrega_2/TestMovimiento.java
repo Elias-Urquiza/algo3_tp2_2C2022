@@ -124,7 +124,7 @@ public class TestMovimiento {
         for (int i = 0; i < 7; i++)
             mutalisco.pasarTurno();
 
-        manager.crearUnidad(posInicial,mutalisco);
+        manager.crearZerg(posInicial,mutalisco);
 
         manager.moverUnidad(posFinal ,mutalisco);
 
@@ -138,7 +138,7 @@ public class TestMovimiento {
         Posicion posFinal =new Posicion(25,26);
 
         Unidad  zerling = new Zerling(economia, posInicial);
-        manager.crearUnidad(posInicial,zerling);
+        manager.crearZerg(posInicial,zerling);
 
         zerling.pasarTurno();zerling.pasarTurno();
 
@@ -161,7 +161,7 @@ public class TestMovimiento {
         Unidad  scout = new Scout(economia, posInicial);
         for (int i = 0; i < 9; i++)
             scout.pasarTurno();
-        manager.crearUnidad(posInicial, scout);
+        manager.crearProtoss(posInicial, scout);
 
         manager.moverUnidad(posFinal, scout);
 
@@ -175,7 +175,7 @@ public class TestMovimiento {
         Posicion posFinal =new Posicion(25,26);
 
         Unidad  dragon = new Dragon(economia, posInicial);
-        manager.crearUnidad(posInicial,dragon);
+        manager.crearProtoss(posInicial,dragon);
 
         for (int i = 0; i < 6; i++)
             dragon.pasarTurno();

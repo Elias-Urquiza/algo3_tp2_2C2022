@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.buildings;
 
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Turno;
-import edu.fiuba.algo3.modelo.VidaZerg;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.unidades.Ataque;
@@ -12,9 +9,10 @@ import edu.fiuba.algo3.modelo.unidades.Tierra;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ConstruccionZerg implements Turno, Objetivo, Estructura {
-    private VidaZerg vida;
+    protected VidaZerg vida;
     private int costoMineral;
     private int costoGas;
     protected int tiempoDeConstruccion;
@@ -108,14 +106,9 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
 
     @Override
-    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, FloorManager floorManager) {
-        int size = construccionesZerg.size();
-
-        construccionesZerg.removeIf(construccion -> (construccion.sePuedeDestruir(pos) ) );
-
-        if(size == construccionesZerg.size()) {
-            throw new RuntimeException("No hay nada para destruir");
-        }
+    public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
+        LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionesZerg;
+        vida.eliminarConstruccion(list, this);
     }
 
 }

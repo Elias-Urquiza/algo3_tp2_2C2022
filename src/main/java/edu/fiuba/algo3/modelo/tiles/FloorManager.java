@@ -99,6 +99,16 @@ public class FloorManager {
         }
     }
 
+    public void quitarEnergiasParaCristalesYVolcanes(){
+        for (Cristales cristales: cristales)
+            energias.removeIf(energia -> (energia.getPos().equals(cristales.getPos() ) ) );
+
+        for (Volcan volcan: volcanes)
+            energias.removeIf(energia -> (energia.getPos().equals(volcan.getPos() ) ) );
+
+    }
+
+
     private void quitarTilesVaciasParaEnergia(){
         for(Energia e : energias){
             tilesVacias.removeIf(tileVacia -> (tileVacia.getPos().equals(e.getPos() ) ) );
@@ -106,12 +116,10 @@ public class FloorManager {
     }
 
     private void agregarTilesVaciasParaEnergia(int id){
-        for(TileVacia v : tilesVacias) {
-            for (Energia e : energias) {
-                Posicion posEnergia = e.getPos();
-                if((posEnergia).equals(v.getPos()) && id == e.getID())
-                    tilesVacias.add(new TileVacia( new Posicion(posEnergia.getX(), posEnergia.getY()) ) );
-            }
+        for (Energia e : energias) {
+            Posicion posEnergia = e.getPos();
+            if(id == e.getID())
+                tilesVacias.add(new TileVacia( new Posicion(posEnergia.getX(), posEnergia.getY()) ) );
         }
     }
 
@@ -154,7 +162,7 @@ public class FloorManager {
                     Moho mohoNew = new Moho(posAgregar);
                     moho.add(mohoNew);
                 } catch (RuntimeException e) {
-                   // System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque hay una construccion o un mineral", posAgregar));
+                   //System.out.println(String.format("DEBUG: El moho no se expandio en la pos %s porque" + e.getMessage(), posAgregar));
 
                 }
             }
@@ -298,10 +306,19 @@ public class FloorManager {
         buscarCoincidenciasVolcanYCristales(posicion);
         buscarCoincidenciasDelMoho(posicion);
     }
-
+    public  void buscarCoincidenciasDeTilesEnergia(Posicion posicion){
+        for (Energia e : energias) {
+            Posicion posicionEnergias = e.getPos();
+            if (posicionEnergias.equals(posicion)) {
+                throw new RuntimeException("Ya hay una energia en esa posicion");
+            }
+        }
+    }
     public void buscarCoincidenciasEnergia(Posicion posicion){
         buscarCoincidenciasDelMoho(posicion);
         buscarCoincidenciasVolcanYCristales(posicion);
+        buscarCoincidenciasDeTilesEnergia(posicion);
+
     }
 
     public void buscarCoincidenciasVolcanYCristales(Posicion posicion){
@@ -318,6 +335,30 @@ public class FloorManager {
                 throw new RuntimeException("Ya hay un volcan en esa posicion");
             }
         }
+    }
+
+    public void coincidenciasEstructurasZerg(Posicion pos){
+        for (ConstruccionZerg c : construccionesZerg) {
+            Posicion posicionZerg = c.getPosicion();
+            if (posicionZerg.equals(pos)) {
+                throw new RuntimeException("Ya hay una construccion en esa posicion");
+            }
+        }
+    }
+
+    public boolean buscarCoincidenciaParaTileVacia(Posicion pos){
+
+        boolean afirmacion = true;
+
+        try {
+            buscarCoincidenciasProtoss(pos);
+            buscarCoincidenciasVolcanYCristales(pos);
+            coincidenciasEstructurasZerg(pos);
+        }catch (RuntimeException e){
+            afirmacion = false;
+        }
+
+        return afirmacion;
     }
 
     public void buscarCoincidenciasUnidades (Posicion pos) throws RuntimeException {
@@ -342,11 +383,22 @@ public class FloorManager {
     }
 
     public void terminarJuegoZerg(){
-        
+
     }
 
     public void terminarJuegoProtoss(){
 
     }
 
+    public void noHayVolcanOVacio(Posicion pos) {
+        for (Cristales cristales : cristales){
+            if(cristales.getPos().equals(pos))
+                throw new RuntimeException("Hay un cristal en esta posicion");
+        }
+
+        for (Volcan volcanes : this.volcanes) {
+            if (volcanes.getPos().equals(pos))
+                throw new RuntimeException("Hay un volcan en esta posicion");
+        }
+    }
 }
