@@ -140,14 +140,21 @@ public class TestUnidad {
 
     @Test
     public void seCreaUnaUnidadAlLadoDelEdificioQueLaCreaCuandoEnUnRadioDeUnoHayOtrasUnidadesYConstrucciones(){
-        Posicion posConstruccionOrigenUnidad = new Posicion(3,3);
-        Posicion posEsperada = new Posicion(4,4);
-        Posicion posConstruccion2 = new Posicion(2,3);
-        Posicion posConstruccion5 = new Posicion(3,4);
-        Posicion posConstruccion7 = new Posicion(4,3);
+        Posicion posConstruccionOrigenUnidad = new Posicion(38,33);
+        Posicion posEsperada                 = new Posicion(39,34);
+        Posicion posConstruccion2 = new Posicion(37,33);
+        Posicion posConstruccion5 = new Posicion(38,34);
+        Posicion posConstruccion7 = new Posicion(39,33);
 
-        Posicion pos1 = new Posicion(1,1);
-        Posicion pos2 = new Posicion(1,2);
+        Posicion pos1 = new Posicion(39,2);
+        Posicion pos2 = new Posicion(39,3);
+        Posicion pos3 = new Posicion(39,0);
+        Posicion pos4 = new Posicion(39,1);
+
+        Criadero criadero1 = new Criadero(economia, pos1);
+        Criadero criadero2 = new Criadero(economia, pos2);
+        Criadero criadero3 = new Criadero(economia, pos3);
+        Criadero criadero4 = new Criadero(economia, pos4);
 
         manager.construirCriaderoEn(pos1, criadero1);
         criadero1.pasarTurno();criadero1.pasarTurno();criadero1.pasarTurno();criadero1.pasarTurno();
@@ -181,7 +188,40 @@ public class TestUnidad {
         manager.crearZerg(posConstruccionOrigenUnidad, bicho7);
 
         assert(posEsperada.equals(bicho7.getPosicion()));
+
     }
+
+
+    /*
+    -----------------------------------------------------------------------------------------------------------
+    @Test
+    public void seCreaUnaUnidadAlLadoDelEdificioQueLaCreaCuandoEnUnRadioDeUnoHayOtrasUnidadesYConstrucciones(){
+        Posicion posConstruccionOrigenUnidad = new Posicion(3,3);
+        Posicion posEsperada = new Posicion(4,4);            y
+        Posicion posConstruccion2 = new Posicion(2,3);    x 1234
+        Posicion posConstruccion5 = new Posicion(3,4);      2
+        Posicion posConstruccion7 = new Posicion(4,3);      3
+
+        Unidad bicho1 = new Zerling(economia, posConstruccionOrigenUnidad);
+        Unidad bicho3 = new Zerling(economia, posConstruccionOrigenUnidad);
+        Unidad bicho4 = new Zerling(economia, posConstruccionOrigenUnidad);
+        Unidad bicho6 = new Zerling(economia, posConstruccionOrigenUnidad);
+        Unidad bicho7 = new Zerling(economia, posConstruccionOrigenUnidad);
+
+        manager.crearUnidad(posConstruccionOrigenUnidad, bicho1);
+        manager.construirZerg(posConstruccion2, new ReservaDeReproduccion(economia, posConstruccion2));
+        manager.crearUnidad(posConstruccionOrigenUnidad, bicho3);
+        manager.crearUnidad(posConstruccionOrigenUnidad, bicho4);
+        manager.construirZerg(posConstruccion5, new ReservaDeReproduccion(economia, posConstruccion5) );
+        manager.crearUnidad(posConstruccionOrigenUnidad, bicho6);
+        manager.construirZerg(posConstruccion7, new ReservaDeReproduccion(economia, posConstruccion7) );
+
+        manager.crearUnidad(posConstruccionOrigenUnidad, bicho7);
+
+        assert(posEsperada.equals(bicho7.getPosicion()));
+    }
+    ----------------------------------------------------------------------------------------------------------
+     */
 
     @Test
     public void unaUnidadParaLaCualPasoSuTiempoDeCreacionSePuedeMover(){
