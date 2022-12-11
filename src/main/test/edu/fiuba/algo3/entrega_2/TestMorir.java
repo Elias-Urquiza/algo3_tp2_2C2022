@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
 import edu.fiuba.algo3.modelo.tiles.Manager;
+import edu.fiuba.algo3.modelo.tiles.Volcan;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,10 +45,10 @@ public class TestMorir {
     @Test
     public void unZergAlMatarloSeMuereCorrectamente() {
         Zerling zerling = new Zerling(economia, new Posicion(24, 24));
-        manager.crearUnidad(new Posicion(25, 26), zerling);
+        manager.crearZerg(new Posicion(25, 26), zerling);
 
         Dragon dragon = new Dragon(economia, new Posicion(24, 24));
-        manager.crearUnidad(new Posicion(14, 14), dragon);
+        manager.crearProtoss(new Posicion(14, 14), dragon);
 
         manager.pasarTurno();
         manager.pasarTurno();
@@ -63,6 +64,12 @@ public class TestMorir {
         manager.unidadAtacaUnidad(dragon, zerling);
 
         assertDoesNotThrow(() -> manager.construirZerg(new Posicion(30, 30), new ReservaDeReproduccion(economia, new Posicion(30, 30))));
+    }
+
+    @Test
+    public void UnExtractorSeMuereCorrectamente(){
+
+
     }
 
 }

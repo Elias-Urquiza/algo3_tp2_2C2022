@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
+import edu.fiuba.algo3.modelo.buildings.zerg.Zangano;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 
 import java.util.HashMap;
@@ -15,8 +16,8 @@ public class UnidadManager  {
 
     public UnidadManager(){
         unidades = new HashMap<>();
-        unidades.put(Raza.PROTOSS, new LinkedList<Unidad>());
-        unidades.put(Raza.ZERG, new LinkedList<Unidad>());
+        unidades.put(Raza.PROTOSS, new LinkedList<UnidadProtoss>());
+        unidades.put(Raza.ZERG, new LinkedList<UnidadZerg>());
     }
 
     public void crearUnidad(Unidad unidad, Posicion pos, HashMap<Raza, Suministros> suministros) throws RuntimeException {
@@ -81,5 +82,34 @@ public class UnidadManager  {
         else
             throw new RuntimeException("La unidad que se desea evolucionar no existe");
     }
+
+    public void deletearZanganosDelExtractor(LinkedList<Zangano> zanganos) {
+        for (Zangano z : zanganos) {
+            unidades.get(Raza.ZERG).remove(z);
+        }
+    }
+
+    public LinkedList<Zangano> devolverZanganos(LinkedList<Posicion> perimetro) {
+
+        LinkedList<UnidadZerg> unidadesZerg = unidades.get(Raza.ZERG);
+        LinkedList<UnidadZerg> unidades = new LinkedList<>();
+        LinkedList<Zangano> zanganos = new LinkedList<>();
+
+        for (Posicion pos: perimetro) {
+            for(UnidadZerg z: unidadesZerg){
+
+                if(pos.equals(z.getPosicion()))
+                    unidades.add(z);
+
+            }
+        }
+
+        for (UnidadZerg z: unidades) {
+            z.agregaZangano(zanganos);
+        }
+
+        return zanganos;
+    }
+
 
 }
