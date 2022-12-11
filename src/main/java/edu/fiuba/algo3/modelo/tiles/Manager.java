@@ -244,6 +244,13 @@ public class Manager {
         return energias;
     }
 
+    public LinkedList<ConstruccionProtoss> getConstruccionProtoss(){
+        return construccionProtoss;
+    }
+    public LinkedList<ConstruccionZerg> getConstruccionesZerg(){
+        return construccionesZerg;
+    }
+
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
@@ -283,6 +290,8 @@ public class Manager {
        }
 
     }
+
+
 
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
@@ -446,7 +455,7 @@ public class Manager {
         return perimetro;
     }
 
-    public void pasarTurno(){
+    public void pasarTurno() throws RuntimeException {
         for(ConstruccionProtoss protoss :construccionProtoss)
             protoss.pasarTurno();
 
@@ -474,8 +483,12 @@ public class Manager {
 
         unidadManager.hacerPasarDeTurno();
 
-        floorManager.terminarJuegoZerg();
-        floorManager.terminarJuegoProtoss();
+        try {
+            floorManager.terminarJuegoZerg();
+            floorManager.terminarJuegoProtoss();
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void crearBases(){
