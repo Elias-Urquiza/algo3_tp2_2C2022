@@ -32,6 +32,7 @@ public class Manager {
     LinkedList<Vacio> tilesDeVacios;
     LinkedList<Pilon> pilones;
     HashMap<Raza, Suministros> suminstrosHashMap;
+
     int maxX;
     int maxY;
     int idPilones;
@@ -599,5 +600,49 @@ public class Manager {
 
     public void destruirZanganosDeExtractor(LinkedList<Zangano> zanganos) {
         unidadManager.deletearZanganosDelExtractor(zanganos);
+    }
+
+    public Object getFloorAt(Posicion pos) {
+        //Smell -> 2L82 refactor
+        for (Moho m : moho) {
+            if (pos.equals(m.getPos())) {
+                return m;
+            }
+        }
+
+        for (Energia e : energias) {
+            if (pos.equals(e.getPos())) {
+                return e;
+            }
+        }
+
+        for (Cristales c : cristales) {
+            if (pos.equals(c.getPos())) {
+                return c;
+            }
+        }
+
+        for (Volcan v : volcanes) {
+            if (pos.equals(v.getPos())) {
+                return v;
+            }
+        }
+
+        for (TileVacia t : tilesVacias) {
+            if (pos.equals(t.getPos())) {
+                return t;
+            }
+        }
+
+        for (Vacio vac : tilesDeVacios) {
+            if (pos.equals(vac.getPos())) {
+                return vac;
+            }
+        }
+        return null;
+    }
+
+    public Object getBuildingAt(Posicion pos) {
+        return null;
     }
 }

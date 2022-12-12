@@ -3,10 +3,14 @@ package edu.fiuba.algo3.Vista;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class CajaDeAbajo extends HBox {
 
+
+    Label mineral;
+    /*
     public CajaDeAbajo() {
 
         setAlignment(Pos.BOTTOM_LEFT);
@@ -14,8 +18,9 @@ public class CajaDeAbajo extends HBox {
         this.setSpacing(10);
         this.setStyle("-fx-background-color: #336699;");
         //----- B o t o n e s del la caja de abajo
-        Button buttonCurrent = new Button("Comentario");
-        buttonCurrent.setPrefSize(100, 20);
+        Label mineral = new Label("Comentario");
+        mineral.setPrefSize(100, 20);
+        mineral.setText("mineral: %s", economia.getMinerales() );
 
         Button buttonProjected = new Button("siVesEstoEsPorqueFunca");
         buttonProjected.setPrefSize(100, 20);
@@ -26,4 +31,10 @@ public class CajaDeAbajo extends HBox {
         //----
 
     }
+
+    public void actualizar(){
+        mineral.setText("mineral: %s", economia.getMinerales() );
+    }
+
+     */
 }
