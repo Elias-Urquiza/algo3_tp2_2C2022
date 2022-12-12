@@ -16,10 +16,12 @@ public enum ButtonIds {
     CONSTRUIREXTRACTOR("#ConstruirExtractor"),
     CONSTRUIRGUARIDA("#ConstruirGuarida"),
     CONSTRUIRRESERVA("#ConstruirReserva"),
-    CONSTRUIRZANGANO("#ConstruirZangano"),
+    // el zangano es una unidad ashi CONSTRUIRZANGANO("#ConstruirZangano"),
 
     CONSTRUIRNEXOMINERAL("#ConstruirNexoMineral"),
     CONSTRUIRPILON("#ConstruirPilon"),
+    CONSTRUIRASIMILADOR("#ConstruirAsimilador"),
+    CONSTRUIRACCESO("#ConstruirAcceso"),
     CONSTRUIRCPUERTOESTELAR("#ConstruirPuertoEstelar");
 
     private final String name;

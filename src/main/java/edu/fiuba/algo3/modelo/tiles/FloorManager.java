@@ -291,6 +291,16 @@ public class FloorManager {
 
     }
 
+
+    public void noHayVolcan(Posicion posicion){
+        for (Volcan volcan : volcanes){
+            Posicion posicionVolcan = volcan.getPos();
+            if(posicionVolcan.equals(posicion)){
+                throw new RuntimeException("hay un volcan en esa posicion");
+            }
+        }
+    }
+
     public  void buscarCoincidenciasDelMoho(Posicion posicion) {
 
         for (Moho m : moho) {

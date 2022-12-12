@@ -33,7 +33,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
                 economia.gastarMineral(costoMineral);
             }
         } catch(final RuntimeException e) {
-            throw new RuntimeException("No tenes los minerales suficientes");
+            throw new RuntimeException(e.getMessage());
         }
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;

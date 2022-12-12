@@ -183,6 +183,7 @@ public class Manager {
             throw new RuntimeException("Posicion ocupada por unidad");
 
         floorManager.buscarCoincidencias(pos);
+        floorManager.noHayVolcan(pos);
         int size = construccionQueExtrae.size();
 
         for(Cristales c : cristales) {

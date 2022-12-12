@@ -36,7 +36,7 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
 
         } catch(final RuntimeException e) {
-            throw new RuntimeException("No tenes los minerales suficientes");
+            throw new RuntimeException(e.getMessage());
         }
         this.vida = new VidaZerg(puntosDeVidaMaxima);
         this.costoGas = costoGas;

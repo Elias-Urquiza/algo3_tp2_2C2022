@@ -39,8 +39,15 @@ public class GameController {
         this.manager = new Manager(dimensionX, dimensionY);
         this.players = new PartidaJugadores();
         economias = new HashMap<>();
-        economias.put(Raza.ZERG, new Economia());
-        economias.put(Raza.PROTOSS, new Economia());
+
+        Economia economiaZerg = new Economia();
+        economiaZerg.ingresarMineral(200);
+
+        Economia economiaProtoss = new Economia();
+        economiaProtoss.ingresarMineral(200);
+
+        economias.put(Raza.ZERG, economiaZerg);
+        economias.put(Raza.PROTOSS, economiaProtoss);
     }
 
 
@@ -67,7 +74,7 @@ public class GameController {
                     players.setJugador(raza2, nombre2, color2);
                     iniciarJuego();
                 } catch (RuntimeException e) {
-                    Popup.display(e.getMessage());
+                    Popup.display(e.getMessage() + "me rompi aca capox");
                     players = new PartidaJugadores();
                 }
             } else {

@@ -2,7 +2,8 @@ package edu.fiuba.algo3.Vista;
 
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
+import edu.fiuba.algo3.modelo.buildings.protoss.*;
+import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
@@ -10,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -44,21 +44,108 @@ public class MenuDeConstrucciones {
         protossBuildings.setPadding(new Insets(40));
         protossBuildings.setSpacing(8);
 
-        Text title = new Text("Data");
+        Text title = new Text("Edificios Protoss");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         protossBuildings.getChildren().add(title);
 
-        Hyperlink options[] = new Hyperlink[] {
-                new Hyperlink("P"),
-                new Hyperlink("R"),
-                new Hyperlink("O"),
-                new Hyperlink("T")};
+        Button options[] = getProtossButtons();
 
-        for (int i=0; i<4; i++) {
+        for (int i=0; i<5; i++) {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             protossBuildings.getChildren().add(options[i]);
         }
+        handleProtossButtons();
         return protossBuildings;
+    }
+
+    public Button[] getProtossButtons() {
+        Button buildPilon = new Button("Construir Pilon");
+        buildPilon.setId(ButtonIds.CONSTRUIRPILON.getName());
+
+        Button buildNexoMineral = new Button("Construir Nexo Mineral");
+        buildNexoMineral.setId(ButtonIds.CONSTRUIRNEXOMINERAL.getName());
+
+        Button buildAsimilador = new Button("Construir Asimilador ");
+        buildAsimilador.setId(ButtonIds.CONSTRUIRASIMILADOR.getName());
+
+        Button buildAcceso = new Button("Construir Acceso");
+        buildAcceso.setId(ButtonIds.CONSTRUIRACCESO.getName());
+
+        Button buildPuertoEstelar = new Button("Construir Reserva de Puerto Estelar");
+        buildPuertoEstelar.setId(ButtonIds.CONSTRUIRCPUERTOESTELAR.getName());
+
+        return new Button[] {
+                buildPilon,
+                buildNexoMineral,
+                buildAsimilador,
+                buildAcceso,
+                buildPuertoEstelar,
+        };
+    }
+    private void handleProtossButtons() {
+
+        crearEstructuras pilon = (Economia economia, Posicion pos) -> {
+            try {
+                manager.construirPilonEn(pos, new Pilon(economia, pos));
+            }catch (RuntimeException e){
+                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                    economia.ingresarMineral(100);
+
+                throw e;
+            }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRPILON, pilon, protossBuildings);
+
+        crearEstructuras nexoMineral = (Economia economia, Posicion pos) -> {
+
+            try {
+                manager.construirEstructuraDeCristales(pos, new NexoMineral(economia, pos));
+            }catch (RuntimeException e){
+                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                    economia.ingresarMineral(50);
+
+                throw e;
+            }
+
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRNEXOMINERAL, nexoMineral, protossBuildings);
+
+        crearEstructuras asimilador = (Economia economia, Posicion pos) -> {
+            try {
+                manager.construirAsimilador(pos, new Asimilador(economia, pos));
+            }catch (RuntimeException e){
+                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                    economia.ingresarMineral(100);
+                throw e;
+            }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRASIMILADOR, asimilador, protossBuildings);
+
+        crearEstructuras acceso = (Economia economia, Posicion pos) -> {
+            try {
+                manager.construirProtoss(pos, new Acceso(economia, pos));
+            }catch (RuntimeException e) {
+                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                    economia.ingresarMineral(150);
+                }
+                throw  e;
+            }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRACCESO, acceso, protossBuildings);
+
+        crearEstructuras puertoEstelar = (Economia economia, Posicion pos) -> {
+            try {
+                manager.construirProtoss(pos, new PuertoEstelar(economia, pos));
+            }catch (RuntimeException e){
+                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                    economia.ingresarMineral(150);
+                    economia.ingresarGasVespeno(150);
+                }
+                throw e;
+            }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRCPUERTOESTELAR, puertoEstelar, protossBuildings);
+
     }
 
     public VBox mostrarMenuZerg() {
@@ -77,7 +164,7 @@ public class MenuDeConstrucciones {
             b.setPrefSize(200, 20);
         }
 
-        for (int i=0; i<6; i++) {
+        for (int i=0; i<5; i++) {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             zergBuildings.getChildren().add(options[i]);
         }
@@ -105,8 +192,9 @@ public class MenuDeConstrucciones {
         Button buildReserva = new Button("Construir Reserva de Reproduccion");
         buildReserva.setId(ButtonIds.CONSTRUIRRESERVA.getName());
 
-        Button buildZangano = new Button("Construir Zangano");
-        buildZangano.setId(ButtonIds.CONSTRUIRZANGANO.getName());
+        //  EL ZANGANO NO ES UN EDIFICIO
+        // Button buildZangano = new Button("Construir Zangano");
+        // buildZangano.setId(ButtonIds.CONSTRUIRZANGANO.getName());
 
         return new Button[] {
                 buildCriadero,
@@ -114,15 +202,79 @@ public class MenuDeConstrucciones {
                 buildExtractor,
                 buildGuarida,
                 buildReserva,
-                buildZangano};
+               // buildZangano
+        };
     }
 
     public void handleZergButtons() {
-        handleCriadero();
+
+        crearEstructuras criadero = (Economia economia, Posicion pos) -> {
+        try {
+            manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+        }catch (RuntimeException e){
+            if("No se puede gastar la cantidad indicada" != e.getMessage())
+                economia.ingresarMineral(200);
+
+            throw e;
+        }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRCRIADERO, criadero, zergBuildings);
+
+        crearEstructuras extractor = (Economia economia, Posicion pos) -> {
+
+        try {
+            manager.construirExtractor(pos, new Extractor(economia, pos));
+        }catch (RuntimeException e){
+            if("No se puede gastar la cantidad indicada" != e.getMessage())
+                economia.ingresarMineral(100);
+
+            throw e;
+        }
+
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIREXTRACTOR, extractor, zergBuildings);
+
+        crearEstructuras reserva = (Economia economia, Posicion pos) -> {
+        try {
+            manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
+        }catch (RuntimeException e){
+            if("No se puede gastar la cantidad indicada" != e.getMessage())
+                economia.ingresarMineral(150);
+            throw e;
+        }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRRESERVA, reserva, zergBuildings);
+
+        crearEstructuras guarida = (Economia economia, Posicion pos) -> {
+        try {
+            manager.construirZerg(pos, new Guarida(economia, pos));
+        }catch (RuntimeException e) {
+            if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                economia.ingresarMineral(200);
+                economia.ingresarGasVespeno(100);
+            }
+            throw  e;
+        }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRGUARIDA, guarida, zergBuildings);
+
+        crearEstructuras espiral = (Economia economia, Posicion pos) -> {
+        try {
+            manager.construirZerg(pos, new Espiral(economia, pos));
+        }catch (RuntimeException e){
+            if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                economia.ingresarMineral(150);
+                economia.ingresarGasVespeno(100);
+            }
+            throw e;
+        }
+        };
+        handleDeBotonesConstruccion(ButtonIds.CONSTRUIRESPIRAL, espiral, zergBuildings);
+
     }
 
-    public void handleCriadero() {
-        Button boton = (Button) zergBuildings.lookup(ButtonIds.CONSTRUIRCRIADERO.getLookupName());
+    public void handleDeBotonesConstruccion(ButtonIds idDelBoton, crearEstructuras funcion, VBox Buildings) {
+        Button boton = (Button) Buildings.lookup(idDelBoton.getLookupName());
         boton.setOnAction(any -> {
             Set<Button> buttons = new HashSet<>();
             Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.FLOORBUTTON.getLookupName());
@@ -134,7 +286,7 @@ public class MenuDeConstrucciones {
                     Posicion pos = new Posicion(GridPane.getRowIndex(b), GridPane.getColumnIndex(b));
                     Economia economia = (Economia) economias.get(partidaJugadores.getJugadorActivo().getRaza());
                     try {
-                        manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+                        funcion.accionBoton(economia, pos);
                     } catch (RuntimeException e) {
                         Popup.display(e.getMessage());
                     }
@@ -142,4 +294,6 @@ public class MenuDeConstrucciones {
             }
         });
     }
+
+
 }

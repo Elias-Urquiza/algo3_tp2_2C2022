@@ -19,7 +19,7 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     private FloorManager floorManager;
 
     public Criadero(Economia economia, Posicion pos) {
-        super(500, 50, 0, 4, economia, pos);
+        super(500, 200, 0, 4, economia, pos);
         numeroDeLarvas = 3;
         expansion = 0;
         this.floorManager = null;
