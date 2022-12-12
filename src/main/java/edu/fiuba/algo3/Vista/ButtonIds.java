@@ -27,8 +27,7 @@ public enum ButtonIds {
     /**
      * @param name
      */
-    private ButtonIds(final String name) {
-
+    ButtonIds(final String name) {
         this.name = name;
     }
     public String getName() {

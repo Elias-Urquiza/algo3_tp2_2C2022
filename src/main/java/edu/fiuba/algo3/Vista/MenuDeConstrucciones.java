@@ -81,7 +81,6 @@ public class MenuDeConstrucciones {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             zergBuildings.getChildren().add(options[i]);
         }
-        test();
         handleZergButtons();
         return zergBuildings;
     }
@@ -134,24 +133,13 @@ public class MenuDeConstrucciones {
                 b.setOnAction(action -> {
                     Posicion pos = new Posicion(GridPane.getRowIndex(b), GridPane.getColumnIndex(b));
                     Economia economia = (Economia) economias.get(partidaJugadores.getJugadorActivo().getRaza());
-                    manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+                    try {
+                        manager.construirCriaderoEn(pos, new Criadero(economia, pos));
+                    } catch (RuntimeException e) {
+                        Popup.display(e.getMessage());
+                    }
                 });
             }
         });
-    }
-
-    public void test() {
-        Set<Button> buttons = new HashSet<>();
-        Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.FLOORBUTTON.getLookupName());
-        for (Node n : nodeButton) {
-            buttons.add((Button) n);
-        }
-        for (Button b : buttons) {
-            b.setOnAction(action -> {
-                Posicion pos = new Posicion(GridPane.getRowIndex(b), GridPane.getColumnIndex(b));
-                Economia economia = (Economia) economias.get(partidaJugadores.getJugadorActivo().getRaza());
-                manager.construirCriaderoEn(pos, new Criadero(economia, pos));
-            });
-        }
     }
 }

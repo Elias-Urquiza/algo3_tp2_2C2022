@@ -5,7 +5,6 @@ import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,9 +23,9 @@ public class PantallaTablero {
         this.buildingGrid = new GridPane();
 
     }
-    public StackPane crearPantalla(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias, int tablerox, int tableroy, int pantallax, int pantallay) {
+    public BorderPane crearPantalla(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias, int tablerox, int tableroy, int pantallax, int pantallay) {
 
-        StackPane stackPane = new StackPane();
+        BorderPane borderPane = new BorderPane();
         double gridSizeX = pantallax/1.5;
         double gridSizeY = pantallay/1.5;
 
@@ -35,10 +34,12 @@ public class PantallaTablero {
 
         populateFloorGrid(manager, floorGrid, tablerox, tableroy, gridSizeX, gridSizeY);
 
-        CajaDeAbajo cajaAbajo = new CajaDeAbajo();
+        Informacion cajaAbajo = new Informacion(partida, economias);
         VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias).getMenu();
-        stackPane.getChildren().addAll(floorGrid, cajaAbajo, cajaDeLaDerecha);
-        return stackPane;
+        borderPane.setRight(cajaDeLaDerecha);
+        borderPane.setCenter(floorGrid);
+        borderPane.setBottom(cajaAbajo);
+        return borderPane;
     }
 
     private void populateFloorGrid(Manager manager, GridPane tilePane, int tablerox, int tableroy, double gridX, double gridY) {
@@ -62,7 +63,7 @@ public class PantallaTablero {
                     BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                             BackgroundPosition.CENTER, new BackgroundSize(botonPiso.getWidth(), botonPiso.getHeight(), true, true, true, false));
                     Background bg = new Background(backgroundImage);
-                    //botonPiso.setBackground(bg);
+                    botonPiso.setBackground(bg);
                     tilePane.add(botonPiso, i, j);
                 }
             }

@@ -38,5 +38,12 @@ public class Economia {
         mineral+= ingreso;
     }
 
+    public int getGasVespeno() {
+        return gasVespeno;
+    }
+
+    public int getMineral() {
+        return mineral;
+    }
 
 }

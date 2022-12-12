@@ -14,6 +14,7 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -78,7 +79,7 @@ public class GameController {
     }
 
     public void iniciarJuego() {
-        StackPane pantallaJuego = new PantallaTablero().crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY);
+        BorderPane pantallaJuego = new PantallaTablero().crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY);
         Scene scene = new Scene(pantallaJuego, pantallaX, pantallaY);
 
         pantalla.setScene(scene);
