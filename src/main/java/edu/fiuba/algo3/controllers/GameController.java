@@ -1,19 +1,18 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.Vista.*;
+import edu.fiuba.algo3.Vista.grilla.PantallaTablero;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.jugadores.Color;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
@@ -24,8 +23,8 @@ public class GameController {
 
     final Stage pantalla;
     final Manager manager;
-    final int dimensionX = 20;
-    final int dimensionY = 20;
+    final int dimensionX = 30;
+    final int dimensionY = 30;
     final int pantallaX = 1000;
     final int pantallaY = 1000;
     PartidaJugadores players;

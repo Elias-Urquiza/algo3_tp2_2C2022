@@ -24,6 +24,7 @@ public class Sprites {
         put(Acceso.class, path+"acceso.png");
         put(NexoMineral.class, path+"nexo.png");
         put(Asimilador.class, path+"asimilador.png");
+        put(Vacio.class, path+"vacio.jpg");
     }};
 
     public static String getFloorSprite(Class clase) {

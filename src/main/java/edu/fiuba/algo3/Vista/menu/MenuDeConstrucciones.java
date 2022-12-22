@@ -1,5 +1,7 @@
-package edu.fiuba.algo3.Vista;
+package edu.fiuba.algo3.Vista.menu;
 
+import edu.fiuba.algo3.Vista.*;
+import edu.fiuba.algo3.Vista.grilla.HandlerBotonesGrilla;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
@@ -11,7 +13,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -32,6 +33,7 @@ public class MenuDeConstrucciones implements Observable {
     HashMap economias;
     PartidaJugadores partidaJugadores;
     LinkedList<Observer> observers;
+    HandlerBotonesGrilla handlerBotonesGrilla;
 
     public MenuDeConstrucciones(Manager manager, GridPane floorGrid, PartidaJugadores partida, HashMap economias, LinkedList<Observer> observers ){
         this.manager = manager;
@@ -41,6 +43,7 @@ public class MenuDeConstrucciones implements Observable {
         this.observers = observers;
         protossBuildings = new VBox();
         zergBuildings = new VBox();
+        handlerBotonesGrilla = new HandlerBotonesGrilla();
     }
 
     public VBox mostrarMenuProtoss() {
@@ -54,7 +57,7 @@ public class MenuDeConstrucciones implements Observable {
 
         Button options[] = getProtossButtons();
 
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<6; i++) {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             protossBuildings.getChildren().add(options[i]);
         }
@@ -84,11 +87,12 @@ public class MenuDeConstrucciones implements Observable {
                 buildAsimilador,
                 buildAcceso,
                 buildPuertoEstelar,
+                getPassTurnButton()
         };
     }
     private void handleProtossButtons() {
 
-        crearEstructuras pilon = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton pilon = (Economia economia, Posicion pos) -> {
             try {
                 manager.construirPilonEn(pos, new Pilon(economia, pos));
             }catch (RuntimeException e){
@@ -100,7 +104,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRPILON, pilon, protossBuildings);
 
-        crearEstructuras nexoMineral = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton nexoMineral = (Economia economia, Posicion pos) -> {
 
             try {
                 manager.construirEstructuraDeCristales(pos, new NexoMineral(economia, pos));
@@ -114,7 +118,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRNEXOMINERAL, nexoMineral, protossBuildings);
 
-        crearEstructuras asimilador = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton asimilador = (Economia economia, Posicion pos) -> {
             try {
                 manager.construirAsimilador(pos, new Asimilador(economia, pos));
             }catch (RuntimeException e){
@@ -125,7 +129,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRASIMILADOR, asimilador, protossBuildings);
 
-        crearEstructuras acceso = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton acceso = (Economia economia, Posicion pos) -> {
             try {
                 manager.construirProtoss(pos, new Acceso(economia, pos));
             }catch (RuntimeException e) {
@@ -137,7 +141,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRACCESO, acceso, protossBuildings);
 
-        crearEstructuras puertoEstelar = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton puertoEstelar = (Economia economia, Posicion pos) -> {
             try {
                 manager.construirProtoss(pos, new PuertoEstelar(economia, pos));
             }catch (RuntimeException e){
@@ -168,7 +172,7 @@ public class MenuDeConstrucciones implements Observable {
             b.setPrefSize(200, 20);
         }
 
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<6; i++) {
             VBox.setMargin(options[i], new Insets(0, 0, 0, 8));
             zergBuildings.getChildren().add(options[i]);
         }
@@ -206,13 +210,13 @@ public class MenuDeConstrucciones implements Observable {
                 buildExtractor,
                 buildGuarida,
                 buildReserva,
-               // buildZangano
+                getPassTurnButton(),
         };
     }
 
     public void handleZergButtons() {
 
-        crearEstructuras criadero = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton criadero = (Economia economia, Posicion pos) -> {
         try {
             manager.construirCriaderoEn(pos, new Criadero(economia, pos));
         }catch (RuntimeException e){
@@ -224,7 +228,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRCRIADERO, criadero, zergBuildings);
 
-        crearEstructuras extractor = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton extractor = (Economia economia, Posicion pos) -> {
 
         try {
             manager.construirExtractor(pos, new Extractor(economia, pos));
@@ -238,7 +242,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIREXTRACTOR, extractor, zergBuildings);
 
-        crearEstructuras reserva = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton reserva = (Economia economia, Posicion pos) -> {
         try {
             manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
         }catch (RuntimeException e){
@@ -249,7 +253,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRRESERVA, reserva, zergBuildings);
 
-        crearEstructuras guarida = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton guarida = (Economia economia, Posicion pos) -> {
         try {
             manager.construirZerg(pos, new Guarida(economia, pos));
         }catch (RuntimeException e) {
@@ -262,7 +266,7 @@ public class MenuDeConstrucciones implements Observable {
         };
         handleDeBotonesConstruccion(ButtonIds.CONSTRUIRGUARIDA, guarida, zergBuildings);
 
-        crearEstructuras espiral = (Economia economia, Posicion pos) -> {
+        CrearEstructurasBoton espiral = (Economia economia, Posicion pos) -> {
         try {
             manager.construirZerg(pos, new Espiral(economia, pos));
         }catch (RuntimeException e){
@@ -277,11 +281,11 @@ public class MenuDeConstrucciones implements Observable {
 
     }
 
-    public void handleDeBotonesConstruccion(ButtonIds idDelBoton, crearEstructuras funcion, VBox Buildings) {
+    public void handleDeBotonesConstruccion(ButtonIds idDelBoton, CrearEstructurasBoton funcion, VBox Buildings) {
         Button boton = (Button) Buildings.lookup(idDelBoton.getLookupName());
         boton.setOnAction(any -> {
             Set<Button> buttons = new HashSet<>();
-            Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.FLOORBUTTON.getLookupName());
+            Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.GRIDBUTTON.getLookupName());
             for (Node n : nodeButton) {
                 buttons.add((Button) n);
             }
@@ -291,14 +295,24 @@ public class MenuDeConstrucciones implements Observable {
                     Economia economia = (Economia) economias.get(partidaJugadores.getJugadorActivo().getRaza());
                     try {
                         funcion.accionBoton(economia, pos);
-                        notificar();
-                        //actualiza los recursos
                     } catch (RuntimeException e) {
                         Popup.display(e.getMessage());
                     }
+                    notificar();
                 });
             }
         });
+    }
+
+    private Button getPassTurnButton() {
+        Button passTurn = new Button("Pasar turno");
+        passTurn.setId(ButtonIds.PASARTURNO.getName());
+        passTurn.setOnAction(actionEvent -> {
+            partidaJugadores.cambiarTurno();
+            manager.pasarTurno();
+            notificar();
+        });
+        return passTurn;
     }
 
 

@@ -9,8 +9,7 @@ public enum ButtonIds {
     COLOR1("#ColorPlayer1"),
     COLOR2("#ColorPlayer2"),
     TITLELABEL("#TitleLabel"),
-    FLOORBUTTON("#FloorButton"),
-    BUILDING("#BuildingButton"),
+    GRIDBUTTON("#FloorButton"),
     CONSTRUIRCRIADERO("#ConstruirCriadero"),
     CONSTRUIRESPIRAL("#ConstruirEspiral"),
     CONSTRUIREXTRACTOR("#ConstruirExtractor"),
@@ -22,7 +21,8 @@ public enum ButtonIds {
     CONSTRUIRPILON("#ConstruirPilon"),
     CONSTRUIRASIMILADOR("#ConstruirAsimilador"),
     CONSTRUIRACCESO("#ConstruirAcceso"),
-    CONSTRUIRCPUERTOESTELAR("#ConstruirPuertoEstelar");
+    CONSTRUIRCPUERTOESTELAR("#ConstruirPuertoEstelar"),
+    PASARTURNO("#PasarTurno");
 
     private final String name;
 
