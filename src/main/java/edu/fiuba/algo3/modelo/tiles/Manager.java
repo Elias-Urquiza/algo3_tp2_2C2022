@@ -605,6 +605,24 @@ public class Manager {
 
     public Object getFloorAt(Posicion pos) {
         //Smell -> 2L82 refactor
+        for (ConstruccionProtoss p : construccionProtoss) {
+            if (pos.equals(p.getPosicion())) {
+                return p;
+            }
+        }
+
+        for (ConstruccionZerg z : construccionesZerg) {
+            if (pos.equals(z.getPosicion())) {
+                return z;
+            }
+        }
+
+        for (ExtraeRecurso ext : construccionQueExtrae) {
+            if (pos.equals(ext.getPosicion())) {
+                return ext;
+            }
+        }
+
         for (Moho m : moho) {
             if (pos.equals(m.getPos())) {
                 return m;

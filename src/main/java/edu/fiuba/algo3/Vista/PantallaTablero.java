@@ -11,38 +11,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class PantallaTablero {
 
     GridPane floorGrid;
-    GridPane buildingGrid;
+
     HashMap<Raza, Economia> economias;
+
     public PantallaTablero() {
         this.floorGrid = new GridPane();
-        this.buildingGrid = new GridPane();
-
     }
-    public BorderPane crearPantalla(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias, int tablerox, int tableroy, int pantallax, int pantallay) {
+
+    public BorderPane crearPantalla(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias, int tablerox, int tableroy, int pantallax, int pantallay,  LinkedList<Observer> listaDeObservers) {
 
         BorderPane borderPane = new BorderPane();
         double gridSizeX = pantallax/1.5;
         double gridSizeY = pantallay/1.5;
 
         floorGrid.setPrefSize(gridSizeX, gridSizeY);
-        buildingGrid.setPrefSize(gridSizeX, gridSizeY);
 
-        populateFloorGrid(manager, floorGrid, tablerox, tableroy, gridSizeX, gridSizeY);
+
+        populateFloorGrid(manager, tablerox, tableroy, gridSizeX, gridSizeY);
 
         Informacion cajaAbajo = new Informacion(partida, economias);
-        VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias).getMenu();
+
+        VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias, listaDeObservers).getMenu();
         borderPane.setRight(cajaDeLaDerecha);
         borderPane.setCenter(floorGrid);
         borderPane.setBottom(cajaAbajo);
         return borderPane;
     }
 
-    private void populateFloorGrid(Manager manager, GridPane tilePane, int tablerox, int tableroy, double gridX, double gridY) {
+    public void populateFloorGrid(Manager manager, int tablerox, int tableroy, double gridX, double gridY) {
         for (int i = 0; i < tablerox; i++) {
             for (int j = 0; j < tableroy; j++) {
                 Object o = manager.getFloorAt(new Posicion(i, j));
@@ -54,7 +56,7 @@ public class PantallaTablero {
                     imageView.setFitHeight(gridY / tableroy);
                     imageView.setFitWidth(gridX / tablerox);
                     imageView.setPreserveRatio(true);
-                    tilePane.add(imageView, i, j);
+                    floorGrid.add(imageView, i, j);
                 } else {
                     Button botonPiso = new Button();
                     Image image = new Image(imagePath);
@@ -64,7 +66,7 @@ public class PantallaTablero {
                             BackgroundPosition.CENTER, new BackgroundSize(botonPiso.getWidth(), botonPiso.getHeight(), true, true, true, false));
                     Background bg = new Background(backgroundImage);
                     botonPiso.setBackground(bg);
-                    tilePane.add(botonPiso, i, j);
+                    floorGrid.add(botonPiso, i, j);
                 }
             }
         }
@@ -97,5 +99,9 @@ public class PantallaTablero {
             }
         }
     }
+
+
+
+
 
 }

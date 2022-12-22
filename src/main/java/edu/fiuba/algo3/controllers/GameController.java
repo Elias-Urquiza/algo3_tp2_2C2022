@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.Vista.ButtonIds;
-import edu.fiuba.algo3.Vista.PantallaSeleccionRaza;
-import edu.fiuba.algo3.Vista.PantallaTablero;
-import edu.fiuba.algo3.Vista.Popup;
+import edu.fiuba.algo3.Vista.*;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.jugadores.Color;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
@@ -20,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class GameController {
@@ -74,7 +72,7 @@ public class GameController {
                     players.setJugador(raza2, nombre2, color2);
                     iniciarJuego();
                 } catch (RuntimeException e) {
-                    Popup.display(e.getMessage() + "me rompi aca capox");
+                    Popup.display(e.getMessage() );
                     players = new PartidaJugadores();
                 }
             } else {
@@ -86,7 +84,15 @@ public class GameController {
     }
 
     public void iniciarJuego() {
-        BorderPane pantallaJuego = new PantallaTablero().crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY);
+        LinkedList<Observer> listaDeObservers = new LinkedList<>();
+        ObservadorConstrucciones o = new ObservadorConstrucciones(this, listaDeObservers);
+        listaDeObservers.add(o);
+
+        ponerJuego(listaDeObservers);
+    }
+
+    public void ponerJuego(LinkedList<Observer> listaDeObservers){
+        BorderPane pantallaJuego = new PantallaTablero().crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY, listaDeObservers);
         Scene scene = new Scene(pantallaJuego, pantallaX, pantallaY);
 
         pantalla.setScene(scene);

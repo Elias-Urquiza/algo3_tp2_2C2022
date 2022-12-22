@@ -16,7 +16,7 @@ public enum ButtonIds {
     CONSTRUIREXTRACTOR("#ConstruirExtractor"),
     CONSTRUIRGUARIDA("#ConstruirGuarida"),
     CONSTRUIRRESERVA("#ConstruirReserva"),
-    // el zangano es una unidad ashi CONSTRUIRZANGANO("#ConstruirZangano"),
+    // el zangano es una unidad CONSTRUIRZANGANO("#ConstruirZangano"),
 
     CONSTRUIRNEXOMINERAL("#ConstruirNexoMineral"),
     CONSTRUIRPILON("#ConstruirPilon"),

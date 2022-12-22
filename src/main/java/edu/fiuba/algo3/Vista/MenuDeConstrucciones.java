@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -19,9 +20,10 @@ import javafx.scene.text.Text;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
-public class MenuDeConstrucciones {
+public class MenuDeConstrucciones implements Observable {
 
     VBox zergBuildings;
     VBox protossBuildings;
@@ -29,12 +31,14 @@ public class MenuDeConstrucciones {
     GridPane floorGrid;
     HashMap economias;
     PartidaJugadores partidaJugadores;
+    LinkedList<Observer> observers;
 
-    public MenuDeConstrucciones(Manager manager, GridPane floorGrid, PartidaJugadores partida, HashMap economias){
+    public MenuDeConstrucciones(Manager manager, GridPane floorGrid, PartidaJugadores partida, HashMap economias, LinkedList<Observer> observers ){
         this.manager = manager;
         this.economias = economias;
         this.partidaJugadores = partida;
         this.floorGrid = floorGrid;
+        this.observers = observers;
         protossBuildings = new VBox();
         zergBuildings = new VBox();
     }
@@ -283,10 +287,12 @@ public class MenuDeConstrucciones {
             }
             for (Button b : buttons) {
                 b.setOnAction(action -> {
-                    Posicion pos = new Posicion(GridPane.getRowIndex(b), GridPane.getColumnIndex(b));
+                    Posicion pos = new Posicion(GridPane.getColumnIndex(b), GridPane.getRowIndex(b));
                     Economia economia = (Economia) economias.get(partidaJugadores.getJugadorActivo().getRaza());
                     try {
                         funcion.accionBoton(economia, pos);
+                        notificar();
+                        //actualiza los recursos
                     } catch (RuntimeException e) {
                         Popup.display(e.getMessage());
                     }
@@ -296,4 +302,19 @@ public class MenuDeConstrucciones {
     }
 
 
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notificar() {
+        for (Observer o :observers)
+            o.update();
+    }
 }
