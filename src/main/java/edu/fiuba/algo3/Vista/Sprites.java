@@ -3,7 +3,12 @@ package edu.fiuba.algo3.Vista;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.*;
+import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
+import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
+import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
+import edu.fiuba.algo3.modelo.unidades.zerg.*;
 
+import java.security.interfaces.RSAMultiPrimePrivateCrtKey;
 import java.util.HashMap;
 
 public class Sprites {
@@ -24,7 +29,18 @@ public class Sprites {
         put(Acceso.class, path+"acceso.png");
         put(NexoMineral.class, path+"nexo.png");
         put(Asimilador.class, path+"asimilador.png");
-        put(Vacio.class, path+"vacio.jpg");
+        put(Vacio.class, path+"vacio.png");
+        put(Zangano.class, path+"zangano.png" );
+        put(Zerling.class, path+"zerling.png" );
+        put(Devorador.class, path+"devorador.png" );
+        put(Guardian.class, path+"guardian.png" );
+        put(Hidralisco.class, path+"hidralisco.png" );
+        put(Mutalisco.class, path+"mutalisco.png" );
+        put(Zealot.class, path+"zealot.png" );
+        put(Scout.class, path+"scout.png" );
+        put(Dragon.class, path+"dragon.png" );
+
+
     }};
 
     public static String getFloorSprite(Class clase) {

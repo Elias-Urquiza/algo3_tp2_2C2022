@@ -1,12 +1,9 @@
 package edu.fiuba.algo3.Vista.grilla;
 
 import edu.fiuba.algo3.Vista.*;
-import edu.fiuba.algo3.Vista.grilla.GrillaBoton;
 import edu.fiuba.algo3.Vista.menu.MenuDeConstrucciones;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
-import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
@@ -22,14 +19,12 @@ import java.util.Objects;
 public class PantallaTablero {
 
     GridPane floorGrid;
-
     HashMap<Raza, Economia> economias;
     HandlerBotonesGrilla handlerBotones;
     PartidaJugadores partida;
 
-    public PantallaTablero() {
+    public PantallaTablero(Manager manager) {
         this.floorGrid = new GridPane();
-        this.handlerBotones = new HandlerBotonesGrilla();
     }
 
     public BorderPane crearPantalla(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias, int tablerox, int tableroy, int pantallax, int pantallay,  LinkedList<Observer> listaDeObservers) {
@@ -38,6 +33,7 @@ public class PantallaTablero {
         double gridSizeX = pantallax/1.5;
         double gridSizeY = pantallay/1.5;
 
+        this.handlerBotones = new HandlerBotonesGrilla(manager, listaDeObservers, floorGrid);
         floorGrid.setPrefSize(gridSizeX, gridSizeY);
         this.partida = partida;
         this.economias = economias;
@@ -46,7 +42,7 @@ public class PantallaTablero {
 
         Informacion cajaAbajo = new Informacion(partida, economias);
 
-        VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias, listaDeObservers).getMenu();
+        VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias, listaDeObservers, handlerBotones).getMenu();
         borderPane.setRight(cajaDeLaDerecha);
         borderPane.setCenter(floorGrid);
         borderPane.setBottom(cajaAbajo);
@@ -57,14 +53,14 @@ public class PantallaTablero {
         for (int i = 0; i < tablerox; i++) {
             for (int j = 0; j < tableroy; j++) {
                 Posicion pos = new Posicion(i, j);
-                Object o = manager.getFloorAt(pos);
+                Object o = manager.getAt(pos);
                 String imagePath = Sprites.getFloorSprite(o.getClass());
                 if (Objects.isNull(imagePath)) {
                     imagePath = Sprites.getDefaultSprite();
                     Image image = new Image(imagePath);
                     ImageView imageView = new ImageView(image);
                     imageView.setFitHeight(gridY / tableroy);
-                    imageView.setFitWidth(gridX / tablerox);
+                    imageView.setFitWidth (gridX / tablerox);
                     imageView.setPreserveRatio(true);
                     floorGrid.add(imageView, i, j);
                 } else {

@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
+
 public class Manager {
     FloorManager floorManager;
     UnidadManager unidadManager;
@@ -595,16 +598,42 @@ public class Manager {
             pilon.pasarTurno();
     }
 
+
     public void crearZanganoParaExtractor(Posicion pos, Zangano zangano) {
-        unidadManager.crearUnidad(zangano, pos, suminstrosHashMap);
+        try {
+            unidadManager.crearUnidad(zangano, pos, suminstrosHashMap);
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
+
+    /*public void crearZanganoParaExtractor(Posicion pos, Zangano zangano) {
+        for(ExtraeRecurso ext : construccionQueExtrae){
+            if(ext.getPosicion().equals(pos) && ext.getClass() == Extractor.class){
+                try{
+                    ((Extractor) ext).agregarZangano(this);
+                    unidadManager.crearUnidad(zangano, pos, suminstrosHashMap);
+                }catch (RuntimeException e){
+                    throw new RuntimeException(e.getMessage());
+                }
+                break;
+            }
+        }
+    }*/
 
     public void destruirZanganosDeExtractor(LinkedList<Zangano> zanganos) {
         unidadManager.deletearZanganosDelExtractor(zanganos);
     }
 
-    public Object getFloorAt(Posicion pos) {
+    public Object getAt(Posicion pos) {
         //Smell -> 2L82 refactor
+
+        Object o = unidadManager.getAt(pos);
+
+        if( o != null )
+            return o;
+
         for (ConstruccionProtoss p : construccionProtoss) {
             if (pos.equals(p.getPosicion())) {
                 return p;
@@ -664,4 +693,10 @@ public class Manager {
     public Object getBuildingAt(Posicion pos) {
         return null;
     }
+
+    public int getMaxX(){ return maxX;}
+
+    public int getMaxY(){ return maxY;}
+
+
 }

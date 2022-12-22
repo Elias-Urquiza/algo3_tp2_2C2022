@@ -112,4 +112,21 @@ public class UnidadManager  {
     }
 
 
+    public Object getAt(Posicion pos) {
+
+        LinkedList<UnidadZerg> lista = unidades.get(Raza.ZERG);
+        for(UnidadZerg u : lista){
+            if(pos.equals(u.getPosicion() ) )
+                return  u;
+        }
+
+        LinkedList<UnidadProtoss> lista2 =unidades.get(Raza.PROTOSS);
+        for(UnidadProtoss u : lista2){
+            if(pos.equals(u.getPosicion() ) )
+                return  u;
+        }
+
+       return null;
+    }
+
 }

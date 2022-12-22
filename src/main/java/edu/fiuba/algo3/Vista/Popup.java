@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
 public class Popup {
 
     public static void display(String text)
@@ -26,5 +28,30 @@ public class Popup {
         popupwindow.showAndWait();
 
     }
+
+    public static void displayAMenu(String text, LinkedList<Button> botones)
+    {
+        Stage popupwindow = new Stage();
+        popupwindow.initModality(Modality.APPLICATION_MODAL);
+        popupwindow.setTitle("This is a pop up window");
+
+        Button button1= new Button("Go back");
+        button1.setOnAction(e -> popupwindow.close());
+
+        VBox layout= new VBox(10 * botones.size() );
+        layout.getChildren().addAll(button1);
+        layout.setAlignment(Pos.CENTER);
+
+        for(Button boton: botones) {
+            layout.getChildren().addAll(boton);
+            layout.setAlignment(Pos.CENTER);
+        }
+
+        Scene scene1= new Scene(layout, 300, 250);
+        popupwindow.setScene(scene1);
+        popupwindow.showAndWait();
+    }
+
+
 }
 

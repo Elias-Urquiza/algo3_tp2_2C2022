@@ -17,7 +17,6 @@ public class ObservadorConstrucciones implements Observer{
     private GameController gameController;
     private LinkedList<Observer> listaDeObservers;
 
-
     public ObservadorConstrucciones(GameController gameController, LinkedList<Observer> listaDeObservers) {
         this.gameController = gameController;
         this.listaDeObservers = listaDeObservers;

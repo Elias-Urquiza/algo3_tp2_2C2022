@@ -91,7 +91,7 @@ public class GameController {
     }
 
     public void ponerJuego(LinkedList<Observer> listaDeObservers){
-        BorderPane pantallaJuego = new PantallaTablero().crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY, listaDeObservers);
+        BorderPane pantallaJuego = new PantallaTablero(manager).crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY, listaDeObservers);
         Scene scene = new Scene(pantallaJuego, pantallaX, pantallaY);
 
         pantalla.setScene(scene);

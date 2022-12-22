@@ -35,7 +35,7 @@ public class MenuDeConstrucciones implements Observable {
     LinkedList<Observer> observers;
     HandlerBotonesGrilla handlerBotonesGrilla;
 
-    public MenuDeConstrucciones(Manager manager, GridPane floorGrid, PartidaJugadores partida, HashMap economias, LinkedList<Observer> observers ){
+    public MenuDeConstrucciones(Manager manager, GridPane floorGrid, PartidaJugadores partida, HashMap economias, LinkedList<Observer> observers, HandlerBotonesGrilla handlerBotonesGrilla ){
         this.manager = manager;
         this.economias = economias;
         this.partidaJugadores = partida;
@@ -43,7 +43,7 @@ public class MenuDeConstrucciones implements Observable {
         this.observers = observers;
         protossBuildings = new VBox();
         zergBuildings = new VBox();
-        handlerBotonesGrilla = new HandlerBotonesGrilla();
+        this.handlerBotonesGrilla = handlerBotonesGrilla;
     }
 
     public VBox mostrarMenuProtoss() {
@@ -303,6 +303,7 @@ public class MenuDeConstrucciones implements Observable {
             }
         });
     }
+
 
     private Button getPassTurnButton() {
         Button passTurn = new Button("Pasar turno");
