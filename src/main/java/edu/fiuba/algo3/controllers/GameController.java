@@ -38,11 +38,12 @@ public class GameController {
         economias = new HashMap<>();
 
         Economia economiaZerg = new Economia();
-        economiaZerg.ingresarMineral(200);
+        economiaZerg.ingresarMineral(1000);
+        economiaZerg.ingresarGasVespeno(1000);
 
         Economia economiaProtoss = new Economia();
-        economiaProtoss.ingresarMineral(200);
-
+        economiaProtoss.ingresarMineral(1000);
+        economiaProtoss.ingresarGasVespeno(1000);
         economias.put(Raza.ZERG, economiaZerg);
         economias.put(Raza.PROTOSS, economiaProtoss);
     }

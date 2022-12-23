@@ -40,4 +40,9 @@ public abstract class UnidadProtoss extends Unidad {
         }
         listas.get(Raza.PROTOSS).add(this);
     }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        return new LinkedList<>();
+    }
 }

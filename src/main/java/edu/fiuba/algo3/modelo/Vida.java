@@ -24,4 +24,5 @@ public abstract class Vida {
 
     public abstract int daniar(int danio);
     public abstract int curar(int curacion);
+    public abstract LinkedList<String> getInformacion();
 }

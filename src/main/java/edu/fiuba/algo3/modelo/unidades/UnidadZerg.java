@@ -48,4 +48,9 @@ public abstract class UnidadZerg extends Unidad {
     public void agregaZangano(LinkedList<Zangano> zanganos) {
         return;
     }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        return new LinkedList<>();
+    }
 }

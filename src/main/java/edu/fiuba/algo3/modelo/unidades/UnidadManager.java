@@ -26,8 +26,9 @@ public class UnidadManager  {
     }
 
     public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
-        agresor.atacar(victima);
+        int dmg = agresor.atacar(victima);
         victima.morirUnidad(unidades);
+        throw new RuntimeException(String.valueOf(dmg));
     }
 
     public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){

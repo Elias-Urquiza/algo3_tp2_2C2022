@@ -111,4 +111,19 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
         vida.eliminarConstruccion(list, this);
     }
 
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList();
+        list.addAll(vida.getInformacion());
+        list.add(String.format("Unidad de %s", superficie.getNombre()));
+        try {
+            construida();
+            list.add("Edificio activo");
+        } catch (RuntimeException e) {
+            list.add(String.format("Turnos hasta activarse: %s", tiempoDeConstruccion-turnos));
+        }
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        return list;
+    }
+
 }

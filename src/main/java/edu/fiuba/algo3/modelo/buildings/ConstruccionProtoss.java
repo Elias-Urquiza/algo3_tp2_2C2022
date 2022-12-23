@@ -116,4 +116,19 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
         floorManager.desactivarEstructurasProtoss();
     }
 
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList();
+        list.addAll(vida.getInformacion());
+        try {
+            construida();
+            list.add("Edificio activo");
+        } catch (RuntimeException e) {
+            list.add(String.format("Turnos hasta activarse: %s", tiempoDeConstruccion-turnos));
+        }
+        list.add(energizado ? "Edificio energizado!" : "Edificio sin energia");
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        return list;
+    }
+
 }

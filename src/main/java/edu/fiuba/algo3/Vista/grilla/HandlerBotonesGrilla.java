@@ -4,8 +4,10 @@ import edu.fiuba.algo3.Vista.ButtonIds;
 import edu.fiuba.algo3.Vista.Observable;
 import edu.fiuba.algo3.Vista.Observer;
 import edu.fiuba.algo3.Vista.Popup;
+import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
+import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
@@ -18,6 +20,7 @@ import edu.fiuba.algo3.modelo.unidades.zerg.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.*;
 
@@ -42,59 +45,59 @@ public class HandlerBotonesGrilla implements Observable {
 
     public void handleBotonesGrid(HashMap mapa) {
 
-        GrillaBoton criaderoAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton criaderoAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("CRIADERO" ,crearBotonesMenuCriadero(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion() ,"CRIADERO" ,crearBotonesMenuCriadero(economia, pos));
             });
         };
         mapa.put(Criadero.class, criaderoAccion);
 
-        GrillaBoton extractorAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton extractorAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("EXTRACTOR" ,crearBotonesMenuExtractor(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "EXTRACTOR" ,crearBotonesMenuExtractor(economia, pos));
             });
         };
         mapa.put(Extractor.class, extractorAccion);
 
-        GrillaBoton reservaAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton reservaAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("RESERVA" ,crearBotonesMenuReserva(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "RESERVA" ,crearBotonesMenuReserva(economia, pos));
             });
         };
         mapa.put(ReservaDeReproduccion.class, reservaAccion);
 
-        GrillaBoton guaridaAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton guaridaAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("GUARIDA" ,crearBotonesMenuGuarida(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "GUARIDA" ,crearBotonesMenuGuarida(economia, pos));
             });
         };
         mapa.put(Guarida.class, guaridaAccion);
 
-        GrillaBoton espiralAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton espiralAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("ESPIRAL" ,crearBotonesMenuEspiral(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "ESPIRAL" ,crearBotonesMenuEspiral(economia, pos));
             });
         };
         mapa.put(Espiral.class, espiralAccion);
 
-        GrillaBoton accesoAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton accesoAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("ACCESO" ,crearBotonesMenuAcceso(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "ACCESO" ,crearBotonesMenuAcceso(economia, pos));
             });
         };
         mapa.put(Acceso.class, accesoAccion);
 
-        GrillaBoton puertoEstelarAccion = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton puertoEstelarAccion = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("PUERTO ESTELAR" ,crearBotonesMenuPuertoEstelar(economia, pos));
+                Popup.displayAMenu(((Estructura) o).getInformacion(), "PUERTO ESTELAR" ,crearBotonesMenuPuertoEstelar(economia, pos));
             });
         };
         mapa.put(PuertoEstelar.class, puertoEstelarAccion);
 
 
-        GrillaBoton accionesUnidad = (Button botonaso, Economia economia, Posicion pos) -> {
+        GrillaBoton accionesUnidad = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
             botonaso.setOnAction(action -> {
-                Popup.displayAMenu("MENU DE ACCIONES" ,crearBotonUnidad(economia, pos));
+                Popup.displayAMenu(((Unidad) o).getInformacion(), "MENU DE ACCIONES" ,crearBotonUnidad(economia, pos));
             });
         };
         mapa.put(Zangano.class, accionesUnidad);
@@ -125,6 +128,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(boton);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -148,6 +152,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(boton);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -170,6 +175,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(boton);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -191,6 +197,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(button);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -205,6 +212,7 @@ public class HandlerBotonesGrilla implements Observable {
         button.setOnAction(action -> {
             try{
                 Object extractor = manager.getAt(pos);
+                // Esto deberia ser responsabilidad del modelo
                 if(isNull(extractor) || extractor.getClass() != Extractor.class) throw new RuntimeException("No hay un extractor en esa posicion");
 
                 ( (Extractor) extractor).agregarZangano(manager);
@@ -215,6 +223,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(button);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -243,6 +252,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(button1);
         });
 
         button2.setOnAction(action -> {
@@ -255,6 +265,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(button2);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -278,6 +289,7 @@ public class HandlerBotonesGrilla implements Observable {
                 Popup.display(e.getMessage());
             }
             notificar();
+            close(button);
         });
 
         LinkedList<Button> b = new LinkedList<>();
@@ -305,6 +317,38 @@ public class HandlerBotonesGrilla implements Observable {
     }
 
     private void setOnActionAtacarUnidad(Button buttonAtacar, Posicion pos) {
+        buttonAtacar.setOnAction(any -> {
+            Set<Button> buttons = new HashSet<>();
+            for (int i = 0; i < manager.getMaxX(); i++) {
+                for (int j = 0; j < manager.getMaxY(); j++) {
+                    Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.GRIDBUTTON.getLookupName());
+                    for (Node n : nodeButton) {
+                        buttons.add((Button) n);
+                    }
+                }
+            }
+            for (Button b : buttons) {
+                b.setOnAction(action -> {
+                    Posicion posicion = new Posicion(GridPane.getColumnIndex(b), GridPane.getRowIndex(b));
+                    Object o = manager.getAt(posicion);
+                    if (o instanceof Estructura) {
+                        try{
+                            manager.unidadAtacaConstruccion((Unidad) manager.getAt(pos), (Estructura) o);
+                        }catch (RuntimeException e){
+                            Popup.display(e.getMessage());
+                        }
+                    } else if (o instanceof Unidad) {
+                        try{
+                            manager.unidadAtacaUnidad((Unidad) manager.getAt(pos), (Unidad) o);
+                        }catch (RuntimeException e){
+                            Popup.display(e.getMessage());
+                        }
+                    }
+                    notificar();
+                });
+            }
+            close(buttonAtacar);
+        });
     }
 
     private void setOnActionMoverUnidad(Button boton, Posicion pos) {
@@ -329,14 +373,17 @@ public class HandlerBotonesGrilla implements Observable {
                     notificar();
                 });
             }
+            close(boton);
         });
     }
     
     private GrillaBoton defaultBoton() {
-        return (Button botonaso, Economia economia, Posicion pos) -> {
+        return (Object o, Button botonaso, Economia economia, Posicion pos) -> {
+            /* To debug
             botonaso.setOnAction(any -> {
                 Popup.display("default (resultado de que el boton no tiene comportamiento, si deberia tenerlo, esto es un error)");
             });
+             */
         };
     }
 
@@ -344,10 +391,13 @@ public class HandlerBotonesGrilla implements Observable {
     //MAL NOMBRE NO SE ENTIENDE QUE HACE
     public void setComportamiento(Object objeto, Button boton, Posicion posicion, Economia economia) {
         GrillaBoton comportamiento = botones.getOrDefault(objeto.getClass(), defaultBoton());
-        comportamiento.setOnActionDeGrilla(boton, economia, posicion);
+        comportamiento.setOnActionDeGrilla(objeto, boton, economia, posicion);
     }
 
 
+    private void close(Button boton) {
+        ((Stage) boton.getScene().getWindow()).close();
+    }
     @Override
     public void attach(Observer o) {
         observers.add(o);

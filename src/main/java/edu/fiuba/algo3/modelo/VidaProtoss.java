@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.LinkedList;
+
 public class VidaProtoss extends Vida {
 
     private int escudoMaximo;
@@ -44,5 +46,13 @@ public class VidaProtoss extends Vida {
             escudo += curacionProtoss;
         }
         return escudo - escudoPreCuracion;
+    }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList<>();
+        list.add(String.format("ESCUDO: %s / %s", escudo, escudoMaximo));
+        list.add(String.format("VIDA: %s / %s", puntosDeVida, puntosDeVidaMaxima));
+        return list;
     }
 }

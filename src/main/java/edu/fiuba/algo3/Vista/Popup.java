@@ -4,7 +4,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -29,7 +32,7 @@ public class Popup {
 
     }
 
-    public static void displayAMenu(String text, LinkedList<Button> botones)
+    public static void displayAMenu(LinkedList<String> info, String text, LinkedList<Button> botones)
     {
         Stage popupwindow = new Stage();
         popupwindow.initModality(Modality.APPLICATION_MODAL);
@@ -47,7 +50,16 @@ public class Popup {
             layout.setAlignment(Pos.CENTER);
         }
 
-        Scene scene1= new Scene(layout, 300, 250);
+        BorderPane pane = new BorderPane(layout);
+        pane.setCenter(layout);
+
+        VBox infoBox = new VBox(10 * info.size());
+        for(String i : info) {
+            Text campoDeTexto = new Text(i);
+            infoBox.getChildren().addAll(new Text(i));
+        }
+        pane.setLeft(infoBox);
+        Scene scene1= new Scene(pane, 300, 250);
         popupwindow.setScene(scene1);
         popupwindow.showAndWait();
     }
