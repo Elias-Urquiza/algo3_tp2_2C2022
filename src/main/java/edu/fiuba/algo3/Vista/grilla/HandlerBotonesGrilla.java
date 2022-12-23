@@ -39,8 +39,7 @@ public class HandlerBotonesGrilla implements Observable {
         this.manager   = manager  ;
         this.observers = observers;
         handleBotonesGrid(botones);
-        this.floorGrid = gridPane;
-
+        this.floorGrid = gridPane ;
     }
 
     public void handleBotonesGrid(HashMap mapa) {
