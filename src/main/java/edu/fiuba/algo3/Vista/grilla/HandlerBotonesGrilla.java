@@ -333,7 +333,11 @@ public class HandlerBotonesGrilla implements Observable {
     }
     
     private GrillaBoton defaultBoton() {
-        return (Button botonaso, Economia economia, Posicion pos) -> {};
+        return (Button botonaso, Economia economia, Posicion pos) -> {
+            botonaso.setOnAction(any -> {
+                Popup.display("default (resultado de que el boton no tiene comportamiento, si deberia tenerlo, esto es un error)");
+            });
+        };
     }
 
 
