@@ -11,13 +11,10 @@ import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.*;
-import javafx.geometry.Pos;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
-
-import static java.util.Objects.isNull;
 
 
 public class Manager {
@@ -36,6 +33,10 @@ public class Manager {
     LinkedList<Pilon> pilones;
     HashMap<Raza, Suministros> suminstrosHashMap;
 
+    LinkedList<Extractor> extractores;
+    LinkedList<NexoMineral> nexos;
+    LinkedList<Asimilador> asimiladores;
+
     int maxX;
     int maxY;
     int idPilones;
@@ -51,6 +52,9 @@ public class Manager {
         this.energias = new LinkedList<>();
         this.tilesVacias = new LinkedList<>();
         this.pilones = new LinkedList<>();
+        this.extractores = new LinkedList<>();
+        this.asimiladores = new LinkedList<>();
+        this.nexos = new LinkedList<>();
         this.maxX = dimensionX;
         this.maxY = dimensionY;
         this.idPilones = 0;
@@ -176,7 +180,7 @@ public class Manager {
         idPilones  ++;
     }
 
-    public void construirEstructuraDeCristales(Posicion pos, ExtraeRecurso extrae){
+    public void construirNexoMineral(Posicion pos, ExtraeRecurso extrae){
 
         if(floorManager.conVacio(pos, maxX, maxY) )
             throw new RuntimeException("La posicion es un espacio aereo");
@@ -199,6 +203,8 @@ public class Manager {
 
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un mineral en la posicion");
+
+        nexos.add( (NexoMineral) extrae);
     }
 
     public void construirExtractor(Posicion pos, ExtraeRecurso extrae){
@@ -213,6 +219,7 @@ public class Manager {
             throw new RuntimeException(e.getMessage());
         }
 
+        extractores.add((Extractor) extrae);
     }
 
     public void construirAsimilador(Posicion pos, ExtraeRecurso extrae){
@@ -235,6 +242,8 @@ public class Manager {
         }
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un volcan en la posicion");
+
+        asimiladores.add((Asimilador)  extrae);
     }
 
     public LinkedList<TileVacia> getTilesVacias(){
@@ -452,15 +461,12 @@ public class Manager {
         return perimetro;
     }
 
-    public void pasarTurno(){
-        for(ConstruccionProtoss protoss :construccionProtoss)
-            protoss.pasarTurno();
-
+    public void pasarTurnoZerg(){
         for (ConstruccionZerg zerg : construccionesZerg)
             zerg.pasarTurno();
 
-        for (ExtraeRecurso extrae : construccionQueExtrae)
-            extrae.pasarTurno();
+        for (Extractor ext : extractores)
+            ext.pasarTurno();
 
         for (Cristales c : cristales) {
 
@@ -482,10 +488,34 @@ public class Manager {
             }
         }
 
-        unidadManager.hacerPasarDeTurno();
+        unidadManager.hacerPasarDeTurnoZerg();
 
-        floorManager.terminarJuegoZerg();
-        floorManager.terminarJuegoProtoss();
+        try {
+            floorManager.terminarJuegoZerg();
+            floorManager.terminarJuegoProtoss();
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void pasarTurnoProtoss(){
+        for(ConstruccionProtoss protoss :construccionProtoss)
+            protoss.pasarTurno();
+
+        for(Asimilador as : asimiladores)
+            as.pasarTurno();
+
+        for(NexoMineral next : nexos)
+            next.pasarTurno();
+
+        unidadManager.hacerPasarDeTurnoProtoss();
+
+        try {
+            floorManager.terminarJuegoZerg();
+            floorManager.terminarJuegoProtoss();
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void crearBases(){

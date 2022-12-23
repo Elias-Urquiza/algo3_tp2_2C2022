@@ -53,11 +53,13 @@ public class UnidadManager  {
         return ocupado;
     }
 
-    public void hacerPasarDeTurno(){
+    public void hacerPasarDeTurnoZerg(){
         LinkedList<Unidad> zergs= unidades.get(Raza.ZERG);
         for (Unidad u :zergs)
             u.pasarTurno();
+    }
 
+    public void hacerPasarDeTurnoProtoss(){
         LinkedList<Unidad> protoss= unidades.get(Raza.PROTOSS);
         for (Unidad u :protoss)
             u.pasarTurno();

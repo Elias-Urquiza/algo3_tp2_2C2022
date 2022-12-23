@@ -9,7 +9,6 @@ import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.LinkedList;
 
@@ -340,7 +339,7 @@ public class TestManager {
         manager.agregarVolcanes(pos2);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirEstructuraDeCristales(pos2, new NexoMineral(economia, pos2))
+                () -> manager.construirNexoMineral(pos2, new NexoMineral(economia, pos2))
         );
         assertEquals("hay un volcan en esa posicion", exception.getMessage());
     }
@@ -348,7 +347,7 @@ public class TestManager {
     @Test
     public void intentoConstruirNexoMineralSobreCristalYPuedo() {
         Posicion pos1 = new Posicion(10, 10);
-        assertDoesNotThrow(() -> manager.construirEstructuraDeCristales(pos1, new NexoMineral(economia, pos1)));
+        assertDoesNotThrow(() -> manager.construirNexoMineral(pos1, new NexoMineral(economia, pos1)));
     }
 
     @Test

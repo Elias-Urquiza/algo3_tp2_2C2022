@@ -107,7 +107,7 @@ public class MenuDeConstrucciones implements Observable {
         CrearEstructurasBoton nexoMineral = (Economia economia, Posicion pos) -> {
 
             try {
-                manager.construirEstructuraDeCristales(pos, new NexoMineral(economia, pos));
+                manager.construirNexoMineral(pos, new NexoMineral(economia, pos));
             }catch (RuntimeException e){
                 if("No se puede gastar la cantidad indicada" != e.getMessage())
                     economia.ingresarMineral(50);
@@ -309,8 +309,22 @@ public class MenuDeConstrucciones implements Observable {
         Button passTurn = new Button("Pasar turno");
         passTurn.setId(ButtonIds.PASARTURNO.getName());
         passTurn.setOnAction(actionEvent -> {
-            partidaJugadores.cambiarTurno();
-            manager.pasarTurno();
+            if(partidaJugadores.getJugadorActivo().getRaza() == Raza.PROTOSS ) {
+                partidaJugadores.cambiarTurno();
+                try {
+                    manager.pasarTurnoZerg();
+                } catch (RuntimeException e) {
+                    Popup.display(e.getMessage() + "\n" + ", cerra el juego se termino");
+                }
+            }
+            else{
+                partidaJugadores.cambiarTurno();
+                try {
+                    manager.pasarTurnoProtoss();
+                }catch (RuntimeException e){
+                    Popup.display(e.getMessage() + "\n" + ", cerra el juego se termino");
+                }
+            }
             notificar();
         });
         return passTurn;
