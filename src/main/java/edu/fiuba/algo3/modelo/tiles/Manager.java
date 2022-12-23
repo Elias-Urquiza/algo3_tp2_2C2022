@@ -75,7 +75,7 @@ public class Manager {
     }
 
 
-    public boolean consumirLarva(){
+    private boolean consumirLarva(){
         boolean seExtrajo = false;
 
         for (Criadero c:  criaderos) {
@@ -93,7 +93,7 @@ public class Manager {
         return seExtrajo;
     }
 
-    public boolean reponerLarva(){
+    private boolean reponerLarva(){
         boolean seRepuso = false;
 
         for (Criadero c:  criaderos) {

@@ -72,7 +72,7 @@ public class PantallaTablero {
                             BackgroundPosition.CENTER, new BackgroundSize(botonPiso.getWidth(), botonPiso.getHeight(), true, true, true, false));
                     Background bg = new Background(backgroundImage);
                     botonPiso.setBackground(bg);
-                    handlerBotones.set(o, botonPiso, pos, economias.get(partida.getJugadorActivo().getRaza()));
+                    handlerBotones.setComportamiento(o, botonPiso, pos, economias.get(partida.getJugadorActivo().getRaza()));
                     floorGrid.add(botonPiso, i, j);
                 }
             }

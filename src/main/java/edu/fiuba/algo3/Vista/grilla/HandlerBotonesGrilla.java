@@ -11,8 +11,6 @@ import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
-import edu.fiuba.algo3.modelo.unidades.UnidadProtoss;
-import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
@@ -297,34 +295,8 @@ public class HandlerBotonesGrilla implements Observable {
         buttonMover.setText("Mover unidad a...");
         buttonAtacar.setText("Atacar a...");
 
-        buttonMover.setOnAction(any -> {
-
-            for (int i = 0; i < manager.getMaxX(); i++) {
-                for (int j = 0; j < manager.getMaxY(); j++) {
-
-                    Set<Button> buttons = new HashSet<>();
-                    Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.GRIDBUTTON.getLookupName());
-                    for (Node n : nodeButton) {
-                        buttons.add((Button) n);
-                    }
-
-                    for (Button b : buttons) {
-                        int finalI = i;
-                        int finalJ = j;
-                        b.setOnAction(action -> {
-                            Posicion posicion = new Posicion(finalI, finalJ);
-
-                            try{
-                                manager.moverUnidad(posicion, (Unidad) manager.getAt(pos) );
-                                notificar();
-                            }catch (RuntimeException e){
-                                Popup.display(e.getMessage());
-                            }
-                        });
-                    }
-                }
-            }
-        });
+        setOnActionMoverUnidad(buttonMover, pos);
+        setOnActionAtacarUnidad(buttonAtacar, pos);
 
         LinkedList<Button> b = new LinkedList<>();
         b.add(buttonMover);
@@ -332,13 +304,41 @@ public class HandlerBotonesGrilla implements Observable {
         return b;
     }
 
+    private void setOnActionAtacarUnidad(Button buttonAtacar, Posicion pos) {
+    }
+
+    private void setOnActionMoverUnidad(Button boton, Posicion pos) {
+        boton.setOnAction(any -> {
+            Set<Button> buttons = new HashSet<>();
+            for (int i = 0; i < manager.getMaxX(); i++) {
+                for (int j = 0; j < manager.getMaxY(); j++) {
+                    Set<Node> nodeButton = floorGrid.lookupAll(ButtonIds.GRIDBUTTON.getLookupName());
+                    for (Node n : nodeButton) {
+                        buttons.add((Button) n);
+                    }
+                }
+            }
+            for (Button b : buttons) {
+                b.setOnAction(action -> {
+                    Posicion posicion = new Posicion(GridPane.getColumnIndex(b), GridPane.getRowIndex(b));
+                    try{
+                        manager.moverUnidad(posicion, (Unidad) manager.getAt(pos) );
+                    }catch (RuntimeException e){
+                        Popup.display(e.getMessage());
+                    }
+                    notificar();
+                });
+            }
+        });
+    }
+    
     private GrillaBoton defaultBoton() {
         return (Button botonaso, Economia economia, Posicion pos) -> {};
     }
 
 
     //MAL NOMBRE NO SE ENTIENDE QUE HACE
-    public void set(Object objeto, Button boton, Posicion posicion, Economia economia) {
+    public void setComportamiento(Object objeto, Button boton, Posicion posicion, Economia economia) {
         GrillaBoton comportamiento = botones.getOrDefault(objeto.getClass(), defaultBoton());
         comportamiento.setOnActionDeGrilla(boton, economia, posicion);
     }
