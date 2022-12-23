@@ -53,4 +53,10 @@ public abstract class UnidadZerg extends Unidad {
     public LinkedList<String> getInformacion() {
         return new LinkedList<>();
     }
+
+    @Override
+    public int getVida(){
+        return vida.getVida();
+    }
+
 }

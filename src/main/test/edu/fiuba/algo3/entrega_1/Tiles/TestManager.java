@@ -342,7 +342,7 @@ public class TestManager {
                 RuntimeException.class,
                 () -> manager.construirEstructuraDeCristales(pos2, new NexoMineral(economia, pos2))
         );
-        assertEquals("No hay un mineral en la posicion", exception.getMessage());
+        assertEquals("hay un volcan en esa posicion", exception.getMessage());
     }
 
     @Test

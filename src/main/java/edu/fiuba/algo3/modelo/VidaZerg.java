@@ -42,4 +42,9 @@ public class VidaZerg extends Vida {
         list.add(String.format("VIDA: %s / %s", puntosDeVida, puntosDeVidaMaxima));
         return list;
     }
+
+    public int getVida(){
+        return puntosDeVida;
+    }
+
 }

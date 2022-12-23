@@ -411,4 +411,12 @@ public class FloorManager {
                 throw new RuntimeException("Hay un volcan en esta posicion");
         }
     }
+
+    public boolean cristalNoCoicideConNexoMineral(Posicion pos) {
+        for(ExtraeRecurso ext : construccionQueExtrae ){
+            if(ext.getPosicion().equals(pos))
+                return true;
+        }
+        return false;
+    }
 }

@@ -210,12 +210,13 @@ public class HandlerBotonesGrilla implements Observable {
         button.setText("Poner Zangano");
 
         button.setOnAction(action -> {
-            try{
-                Object extractor = manager.getAt(pos);
-                // Esto deberia ser responsabilidad del modelo
-                if(isNull(extractor) || extractor.getClass() != Extractor.class) throw new RuntimeException("No hay un extractor en esa posicion");
+            Object extractor = manager.getAt(pos);
+            // Esto deberia ser responsabilidad del modelo
+            if(isNull(extractor) || extractor.getClass() != Extractor.class) throw new RuntimeException("No hay un extractor en esa posicion");
 
+            try{
                 ( (Extractor) extractor).agregarZangano(manager);
+
             }catch (RuntimeException e){
                 if("No se puede gastar la cantidad indicada" != e.getMessage()) {
                     economia.ingresarMineral(25);
@@ -339,7 +340,11 @@ public class HandlerBotonesGrilla implements Observable {
                         }
                     } else if (o instanceof Unidad) {
                         try{
+                            int vida1 =  ((Unidad) o).getVida();
                             manager.unidadAtacaUnidad((Unidad) manager.getAt(pos), (Unidad) o);
+                            int vida2 =  ((Unidad) o).getVida();
+                            int vida3 = vida1 - vida2;
+                            Popup.display( "Daño hecho: " + vida3);
                         }catch (RuntimeException e){
                             Popup.display(e.getMessage());
                         }

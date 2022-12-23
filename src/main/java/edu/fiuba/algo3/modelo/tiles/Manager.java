@@ -392,6 +392,7 @@ public class Manager {
         }catch (RuntimeException e){
             return;
         }
+        if (unidadManager.posicionOcupada(pos)) throw new RuntimeException("posicion ocupada por una unidad");
         unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
     }
 
@@ -462,6 +463,10 @@ public class Manager {
             extrae.pasarTurno();
 
         for (Cristales c : cristales) {
+
+            if (floorManager.cristalNoCoicideConNexoMineral(c.getPos()))
+                continue;
+
             LinkedList <Posicion> perimetro;
             LinkedList <Zangano>listaZanganos;
             int numZanganos = 0;
@@ -629,6 +634,12 @@ public class Manager {
     public Object getAt(Posicion pos) {
         //Smell -> 2L82 refactor
 
+        for (ExtraeRecurso ext : construccionQueExtrae) {
+            if (pos.equals(ext.getPosicion())) {
+                return ext;
+            }
+        }
+
         Object o = unidadManager.getAt(pos);
 
         if( o != null )
@@ -643,12 +654,6 @@ public class Manager {
         for (ConstruccionZerg z : construccionesZerg) {
             if (pos.equals(z.getPosicion())) {
                 return z;
-            }
-        }
-
-        for (ExtraeRecurso ext : construccionQueExtrae) {
-            if (pos.equals(ext.getPosicion())) {
-                return ext;
             }
         }
 

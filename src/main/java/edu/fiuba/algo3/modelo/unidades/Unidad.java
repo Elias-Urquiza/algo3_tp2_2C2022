@@ -83,4 +83,7 @@ public abstract class Unidad implements Objetivo, Turno {
         turnos++;
     }
     public abstract LinkedList<String> getInformacion();
+
+    public abstract int getVida();
+
 }

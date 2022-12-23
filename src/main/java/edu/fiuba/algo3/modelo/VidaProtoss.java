@@ -55,4 +55,12 @@ public class VidaProtoss extends Vida {
         list.add(String.format("VIDA: %s / %s", puntosDeVida, puntosDeVidaMaxima));
         return list;
     }
+
+    public int getVida(){
+        if(escudo > 0 )
+            return escudo;
+        else
+            return puntosDeVida;
+    }
+
 }
