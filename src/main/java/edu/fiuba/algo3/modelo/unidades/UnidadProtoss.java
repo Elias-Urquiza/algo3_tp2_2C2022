@@ -6,8 +6,11 @@ import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaProtoss;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class UnidadProtoss extends Unidad {
     private VidaProtoss vida;
@@ -43,11 +46,31 @@ public abstract class UnidadProtoss extends Unidad {
 
     @Override
     public LinkedList<String> getInformacion() {
-        return new LinkedList<>();
+        LinkedList<String> list = new LinkedList<>();
+        list.addAll(vida.getInformacion());
+        list.add(String.format("Unidad de: %s", superficie));
+        if (!ataques.isEmpty()) {
+            list.add(String.format("Puede atacar unidades de %s", getNombreDeAtaques()));
+        }
+        list.add(String.format("Ocupa %s suministros", suministro));
+        list.add(String.format("Turnos en construirse: %s", tiempoDeConstruccion-turnos));
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        for(Ataque a : ataques) {
+            list.addAll(a.getInformacion());
+        }
+        return list;
     }
 
     @Override
     public int getVida(){
         return vida.getVida();
+    }
+
+    private String getNombreDeAtaques() {
+        List<String> list = new ArrayList<>();
+        for (Ataque a : ataques) {
+            list.add(a.getNombre());
+        }
+        return String.join(",", list);
     }
 }

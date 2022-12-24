@@ -508,6 +508,11 @@ public class Manager {
         }
     }
 
+    public void pasarTurno() {
+        pasarTurnoProtoss();
+        pasarTurnoZerg();
+    }
+
     public void pasarTurnoProtoss(){
         for(ConstruccionProtoss protoss :construccionProtoss)
             protoss.pasarTurno();

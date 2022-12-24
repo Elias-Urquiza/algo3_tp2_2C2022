@@ -2,6 +2,8 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 
+import java.util.LinkedList;
+
 public class Tierra implements Ataque, Movimiento {
 
     private static String nombre = "tierra";
@@ -38,6 +40,18 @@ public class Tierra implements Ataque, Movimiento {
     @Override
     public String getNombre() {
         return nombre;
+    }
+
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList<>();
+        list.add(String.format("El ataque por %s tiene\n%s de rango y %s de daño", getNombre(), rango, danio));
+        return list;
     }
 
 }

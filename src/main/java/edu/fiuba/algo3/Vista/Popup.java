@@ -54,10 +54,9 @@ public class Popup {
         pane.setCenter(layout);
 
         VBox infoBox = new VBox(10 * info.size());
-        for(String i : info) {
-            Text campoDeTexto = new Text(i);
-            infoBox.getChildren().addAll(new Text(i));
-        }
+
+        Text campoDeTexto = new Text(String.join("\n", info));
+        infoBox.getChildren().addAll(campoDeTexto);
         pane.setLeft(infoBox);
         Scene scene1= new Scene(pane, 300, 250);
         popupwindow.setScene(scene1);

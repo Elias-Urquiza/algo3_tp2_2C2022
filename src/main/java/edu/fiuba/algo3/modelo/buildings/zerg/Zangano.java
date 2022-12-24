@@ -18,7 +18,6 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
     public Zangano(Economia economiaZerg, Posicion pos) {
         super(25, 25, 0, economiaZerg, pos, 1, 0, new Tierra(0, 0), new Tierra(0, 0), 1);
         this.economia = economiaZerg;
-        ataques.add(new Tierra(0, 0));
         turnos = 0;
     }
 
