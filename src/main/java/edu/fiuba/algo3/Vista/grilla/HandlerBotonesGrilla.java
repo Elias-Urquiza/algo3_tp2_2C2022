@@ -8,11 +8,11 @@ import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.Estructura;
-import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
-import edu.fiuba.algo3.modelo.buildings.protoss.PuertoEstelar;
+import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
+import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
@@ -107,9 +107,87 @@ public class HandlerBotonesGrilla implements Observable {
         mapa.put(Scout.class, accionesUnidad);
         mapa.put(Hidralisco.class, accionesUnidad);
         mapa.put(Devorador.class, accionesUnidad);
+
+        GrillaBoton accionesMutalisco = (Object o, Button botonaso, Economia economia, Posicion pos) -> {
+            botonaso.setOnAction(action -> {
+                Popup.displayAMenu(((Unidad) o).getInformacion(), "MENU DE ACCIONES" ,crearBotonMutalisco(economia, pos));
+            });
+        };
+        mapa.put(Mutalisco.class, accionesMutalisco);
+
     }
 
+    private LinkedList<Button> crearBotonMutalisco(Economia economia, Posicion pos) {
+        LinkedList<Button> b = crearBotonUnidad(economia, pos);
 
+        Button button1 = new Button();
+        Button button2 = new Button();
+
+        button1.setText("evolucionar a Devorador");
+        button2.setText("evolucionar a Guardian");
+
+        setOnActionEvolucionarADevorador(button1, economia, pos);
+        setOnActionEvolucionarAGuardian (button2, economia, pos);
+
+        b.add(button1);
+        b.add(button2);
+
+        return b;
+    }
+
+    private void setOnActionEvolucionarADevorador(Button button1, Economia economia, Posicion pos) {
+        button1.setOnAction(any -> {
+
+            try {
+                manager.evolucionar( (UnidadZerg) manager.getAt(pos), new Devorador(economia, pos));
+
+            }catch (RuntimeException e){
+                Popup.display(e.getMessage() + " SOY YO EL QUE JODE");
+
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
+                    economia.ingresarMineral(150);
+                    economia.ingresarGasVespeno(50);
+                }
+            }
+            notificar();
+            close(button1);
+        });
+    }
+
+    private void setOnActionEvolucionarAGuardian(Button button1, Economia economia, Posicion pos) {
+        button1.setOnAction(any -> {
+
+            try {
+                manager.evolucionar( (UnidadZerg) manager.getAt(pos), new Guardian(economia, pos));
+            }catch (RuntimeException e){
+                Popup.display(e.getMessage());
+
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
+                    economia.ingresarMineral(50);
+                    economia.ingresarGasVespeno(100);
+                }
+            }
+            notificar();
+            close(button1);
+        });
+    }
+
+    private LinkedList<Button> crearBotonUnidad(Economia economia, Posicion pos){
+
+        Button buttonMover = new Button();
+        Button buttonAtacar = new Button();
+
+        buttonMover.setText("Mover unidad a...");
+        buttonAtacar.setText("Atacar a...");
+
+        setOnActionMoverUnidad(buttonMover, pos);
+        setOnActionAtacarUnidad(buttonAtacar, pos);
+
+        LinkedList<Button> b = new LinkedList<>();
+        b.add(buttonMover);
+        b.add(buttonAtacar);
+        return b;
+    }
 
     // CREADORES DE BOTONES ZERG //
     private LinkedList<Button> crearBotonesMenuReserva(Economia economia, Posicion pos) {
@@ -121,7 +199,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearZerg(pos, new Zerling(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(25);
                 }
                 Popup.display(e.getMessage());
@@ -144,7 +222,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearZerg(pos, new Hidralisco(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(75);
                     economia.ingresarGasVespeno(25);
                 }
@@ -167,7 +245,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearZerg(pos, new Mutalisco(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(100);
                     economia.ingresarGasVespeno(100);
                 }
@@ -190,7 +268,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearZerg(pos, new Zangano(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(25);
                 }
                 Popup.display(e.getMessage());
@@ -209,15 +287,16 @@ public class HandlerBotonesGrilla implements Observable {
         button.setText("Poner Zangano");
 
         button.setOnAction(action -> {
-            Object extractor = manager.getAt(pos);
+            Object o = manager.getAt(pos);
             // Esto deberia ser responsabilidad del modelo
-            if(isNull(extractor) || extractor.getClass() != Extractor.class) throw new RuntimeException("No hay un extractor en esa posicion");
+            if(isNull(o) || o.getClass() != Extractor.class) Popup.display("No hay un extractor en esa posicion");
+            Extractor extractor = (Extractor) o;
 
             try{
-                ( (Extractor) extractor).agregarZangano(manager);
+                extractor.agregarZangano(manager);
 
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(25);
                 }
                 Popup.display(e.getMessage());
@@ -245,7 +324,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearProtoss(pos, new Dragon(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(125);
                     economia.ingresarGasVespeno(50);
                 }
@@ -259,7 +338,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearProtoss(pos, new Zealot(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(100);
                 }
                 Popup.display(e.getMessage());
@@ -282,7 +361,7 @@ public class HandlerBotonesGrilla implements Observable {
             try{
                 manager.crearProtoss(pos, new Scout(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(300);
                     economia.ingresarGasVespeno(150);
                 }
@@ -299,23 +378,6 @@ public class HandlerBotonesGrilla implements Observable {
     // FIN CREADORES DE BOTONES PROTOSS //
 
 
-    private LinkedList<Button> crearBotonUnidad(Economia economia, Posicion pos){
-
-        Button buttonMover = new Button();
-        Button buttonAtacar = new Button();
-
-        buttonMover.setText("Mover unidad a...");
-        buttonAtacar.setText("Atacar a...");
-
-        setOnActionMoverUnidad(buttonMover, pos);
-        setOnActionAtacarUnidad(buttonAtacar, pos);
-
-        LinkedList<Button> b = new LinkedList<>();
-        b.add(buttonMover);
-        b.add(buttonAtacar);
-        return b;
-    }
-
     private void setOnActionAtacarUnidad(Button buttonAtacar, Posicion pos) {
         buttonAtacar.setOnAction(any -> {
             Set<Button> buttons = new HashSet<>();
@@ -331,9 +393,13 @@ public class HandlerBotonesGrilla implements Observable {
                 b.setOnAction(action -> {
                     Posicion posicion = new Posicion(GridPane.getColumnIndex(b), GridPane.getRowIndex(b));
                     Object o = manager.getAt(posicion);
-                    if (o instanceof Estructura) {
+                    if (o instanceof Estructura ) {
                         try{
+                            int vida1 =  ((Estructura) o).getVida();
                             manager.unidadAtacaConstruccion((Unidad) manager.getAt(pos), (Estructura) o);
+                            int vida2 =  ((Estructura) o).getVida();
+                            int vida3 = vida1 - vida2;
+                            Popup.display( "Daño hecho: " + vida3);
                         }catch (RuntimeException e){
                             Popup.display(e.getMessage());
                         }
@@ -353,6 +419,12 @@ public class HandlerBotonesGrilla implements Observable {
             }
             close(buttonAtacar);
         });
+    }
+
+    private boolean chequearEdificio(Object o) {
+        return (o.getClass() == Pilon.class ||o.getClass() == Acceso.class ||o.getClass() == Asimilador.class ||o.getClass() == NexoMineral.class ||o.getClass() == PuertoEstelar.class ||
+               o.getClass() == Criadero.class ||o.getClass() == Espiral.class ||o.getClass() == Guarida.class ||o.getClass() == ReservaDeReproduccion.class ||o.getClass() == Extractor.class);
+
     }
 
     private void setOnActionMoverUnidad(Button boton, Posicion pos) {

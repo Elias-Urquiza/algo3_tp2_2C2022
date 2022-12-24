@@ -96,7 +96,7 @@ public class MenuDeConstrucciones implements Observable {
             try {
                 manager.construirPilonEn(pos, new Pilon(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                if("No se puede gastar la cantidad indicada" == e.getMessage())
                     economia.ingresarMineral(100);
 
                 throw e;
@@ -109,7 +109,7 @@ public class MenuDeConstrucciones implements Observable {
             try {
                 manager.construirNexoMineral(pos, new NexoMineral(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                if("No se puede gastar la cantidad indicada" == e.getMessage())
                     economia.ingresarMineral(50);
 
                 throw e;
@@ -122,7 +122,7 @@ public class MenuDeConstrucciones implements Observable {
             try {
                 manager.construirAsimilador(pos, new Asimilador(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage())
+                if("No se puede gastar la cantidad indicada" == e.getMessage())
                     economia.ingresarMineral(100);
                 throw e;
             }
@@ -133,7 +133,7 @@ public class MenuDeConstrucciones implements Observable {
             try {
                 manager.construirProtoss(pos, new Acceso(economia, pos));
             }catch (RuntimeException e) {
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(150);
                 }
                 throw  e;
@@ -145,7 +145,7 @@ public class MenuDeConstrucciones implements Observable {
             try {
                 manager.construirProtoss(pos, new PuertoEstelar(economia, pos));
             }catch (RuntimeException e){
-                if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+                if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                     economia.ingresarMineral(150);
                     economia.ingresarGasVespeno(150);
                 }
@@ -220,7 +220,7 @@ public class MenuDeConstrucciones implements Observable {
         try {
             manager.construirCriaderoEn(pos, new Criadero(economia, pos));
         }catch (RuntimeException e){
-            if("No se puede gastar la cantidad indicada" != e.getMessage())
+            if("No se puede gastar la cantidad indicada" == e.getMessage())
                 economia.ingresarMineral(200);
 
             throw e;
@@ -233,7 +233,7 @@ public class MenuDeConstrucciones implements Observable {
         try {
             manager.construirExtractor(pos, new Extractor(economia, pos));
         }catch (RuntimeException e){
-            if("No se puede gastar la cantidad indicada" != e.getMessage())
+            if("No se puede gastar la cantidad indicada" == e.getMessage())
                 economia.ingresarMineral(100);
 
             throw e;
@@ -246,7 +246,7 @@ public class MenuDeConstrucciones implements Observable {
         try {
             manager.construirZerg(pos, new ReservaDeReproduccion(economia, pos));
         }catch (RuntimeException e){
-            if("No se puede gastar la cantidad indicada" != e.getMessage())
+            if("No se puede gastar la cantidad indicada" == e.getMessage())
                 economia.ingresarMineral(150);
             throw e;
         }
@@ -257,7 +257,7 @@ public class MenuDeConstrucciones implements Observable {
         try {
             manager.construirZerg(pos, new Guarida(economia, pos));
         }catch (RuntimeException e) {
-            if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+            if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                 economia.ingresarMineral(200);
                 economia.ingresarGasVespeno(100);
             }
@@ -270,7 +270,7 @@ public class MenuDeConstrucciones implements Observable {
         try {
             manager.construirZerg(pos, new Espiral(economia, pos));
         }catch (RuntimeException e){
-            if("No se puede gastar la cantidad indicada" != e.getMessage()) {
+            if("No se puede gastar la cantidad indicada" == e.getMessage()) {
                 economia.ingresarMineral(150);
                 economia.ingresarGasVespeno(100);
             }

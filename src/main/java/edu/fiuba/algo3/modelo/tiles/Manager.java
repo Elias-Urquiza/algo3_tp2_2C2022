@@ -219,6 +219,15 @@ public class Manager {
             throw new RuntimeException(e.getMessage());
         }
 
+        Recurso recurso = null;
+
+        for(Recurso r : volcanes){
+            if(r.getPos().equals(pos))
+                recurso = r;
+        }
+
+        extrae.setRecurso(recurso);
+
         extractores.add((Extractor) extrae);
     }
 
@@ -243,7 +252,8 @@ public class Manager {
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un volcan en la posicion");
 
-        asimiladores.add((Asimilador)  extrae);
+        if(extrae.getClass() != Extractor.class)//solucion de ultimo momento
+            asimiladores.add((Asimilador)  extrae);
     }
 
     public LinkedList<TileVacia> getTilesVacias(){

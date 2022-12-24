@@ -80,8 +80,10 @@ public class UnidadManager  {
             }
         }
 
-        if(encontrado)
+        if(encontrado) {
             lista.remove(zergAEliminar);
+            lista.add(unidadEvolucionada);
+        }
         else
             throw new RuntimeException("La unidad que se desea evolucionar no existe");
     }

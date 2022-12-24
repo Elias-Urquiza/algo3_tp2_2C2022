@@ -48,6 +48,11 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
         this.turnos = 0;
     }
 
+    @Override
+    public int getVida() {
+        return vida.getVida();
+    }
+
     public int curar() {
         return vida.curar(CURACION_ZERG);
     }
