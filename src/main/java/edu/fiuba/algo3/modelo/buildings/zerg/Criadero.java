@@ -82,6 +82,13 @@ public class Criadero extends ConstruccionZerg implements Turno, Construccion {
     public void usar() {
 
     }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = super.getInformacion();
+        list.add(String.format("Numero de larvas: %s", numeroDeLarvas));
+        return list;
+    }
     /*
           - 0 0 0 0 0 0 0 0
           - 0 0 0 0 0 0 0 0

@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.unidades.Tierra;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.net.ssl.SSLContextSpi;
@@ -47,12 +48,9 @@ public class TestScout {
     public void recibeDanioSoloAereo(){
         Scout unidad = new Scout(new MockEconomia(), new Posicion(1,1));
         Tierra tierra = new Tierra(20, 100);
-        int esperado = 0;
         for (int i = 0; i < 9; i++)
             unidad.pasarTurno();
-        int resultado = unidad.recibirDanio(20, tierra, new Posicion(3, 3));
-
-        assertEquals(esperado, resultado);
+        Assertions.assertThrows(RuntimeException.class, () -> unidad.recibirDanio(20, tierra, new Posicion(3, 3)));
     }
 
 }

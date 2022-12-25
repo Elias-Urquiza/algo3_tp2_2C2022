@@ -1,9 +1,6 @@
 package edu.fiuba.algo3.modelo.tiles;
 
-import edu.fiuba.algo3.modelo.Economia;
-import edu.fiuba.algo3.modelo.ExtraeRecurso;
-import edu.fiuba.algo3.modelo.Posicion;
-import edu.fiuba.algo3.modelo.Suministros;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
 import edu.fiuba.algo3.modelo.buildings.ConstruccionZerg;
 import edu.fiuba.algo3.modelo.buildings.Estructura;
@@ -11,6 +8,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.unidades.*;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,7 +30,7 @@ public class Manager {
     LinkedList<Vacio> tilesDeVacios;
     LinkedList<Pilon> pilones;
     HashMap<Raza, Suministros> suminstrosHashMap;
-
+    HashMap<Raza, Stats> statistics;
     LinkedList<Extractor> extractores;
     LinkedList<NexoMineral> nexos;
     LinkedList<Asimilador> asimiladores;
@@ -75,6 +73,10 @@ public class Manager {
             }
         }
 
+        HashMap<Raza, Stats> statsHashMap = new HashMap<>();
+        statsHashMap.put(Raza.ZERG, new Stats());
+        statsHashMap.put(Raza.PROTOSS, new Stats());
+        this.statistics = statsHashMap;
         crearBases();
     }
 
@@ -147,6 +149,7 @@ public class Manager {
         }
         criaderos.add(criadero);
         suminstrosHashMap.get(Raza.ZERG).aumentarMaxSuminstros(5);
+        statistics.get(Raza.ZERG).construyoConstruccion(criadero);
     }
 
     public void construirPilonEn(Posicion pos, Pilon pilon) {
@@ -175,6 +178,8 @@ public class Manager {
             if(size == construccionProtoss.size())
                 throw new RuntimeException("No se puede construir en esta posicion");
         }
+        if(pilones.size() > 0)
+            statistics.get(Raza.PROTOSS).construyoConstruccion(pilon);
         pilones.add(pilon);
         suminstrosHashMap.get(Raza.PROTOSS).aumentarMaxSuminstros(5);
         idPilones  ++;
@@ -203,7 +208,7 @@ public class Manager {
 
         if(size == construccionQueExtrae.size())
             throw new RuntimeException("No hay un mineral en la posicion");
-
+        statistics.get(Raza.PROTOSS).construyoConstruccion(extrae);
         nexos.add( (NexoMineral) extrae);
     }
 
@@ -229,6 +234,7 @@ public class Manager {
         extrae.setRecurso(recurso);
 
         extractores.add((Extractor) extrae);
+        statistics.get(Raza.ZERG).construyoConstruccion(extrae);
     }
 
     public void construirAsimilador(Posicion pos, ExtraeRecurso extrae){
@@ -254,6 +260,7 @@ public class Manager {
 
         if(extrae.getClass() != Extractor.class)//solucion de ultimo momento
             asimiladores.add((Asimilador)  extrae);
+            statistics.get(Raza.ZERG).construyoConstruccion(extrae);
     }
 
     public LinkedList<TileVacia> getTilesVacias(){
@@ -289,6 +296,7 @@ public class Manager {
         }
         if(size == construccionProtoss.size())
             throw new RuntimeException("Este piso no esta energizado");
+        statistics.get(Raza.PROTOSS).construyoConstruccion(protoss);
     }
 
     public void destruirProtoss(Posicion pos) {
@@ -345,6 +353,7 @@ public class Manager {
             reponerLarva();
             throw new RuntimeException("Este piso no tiene moho");
         }
+        statistics.get(Raza.ZERG).construyoConstruccion(zerg);
     }
 
     public void crearZerg(Posicion posConstruccion, Unidad unidad){
@@ -353,6 +362,7 @@ public class Manager {
 
         try{
             crearUnidad(posConstruccion, unidad);
+            statistics.get(Raza.ZERG).construyoUnidad(unidad);
         }catch (RuntimeException e){
             reponerLarva(); // volvemos a poner a larva en su lugar en caso de que no se haya podido construir el edificio.
             throw new RuntimeException(e.getMessage());
@@ -361,6 +371,7 @@ public class Manager {
 
     public void crearProtoss(Posicion posConstruccion, Unidad unidad){
         crearUnidad( posConstruccion, unidad);
+        statistics.get(Raza.PROTOSS).construyoUnidad(unidad);
     }
 
     public void crearUnidad(Posicion posConstruccion, Unidad unidad){
@@ -415,13 +426,17 @@ public class Manager {
         unidadManager.moverUnidad(unidad, pos, (floorManager.conVacio(pos, maxX, maxY) ));
     }
 
-    public void unidadAtacaUnidad(Unidad unaUnidad, Unidad unObjetivo){
-        unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
+    public int unidadAtacaUnidad(Raza raza, Unidad unaUnidad, Unidad unObjetivo){
+        int dmg = unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
+        statistics.get(raza).realizoDanio(dmg);
+        return dmg;
     }
 
-    public void unidadAtacaConstruccion(Unidad unaUnidad, Estructura unaEstructura){
-        unidadManager.ejecutarComandoDeDaniar(unaUnidad, (Objetivo) unaEstructura);
+    public int unidadAtacaConstruccion(Raza raza, Unidad unaUnidad, Estructura unaEstructura){
+        int dmg = unidadManager.ejecutarComandoDeDaniar(unaUnidad, (Objetivo) unaEstructura);
         unaEstructura.destruir(construccionesZerg, construccionProtoss, construccionQueExtrae ,floorManager);
+        statistics.get(raza).realizoDanio(dmg);
+        return dmg;
     }
 
     public void agregarCristales(Posicion pos) {
@@ -494,18 +509,10 @@ public class Manager {
             if(listaZanganos.size() > 0) {
                 for (Zangano z : listaZanganos)
                     z.extraerMineral(c);
-                System.out.format("la pos del cristal es: %s", c.getPos());
             }
         }
 
         unidadManager.hacerPasarDeTurnoZerg();
-
-        try {
-            floorManager.terminarJuegoZerg();
-            floorManager.terminarJuegoProtoss();
-        }catch (RuntimeException e){
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     public void pasarTurno() {
@@ -524,7 +531,9 @@ public class Manager {
             next.pasarTurno();
 
         unidadManager.hacerPasarDeTurnoProtoss();
+    }
 
+    public void checkForWinning() {
         try {
             floorManager.terminarJuegoZerg();
             floorManager.terminarJuegoProtoss();
@@ -740,13 +749,16 @@ public class Manager {
         return null;
     }
 
-    public Object getBuildingAt(Posicion pos) {
-        return null;
+    public Suministros getSuministrosFor(Raza raza) {
+        return suminstrosHashMap.get(raza);
     }
 
     public int getMaxX(){ return maxX;}
 
     public int getMaxY(){ return maxY;}
 
+    public LinkedList<String> getStatsFor(Raza raza) {
+        return statistics.get(raza).getInformacion();
+    }
 
 }

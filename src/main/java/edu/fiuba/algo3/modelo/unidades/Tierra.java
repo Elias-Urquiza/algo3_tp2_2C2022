@@ -28,8 +28,13 @@ public class Tierra implements Ataque, Movimiento {
     }
 
     @Override
-    public boolean equals(Ataque ataque) {
+    public boolean es(Ataque ataque) {
         return nombre.equals(ataque.getNombre());
+    }
+
+    @Override
+    public boolean es(Movimiento mov) {
+        return nombre.equals(mov.getNombre());
     }
 
     @Override

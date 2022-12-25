@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
@@ -92,11 +93,20 @@ public class GameController {
     }
 
     public void ponerJuego(LinkedList<Observer> listaDeObservers){
-        BorderPane pantallaJuego = new PantallaTablero(manager).crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaY, listaDeObservers);
+        BorderPane pantallaJuego = new PantallaTablero(manager).crearPantalla(manager, players, economias, dimensionX, dimensionY, pantallaX, pantallaX, listaDeObservers);
         Scene scene = new Scene(pantallaJuego, pantallaX, pantallaY);
 
         pantalla.setScene(scene);
         pantalla.show();
+        try {
+            manager.checkForWinning();
+        } catch (RuntimeException e) {
+            StackPane pantallaGanador = new PantallaDeGanador().crearPantalla(pantalla, pantallaX, pantallaX, e.getMessage(),
+                    manager.getStatsFor(players.getJugadorActivo().getRaza()));
+            Scene sceneWinner = new Scene(pantallaGanador, pantallaX, pantallaY);
+            pantalla.setScene(sceneWinner);
+            pantalla.show();
+        }
     }
 
     private boolean checkForSelectionPantallaSeleccion(Pane pane) {

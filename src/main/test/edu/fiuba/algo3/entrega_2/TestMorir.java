@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.protoss.Pilon;
 import edu.fiuba.algo3.modelo.buildings.zerg.Criadero;
 import edu.fiuba.algo3.modelo.buildings.zerg.ReservaDeReproduccion;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.tiles.Volcan;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
@@ -60,8 +61,8 @@ public class TestMorir {
         manager.moverUnidad(new Posicion(30, 30), zerling);
         manager.moverUnidad(new Posicion(30, 31), dragon);
 
-        manager.unidadAtacaUnidad(dragon, zerling);
-        manager.unidadAtacaUnidad(dragon, zerling);
+        manager.unidadAtacaUnidad(Raza.ZERG, dragon, zerling);
+        manager.unidadAtacaUnidad(Raza.ZERG, dragon, zerling);
 
         assertDoesNotThrow(() -> manager.construirZerg(new Posicion(30, 30), new ReservaDeReproduccion(economia, new Posicion(30, 30))));
     }

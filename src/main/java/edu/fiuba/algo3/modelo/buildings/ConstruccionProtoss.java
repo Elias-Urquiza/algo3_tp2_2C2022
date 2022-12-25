@@ -19,7 +19,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
-    protected Tierra superficie;
+    protected Ataque superficie;
     protected int turnos;
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
@@ -48,10 +48,15 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
-       if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
-           return vida.daniar(danio);
-       }
-       return 0;
+        boolean atacable = tipoDeAtaque.es(superficie);
+        boolean enRango = tipoDeAtaque.inRange(pos, posicionAtacante);
+        if (!atacable) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque sus tipos no son compatibles.");
+        }
+        if (!enRango) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque esta muy lejos.");
+        }
+        return vida.daniar(danio);
     }
 
     @Override
@@ -133,6 +138,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
         }
         list.add(energizado ? "Edificio energizado!" : "Edificio sin energia");
         list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        list.add(String.format("Se cura %s puntos por turno", CURACION_PROTOSS));
         return list;
     }
 

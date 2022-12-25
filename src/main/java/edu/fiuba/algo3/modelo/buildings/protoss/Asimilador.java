@@ -58,7 +58,9 @@ public class Asimilador extends ConstruccionProtoss implements Turno, Construcci
 
     @Override
     public void extraer() {
-        economia.ingresarGasVespeno(recurso.extraer(GAS_POR_TURNO));
+        try {
+            economia.ingresarGasVespeno(recurso.extraer(GAS_POR_TURNO));
+        } catch (RuntimeException ignored) {}
     }
 
     @Override

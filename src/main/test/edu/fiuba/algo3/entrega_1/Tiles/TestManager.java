@@ -678,13 +678,7 @@ public class TestManager {
     @Test
     public void llenarElLimiteDeUnidadesEIntentarConstruirMasUnidadesTiraError() {
         // Setup to reach 200 max limit -> if limit is changed, test will fail.
-        for(int i = 5; i < 15; i++) {
-            for(int j = 5; j < 10; j++) {
-                Posicion pos = new Posicion(i, j);
-                manager.crearProtoss(pos, new Scout(economia, pos));
-            }
-        }
-        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
+        manager.crearProtoss(new Posicion(18, 17), new Scout(economia, new Posicion(18, 17)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
@@ -696,14 +690,10 @@ public class TestManager {
     public void noLlenarElLimiteConUnPilonYDestruirElPilonYaNoTeDejaConstruir() {
         // Setup to reach 200 max limit -> if limit is changed, test will fail.
         manager.construirPilonEn(new Posicion(0,0), new Pilon(economia, new Posicion(0,0)));
-        for(int i = 5; i < 15; i++) {
-            for(int j = 5; j < 10; j++) {
-                Posicion pos = new Posicion(i, j);
-                manager.crearProtoss(pos, new Scout(economia, pos));
-            }
-        }
+
+        Posicion pos = new Posicion(1, 1);
+        manager.crearProtoss(pos, new Scout(economia, pos));
         manager.destruirProtoss(new Posicion(0, 0));
-        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))

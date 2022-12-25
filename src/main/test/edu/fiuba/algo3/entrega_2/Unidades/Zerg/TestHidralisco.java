@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.zerg.Hidralisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,14 +50,9 @@ public class TestHidralisco {
     public void recibeDanioSoloTerrestre(){
         Hidralisco hidralisco = new Hidralisco(new MockEconomia(), new Posicion(1,1));
         Aire aire = new Aire(20, 100);
-        int esperado = 0;
         for (int i = 0; i < 4; i++)
-            hidralisco.pasarTurno();
-
-
-        int resultado = hidralisco.recibirDanio(20, aire, new Posicion(3, 3));
-
-        assertEquals(esperado, resultado);
+        hidralisco.pasarTurno();
+        Assertions.assertThrows(RuntimeException.class, () -> hidralisco.recibirDanio(20, aire, new Posicion(3, 3)));
     }
 
 }

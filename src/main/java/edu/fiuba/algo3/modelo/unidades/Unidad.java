@@ -7,8 +7,10 @@ import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.Turno;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public abstract class Unidad implements Objetivo, Turno {
 
@@ -50,10 +52,20 @@ public abstract class Unidad implements Objetivo, Turno {
 
         if(turnos < tiempoDeConstruccion)
             throw new RuntimeException("Unidad todavia en preparacion");
-
+        int errores = 0;
+        List<RuntimeException> exceptions = new ArrayList<>();
         int danio = 0;
         for (Ataque ataque : ataques) {
-            danio += ataque.atacar(objetivo, pos);
+            try {
+                danio += ataque.atacar(objetivo, pos);
+            } catch (RuntimeException e) {
+                errores++;
+                exceptions.add(e);
+            }
+        }
+        if (errores == ataques.size()) {
+            // Si entra aca es por rango -> si hubieran mas ataques esto no funciona. U otras restricciones.
+            throw new RuntimeException("Fuera de rango, acerca tu unidad!");
         }
         return danio;
     }

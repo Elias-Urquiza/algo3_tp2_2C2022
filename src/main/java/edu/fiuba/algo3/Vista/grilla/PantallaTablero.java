@@ -33,19 +33,20 @@ public class PantallaTablero {
         double gridSizeX = pantallax/1.5;
         double gridSizeY = pantallay/1.5;
 
-        this.handlerBotones = new HandlerBotonesGrilla(manager, listaDeObservers, floorGrid);
+        this.handlerBotones = new HandlerBotonesGrilla(manager, listaDeObservers, floorGrid, partida);
         floorGrid.setPrefSize(gridSizeX, gridSizeY);
         this.partida = partida;
         this.economias = economias;
 
         populateFloorGrid(manager, tablerox, tableroy, gridSizeX, gridSizeY);
 
-        Informacion cajaAbajo = new Informacion(partida, economias);
+        Informacion cajaAbajo = new Informacion(manager, partida, economias);
 
         VBox cajaDeLaDerecha = new MenuDeConstrucciones(manager, floorGrid, partida, economias, listaDeObservers, handlerBotones).getMenu();
         borderPane.setRight(cajaDeLaDerecha);
         borderPane.setCenter(floorGrid);
         borderPane.setBottom(cajaAbajo);
+
         return borderPane;
     }
 

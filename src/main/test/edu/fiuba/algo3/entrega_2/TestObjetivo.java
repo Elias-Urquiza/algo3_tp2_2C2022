@@ -12,6 +12,7 @@ import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class TestObjetivo {
@@ -54,24 +55,17 @@ public class TestObjetivo {
 
     @Test
     public void unAtaqueTerrestreAUnaUnidadAereaNoSeRealiza(){
-        int esperado = 0;
         Ataque ataque= new Tierra(20,muchoRango);
         Mutalisco bicho = new Mutalisco(new MockEconomia(), new Posicion(1,1));
 
-        int resultado = bicho.recibirDanio(20, ataque, posicionEnRangoParaTestear);
-
-        assertEquals(esperado, resultado);
+        assertThrows(RuntimeException.class, () -> bicho.recibirDanio(20, ataque, posicionEnRangoParaTestear));
     }
 
     @Test
     public void unAtaqueAereoAUnaUnidadTerrestreNoSeRealiza(){
-        int esperado = 0;
         Ataque ataque= new Aire(20, muchoRango);
         Dragon bicho = new Dragon(new MockEconomia(), new Posicion(1,1));
-
-        int resultado = bicho.recibirDanio(20, ataque, posicionEnRangoParaTestear);
-
-        assertEquals(esperado, resultado);
+        assertThrows(RuntimeException.class, () -> bicho.recibirDanio(20, ataque, posicionEnRangoParaTestear));
     }
 
     @Test

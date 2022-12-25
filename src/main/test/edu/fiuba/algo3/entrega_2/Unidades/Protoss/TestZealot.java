@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
 import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,11 +34,8 @@ public class TestZealot {
     public void recibeDanioSoloTerrestre(){
         Zealot unidad = new Zealot(new MockEconomia(), new Posicion(1,1));
         Aire aire = new Aire(20, 100);
-        int esperado = 0;
         for (int i = 0; i < 4; i++)
             unidad.pasarTurno();
-        int resultado = unidad.recibirDanio(20, aire, new Posicion(3, 3));
-
-        assertEquals(esperado, resultado);
+        Assertions.assertThrows(RuntimeException.class,() -> unidad.recibirDanio(20, aire, new Posicion(3, 3)));
     }
 }

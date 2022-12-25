@@ -238,7 +238,7 @@ public class TestUnidad {
     @Test
     public void unaUnidadParaLaCualPasoSuTiempoDeCreacionPuedeAtacar(){
         Posicion pos0 = new Posicion(3,3);
-        Posicion pos1 = new Posicion(4,4);
+        Posicion pos1 = new Posicion(3,4);
 
         Unidad bicho1 = new Zerling(economia, pos0);
 

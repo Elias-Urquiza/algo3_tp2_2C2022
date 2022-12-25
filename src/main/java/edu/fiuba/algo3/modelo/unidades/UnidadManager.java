@@ -2,8 +2,8 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
-import edu.fiuba.algo3.modelo.buildings.zerg.Zangano;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,10 +25,10 @@ public class UnidadManager  {
         unidad.agregate(unidades, suministros);// se filtra por proto-zerg.
     }
 
-    public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
+    public int ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
         int dmg = agresor.atacar(victima);
         victima.morirUnidad(unidades);
-//        throw new RuntimeException(String.valueOf(dmg));
+        return dmg;
     }
 
     public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){

@@ -15,6 +15,24 @@ import java.util.LinkedList;
 
 public class Popup {
 
+    public static void displayEndgame(LinkedList<String> info, String text) {
+        Stage popupwindow = new Stage();
+        popupwindow.initModality(Modality.APPLICATION_MODAL);
+        popupwindow.setTitle("Fin del juego");
+        Label label1= new Label(text);
+        Button button1= new Button("Fin");
+        button1.setOnAction(e -> System.exit(200));
+        VBox layout= new VBox(10);
+        layout.getChildren().addAll(label1, button1);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene1= new Scene(layout, 300, 250);
+        for(String s : info) {
+            System.out.println(s);
+        }
+        popupwindow.setScene(scene1);
+        popupwindow.showAndWait();
+    }
+
     public static void display(String text)
     {
         Stage popupwindow = new Stage();

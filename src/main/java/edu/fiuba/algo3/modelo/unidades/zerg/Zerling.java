@@ -14,6 +14,6 @@ public class Zerling extends UnidadZerg {
 
         super(35, 25, 0, economia, pos, 2, 1, new Tierra(0, 0), new Tierra(0, 0),
                 1);
-        ataques.add(new Tierra(150, 1));
+        ataques.add(new Tierra(4, 1));
     }
 }

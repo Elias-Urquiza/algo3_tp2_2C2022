@@ -3,15 +3,19 @@ package edu.fiuba.algo3.modelo;
 public class Suministros {
     int maxSuministros;
     int suministros;
+    static int MAXIMO_200 = 200;
 
     public Suministros() {
-        this.maxSuministros = 200;
+        this.maxSuministros = 0;
         this.suministros = 0;
     }
 
     public int aumentarMaxSuminstros(int aumento) {
         //Returns after max suministros
-        this.maxSuministros += aumento;
+        int aAumentar = aumento + maxSuministros;
+        if (aAumentar < MAXIMO_200) {
+            this.maxSuministros += aumento;
+        }
         return maxSuministros;
     }
 
@@ -33,6 +37,14 @@ public class Suministros {
             return 0;
         }
         maxSuministros -= disminuye;
+        return maxSuministros;
+    }
+
+    public int getSuministros() {
+        return suministros;
+    }
+
+    public int getMaxSuministros() {
         return maxSuministros;
     }
 }

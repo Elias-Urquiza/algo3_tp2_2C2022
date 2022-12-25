@@ -59,10 +59,15 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
-        if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
-            return vida.daniar(danio);
+        boolean atacable = tipoDeAtaque.es(superficie);
+        boolean enRango = tipoDeAtaque.inRange(pos, posicionAtacante);
+        if (!atacable) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque sus tipos no son compatibles.");
         }
-        return 0;
+        if (!enRango) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque esta muy lejos.");
+        }
+        return vida.daniar(danio);
     }
 
     @Override
@@ -128,6 +133,7 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
             list.add(String.format("Turnos hasta activarse: %s", tiempoDeConstruccion-turnos));
         }
         list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        list.add(String.format("Se cura %s puntos por turno", CURACION_ZERG));
         return list;
     }
 

@@ -1,8 +1,10 @@
 package edu.fiuba.algo3.Vista;
 
 import edu.fiuba.algo3.modelo.Economia;
+import edu.fiuba.algo3.modelo.Suministros;
 import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
+import edu.fiuba.algo3.modelo.tiles.Manager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,10 +20,12 @@ public class Informacion extends HBox {
 
     PartidaJugadores partida;
     HashMap<Raza, Economia> economias;
+    Manager manager;
 
-    public Informacion(PartidaJugadores partida, HashMap<Raza, Economia> economias) {
+    public Informacion(Manager manager, PartidaJugadores partida, HashMap<Raza, Economia> economias) {
         this.economias = economias;
         this.partida = partida;
+        this.manager = manager;
         setDefaultInformation();
         setAlignment(Pos.CENTER);
         this.setSpacing(10);
@@ -49,8 +53,8 @@ public class Informacion extends HBox {
         color.setRadius(30);
         turno.setFont(new Font(30));
         Label resources = getMoneyLabel();
-        resources.setFont(new Font(30));
-        this.getChildren().addAll(turno, color, resources);
+        Label suministros = getSuministrosLabel();
+        this.getChildren().addAll(turno, color, resources, suministros);
     }
 
     private Label getMoneyLabel() {
@@ -58,6 +62,15 @@ public class Informacion extends HBox {
         Label label = new Label();
 
         label.setText(String.format("Mineral disponible: %s\nGas vespeno disponible: %s", econToShow.getMineral(), econToShow.getGasVespeno()));
+        label.setFont(new Font(30));
+        return label;
+    }
+
+    private Label getSuministrosLabel() {
+        Suministros sum = manager.getSuministrosFor(partida.getJugadorActivo().getRaza());
+        Label label = new Label();
+        label.setText(String.format("Suministros: %s / %s", sum.getSuministros(), sum.getMaxSuministros()));
+        label.setFont(new Font(30));
         return label;
     }
 }

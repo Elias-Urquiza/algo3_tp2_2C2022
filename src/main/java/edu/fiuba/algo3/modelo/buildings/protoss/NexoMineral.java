@@ -52,9 +52,11 @@ public class NexoMineral extends ConstruccionProtoss implements Turno, Construcc
         energizado = true;
     }
 
-    @Override // no hace nada que onda
+    @Override
     public void extraer() {
-        economia.ingresarMineral(recurso.extraer(MINERAL_POR_TURNO));
+        try {
+            economia.ingresarMineral(recurso.extraer(MINERAL_POR_TURNO));
+        } catch (RuntimeException ignored) {}
     }
 
     @Override

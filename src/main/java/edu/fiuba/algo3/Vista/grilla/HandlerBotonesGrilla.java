@@ -4,15 +4,16 @@ import edu.fiuba.algo3.Vista.ButtonIds;
 import edu.fiuba.algo3.Vista.Observable;
 import edu.fiuba.algo3.Vista.Observer;
 import edu.fiuba.algo3.Vista.Popup;
-import edu.fiuba.algo3.modelo.Construccion;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.buildings.protoss.*;
 import edu.fiuba.algo3.modelo.buildings.zerg.*;
+import edu.fiuba.algo3.modelo.jugadores.PartidaJugadores;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.Unidad;
 import edu.fiuba.algo3.modelo.unidades.UnidadZerg;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
@@ -32,14 +33,16 @@ public class HandlerBotonesGrilla implements Observable {
     Manager manager;
     GridPane floorGrid;
     LinkedList<Observer> observers;
+    PartidaJugadores partida;
 
 
-    public HandlerBotonesGrilla(Manager manager, LinkedList<Observer> observers, GridPane gridPane) {
+    public HandlerBotonesGrilla(Manager manager, LinkedList<Observer> observers, GridPane gridPane, PartidaJugadores partida) {
         botones = new HashMap<>() ;
         this.manager   = manager  ;
         this.observers = observers;
         handleBotonesGrid(botones);
         this.floorGrid = gridPane ;
+        this.partida = partida;
     }
 
     public void handleBotonesGrid(HashMap mapa) {
@@ -394,25 +397,23 @@ public class HandlerBotonesGrilla implements Observable {
                     Posicion posicion = new Posicion(GridPane.getColumnIndex(b), GridPane.getRowIndex(b));
                     Object o = manager.getAt(posicion);
                     if (o instanceof Estructura ) {
-                        try{
-                            int vida1 =  ((Estructura) o).getVida();
-                            manager.unidadAtacaConstruccion((Unidad) manager.getAt(pos), (Estructura) o);
-                            int vida2 =  ((Estructura) o).getVida();
-                            int vida3 = vida1 - vida2;
-                            Popup.display( "Daño hecho: " + vida3);
-                        }catch (RuntimeException e){
+
+                        try {
+                            int dmg = manager.unidadAtacaConstruccion(partida.getJugadorActivo().getRaza(), (Unidad) manager.getAt(pos), (Estructura) o);
+                            Popup.display(String.format("Daño hecho: %s", dmg));
+                        } catch (RuntimeException e){
                             Popup.display(e.getMessage());
                         }
+
                     } else if (o instanceof Unidad) {
-                        try{
-                            int vida1 =  ((Unidad) o).getVida();
-                            manager.unidadAtacaUnidad((Unidad) manager.getAt(pos), (Unidad) o);
-                            int vida2 =  ((Unidad) o).getVida();
-                            int vida3 = vida1 - vida2;
-                            Popup.display( "Daño hecho: " + vida3);
-                        }catch (RuntimeException e){
+
+                        try {
+                            int dmg = manager.unidadAtacaUnidad(partida.getJugadorActivo().getRaza(), (Unidad) manager.getAt(pos), (Unidad) o);
+                            Popup.display(String.format("Daño hecho: %s", dmg));
+                        } catch (RuntimeException e){
                             Popup.display(e.getMessage());
                         }
+
                     }
                     notificar();
                 });

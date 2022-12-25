@@ -16,13 +16,12 @@ public class VidaProtoss extends Vida {
     public int daniar(int danio) {
         int dmg = escudo - danio;
         if (dmg < 0) {
-            int danioVida = daniarVida(danio - escudo);
+            daniarVida(danio - escudo);
             escudo = 0;
-            return danioVida;
         } else {
             escudo -= danio;
-            return 0;
         }
+        return danio;
     }
 
     private int daniarVida(int danio) {
@@ -57,10 +56,11 @@ public class VidaProtoss extends Vida {
     }
 
     public int getVida(){
-        if(escudo > 0 )
-            return escudo;
-        else
-            return puntosDeVida;
+        return puntosDeVida;
+    }
+
+    public int getEscudo() {
+        return escudo;
     }
 
 }

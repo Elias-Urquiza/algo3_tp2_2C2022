@@ -20,8 +20,13 @@ public class Aire implements Ataque, Movimiento {
     }
 
     @Override
-    public boolean equals(Ataque ataque){
+    public boolean es(Ataque ataque){
         return nombre.equals(ataque.getNombre());
+    }
+
+    @Override
+    public boolean es(Movimiento movimiento){
+        return nombre.equals(movimiento.getNombre());
     }
 
     @Override
