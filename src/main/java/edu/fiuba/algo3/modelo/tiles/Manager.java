@@ -438,6 +438,7 @@ public class Manager {
     public int unidadAtacaUnidad(Raza raza, Unidad unaUnidad, Unidad unObjetivo){
         int dmg = unidadManager.ejecutarComandoDeDaniar(unaUnidad, unObjetivo);
         statistics.get(raza).realizoDanio(dmg);
+        checkForWinning();
         return dmg;
     }
 
@@ -445,6 +446,7 @@ public class Manager {
         int dmg = unidadManager.ejecutarComandoDeDaniar(unaUnidad, (Objetivo) unaEstructura);
         unaEstructura.destruir(construccionesZerg, construccionProtoss, construccionQueExtrae ,floorManager);
         statistics.get(raza).realizoDanio(dmg);
+        checkForWinning();
         return dmg;
     }
 

@@ -402,6 +402,11 @@ public class HandlerBotonesGrilla implements Observable {
                             int dmg = manager.unidadAtacaConstruccion(partida.getJugadorActivo().getRaza(), (Unidad) manager.getAt(pos), (Estructura) o);
                             Popup.display(String.format("Daño hecho: %s", dmg));
                         } catch (RuntimeException e){
+                            //desperate times require desperate measures
+                            if (e.getMessage() == "Los Protoss han ganado el juego" ||  e.getMessage() == "Los Zerg han ganado el juego") {
+                                notificar();
+                                return;
+                            }
                             Popup.display(e.getMessage());
                         }
 
@@ -411,6 +416,11 @@ public class HandlerBotonesGrilla implements Observable {
                             int dmg = manager.unidadAtacaUnidad(partida.getJugadorActivo().getRaza(), (Unidad) manager.getAt(pos), (Unidad) o);
                             Popup.display(String.format("Daño hecho: %s", dmg));
                         } catch (RuntimeException e){
+                            // :/
+                            if (e.getMessage() == "Los Protoss han ganado el juego" ||  e.getMessage() == "Los Zerg han ganado el juego") {
+                                notificar();
+                                return;
+                            }
                             Popup.display(e.getMessage());
                         }
 

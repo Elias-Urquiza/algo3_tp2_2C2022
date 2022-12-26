@@ -728,11 +728,9 @@ public class TestManager {
 
 
         for(int i = 0; i<59; i++)
-            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
-        for(int i = 0; i<1; i++)
-            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
+            manager.unidadAtacaConstruccion(Raza.ZERG, hidralisco, manager.getConstruccionProtoss().get(0));
 
-        RuntimeException exception = assertThrows( RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows( RuntimeException.class, () ->   manager.unidadAtacaConstruccion(Raza.ZERG, hidralisco, manager.getConstruccionProtoss().get(0)));
         assertEquals("Los Zerg han ganado el juego", exception.getMessage());
     }
 
@@ -751,10 +749,10 @@ public class TestManager {
 
         manager.moverUnidad(new Posicion(17, 16), dragon);
 
-        for(int i =0; i< 25 ;i++)
-            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+        for(int i =0; i< 24 ;i++)
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0));
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0)));
         assertEquals("Los Protoss han ganado el juego", exception.getMessage());
 
     }
@@ -781,14 +779,14 @@ public class TestManager {
         extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();
 
         for(int i =0; i< 25 ;i++)
-            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0));
 
         assertDoesNotThrow( () -> manager.pasarTurno());
 
-        for(int i =0; i< 38 ;i++)// dragon le pega al extractor (por gil le pasa)
-            manager.unidadAtacaConstruccion(dragon, extractor);
+        for(int i =0; i< 37 ;i++)// dragon le pega al extractor (por gil le pasa)
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, extractor);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.unidadAtacaConstruccion(Raza.ZERG, dragon, extractor));
         assertEquals("Los Protoss han ganado el juego", exception.getMessage());
     }
 }
