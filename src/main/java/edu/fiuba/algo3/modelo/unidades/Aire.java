@@ -2,6 +2,8 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 
+import java.util.LinkedList;
+
 public class Aire implements Ataque, Movimiento {
 
     private static String nombre = "Aire";
@@ -18,8 +20,13 @@ public class Aire implements Ataque, Movimiento {
     }
 
     @Override
-    public boolean equals(Ataque ataque){
+    public boolean es(Ataque ataque){
         return nombre.equals(ataque.getNombre());
+    }
+
+    @Override
+    public boolean es(Movimiento movimiento){
+        return nombre.equals(movimiento.getNombre());
     }
 
     @Override
@@ -35,5 +42,17 @@ public class Aire implements Ataque, Movimiento {
     @Override
     public String getNombre() {
         return nombre;
+    }
+
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList<>();
+        list.add(String.format("El ataque por %s tiene\n%s de rango y %s de daño", getNombre(), rango, danio));
+        return list;
     }
 }

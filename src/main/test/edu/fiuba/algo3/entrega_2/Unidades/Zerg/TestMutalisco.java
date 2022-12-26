@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.unidades.Tierra;
 import edu.fiuba.algo3.modelo.unidades.zerg.Hidralisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,13 +51,8 @@ public class TestMutalisco {
         Mutalisco mutalisco = new Mutalisco(new MockEconomia(), new Posicion(1,1));
         Tierra tierra = new Tierra(20, 100);
         int esperado = 0;
-
         for (int i = 0; i < 7; i++)
             mutalisco.pasarTurno();
-
-        int resultado = mutalisco.recibirDanio(20, tierra, new Posicion(1, 1));
-
-        assertEquals(esperado, resultado);
+        Assertions.assertThrows(RuntimeException.class, () -> mutalisco.recibirDanio(20, tierra, new Posicion(1, 1)));
     }
-
 }

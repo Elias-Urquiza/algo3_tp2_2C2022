@@ -35,4 +35,16 @@ public class VidaZerg extends Vida {
         }
         return puntosDeVida - vidaPreCuracion;
     }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList<>();
+        list.add(String.format("VIDA: %s / %s", puntosDeVida, puntosDeVidaMaxima));
+        return list;
+    }
+
+    public int getVida(){
+        return puntosDeVida;
+    }
+
 }

@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.buildings.protoss.Acceso;
 import edu.fiuba.algo3.modelo.buildings.zerg.Extractor;
 import edu.fiuba.algo3.mocks.CriaderoActivo;
 import edu.fiuba.algo3.mocks.MockEconomia;
+import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.unidades.protoss.Dragon;
 import org.junit.Test;
@@ -200,7 +201,7 @@ public class TestsExtractor {
         extractor.agregarZangano(manager);
 
         for(int i=0; i < 38; i++)
-            manager.unidadAtacaConstruccion(dragon, extractor);
+            manager.unidadAtacaConstruccion(Raza.PROTOSS, dragon, extractor);
 
         Extractor extractor2 = new Extractor(mockEconomia, new Posicion(17, 15));
 

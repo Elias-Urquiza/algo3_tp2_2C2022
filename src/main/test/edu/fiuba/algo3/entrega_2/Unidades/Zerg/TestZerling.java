@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.buildings.zerg.Guarida;
 import edu.fiuba.algo3.modelo.unidades.Aire;
 import edu.fiuba.algo3.modelo.unidades.Ataque;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,10 +36,8 @@ public class TestZerling {
     public void recibeDanioSoloTerrestre(){
         Zerling zerling1 = new Zerling(new MockEconomia(), new Posicion(1,1));
         Aire aire = new Aire(20, 10000000);
-        int esperado = 0;
-        zerling1.pasarTurno();zerling1.pasarTurno();
-        int resultado = zerling1.recibirDanio(20, aire, new Posicion(3, 3));
-
-        assertEquals(esperado, resultado);
+        zerling1.pasarTurno();
+        zerling1.pasarTurno();
+        Assertions.assertThrows(RuntimeException.class, () -> zerling1.recibirDanio(20, aire, new Posicion(3, 3)));
     }
 }

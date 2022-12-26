@@ -2,8 +2,8 @@ package edu.fiuba.algo3.modelo.unidades;
 
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
-import edu.fiuba.algo3.modelo.buildings.zerg.Zangano;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,9 +25,10 @@ public class UnidadManager  {
         unidad.agregate(unidades, suministros);// se filtra por proto-zerg.
     }
 
-    public void ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
-        agresor.atacar(victima);
+    public int ejecutarComandoDeDaniar(Unidad agresor, Objetivo victima){
+        int dmg = agresor.atacar(victima);
         victima.morirUnidad(unidades);
+        return dmg;
     }
 
     public void moverUnidad(Unidad unaUnidad, Posicion nuevaPosicion, Boolean esVacio){
@@ -52,11 +53,13 @@ public class UnidadManager  {
         return ocupado;
     }
 
-    public void hacerPasarDeTurno(){
+    public void hacerPasarDeTurnoZerg(){
         LinkedList<Unidad> zergs= unidades.get(Raza.ZERG);
         for (Unidad u :zergs)
             u.pasarTurno();
+    }
 
+    public void hacerPasarDeTurnoProtoss(){
         LinkedList<Unidad> protoss= unidades.get(Raza.PROTOSS);
         for (Unidad u :protoss)
             u.pasarTurno();
@@ -77,8 +80,10 @@ public class UnidadManager  {
             }
         }
 
-        if(encontrado)
+        if(encontrado) {
             lista.remove(zergAEliminar);
+            lista.add(unidadEvolucionada);
+        }
         else
             throw new RuntimeException("La unidad que se desea evolucionar no existe");
     }
@@ -111,5 +116,22 @@ public class UnidadManager  {
         return zanganos;
     }
 
+
+    public Object getAt(Posicion pos) {
+
+        LinkedList<UnidadZerg> lista = unidades.get(Raza.ZERG);
+        for(UnidadZerg u : lista){
+            if(pos.equals(u.getPosicion() ) )
+                return  u;
+        }
+
+        LinkedList<UnidadProtoss> lista2 =unidades.get(Raza.PROTOSS);
+        for(UnidadProtoss u : lista2){
+            if(pos.equals(u.getPosicion() ) )
+                return  u;
+        }
+
+       return null;
+    }
 
 }

@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.buildings.Estructura;
 import edu.fiuba.algo3.modelo.tiles.FloorManager;
 import edu.fiuba.algo3.modelo.tiles.Manager;
 import edu.fiuba.algo3.modelo.tiles.Recurso;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -78,7 +79,9 @@ public class Extractor extends ConstruccionZerg implements Construccion, Turno, 
 
     @Override
     public void extraer() {
-        economia.ingresarGasVespeno(recurso.extraer(zanganos.size() * PRODUCCION_POR_ZANGANO));
+        try {
+            economia.ingresarGasVespeno(recurso.extraer(zanganos.size() * PRODUCCION_POR_ZANGANO));
+        } catch (RuntimeException ignored) {}
     }
 
     @Override

@@ -7,10 +7,12 @@ import java.util.PrimitiveIterator;
 public class PartidaJugadores {
     private HashMap<Raza,Jugador> jugadores;
 
+    private Jugador jugadorActivo;
     private int MAX_NOMBRE = 20;
 
     public PartidaJugadores() {
         this.jugadores = new HashMap<>();
+        this.jugadorActivo = getJugador(Raza.PROTOSS);
     }
 
 
@@ -51,6 +53,9 @@ public class PartidaJugadores {
 
         Jugador jugador = new Jugador(nombre, raza, color);
         jugadores.put(raza,jugador);
+        if(jugadorActivo == null) {
+            jugadorActivo = jugador;
+        }
     }
 
     private boolean chequearNombreOcupado(String nombre, Raza raza) {
@@ -66,5 +71,14 @@ public class PartidaJugadores {
 
     public Jugador getJugador(Raza raza) {
         return jugadores.get(raza);
+    }
+    public Jugador getJugadorActivo() {
+        return jugadorActivo;
+    }
+
+    public void cambiarTurno() {
+        jugadorActivo = getJugador(Raza.PROTOSS).equals(jugadorActivo)
+                ? getJugador(Raza.ZERG)
+                : getJugador(Raza.PROTOSS);
     }
 }

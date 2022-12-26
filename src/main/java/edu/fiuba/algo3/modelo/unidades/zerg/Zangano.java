@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.buildings.zerg;
+package edu.fiuba.algo3.modelo.unidades.zerg;
 
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.tiles.Cristales;
@@ -18,7 +18,6 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
     public Zangano(Economia economiaZerg, Posicion pos) {
         super(25, 25, 0, economiaZerg, pos, 1, 0, new Tierra(0, 0), new Tierra(0, 0), 1);
         this.economia = economiaZerg;
-        ataques.add(new Tierra(0, 0));
         turnos = 0;
     }
 
@@ -44,7 +43,9 @@ public class Zangano extends UnidadZerg implements Turno, ExtraeRecurso{
 
     public void extraerMineral(Cristales cristal){
         if(turnos >= tiempoDeConstruccion)
-            economia.ingresarMineral(cristal.extraer(PRODUCCION_POR_ZANGANO));
+            try {
+                economia.ingresarMineral(cristal.extraer(PRODUCCION_POR_ZANGANO));
+            } catch(RuntimeException ignored) {}
     }
 
     public void construida(){

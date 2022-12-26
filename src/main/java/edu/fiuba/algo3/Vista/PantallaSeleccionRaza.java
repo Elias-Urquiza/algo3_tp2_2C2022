@@ -22,18 +22,18 @@ public class PantallaSeleccionRaza {
         List<String> razaOptions = getRazaOptions();
         List<String> coloresOptions = getColorOptions();
 
-        label(500, 100, pane, "AlgoStar", Ids.TITLELABEL.getName(), new Font("Arial", 30));
+        label(500, 100, pane, "AlgoStar", ButtonIds.TITLELABEL.getName(), new Font("Arial", 30));
 
-        input(100, 400, pane, "Ingrese nombre Jugador1", Ids.NOMBRE1.getName());
-        input(500, 400, pane, "Ingrese nombre Jugador2", Ids.NOMBRE2.getName());
+        input(100, 400, pane, "Ingrese nombre Jugador1", ButtonIds.NOMBRE1.getName());
+        input(500, 400, pane, "Ingrese nombre Jugador2", ButtonIds.NOMBRE2.getName());
 
-        dropdown(100, 450, pane, "Seleccione raza para Jugador1", Ids.RAZA1.getName(), razaOptions);
-        dropdown(500, 450, pane, "Seleccione raza para Jugador2", Ids.RAZA2.getName(), razaOptions);
+        dropdown(100, 450, pane, "Seleccione raza para Jugador1", ButtonIds.RAZA1.getName(), razaOptions);
+        dropdown(500, 450, pane, "Seleccione raza para Jugador2", ButtonIds.RAZA2.getName(), razaOptions);
 
-        dropdown(100, 500, pane, "Seleccione color para Jugador1", Ids.COLOR1.getName(), coloresOptions);
-        dropdown(500, 500, pane, "Seleccione color para Jugador2", Ids.COLOR2.getName(), coloresOptions);
+        dropdown(100, 500, pane, "Seleccione color para Jugador1", ButtonIds.COLOR1.getName(), coloresOptions);
+        dropdown(500, 500, pane, "Seleccione color para Jugador2", ButtonIds.COLOR2.getName(), coloresOptions);
 
-        button(300, 600, pane, "Iniciar partida", Ids.STARTGAME.getName());
+        button(300, 600, pane, "Iniciar partida", ButtonIds.STARTGAME.getName());
 
         return pane;
     }
@@ -83,6 +83,4 @@ public class PantallaSeleccionRaza {
         }
         return colores;
     }
-
-
 }

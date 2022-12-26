@@ -6,8 +6,8 @@ import edu.fiuba.algo3.modelo.unidades.Unidad;
 import java.util.LinkedList;
 
 public abstract class Vida {
-    public int puntosDeVida;
-    public int puntosDeVidaMaxima;
+    protected int puntosDeVida;
+    protected int puntosDeVidaMaxima;
 
     public Vida(int puntosDeVidaMaxima) {
         this.puntosDeVidaMaxima = puntosDeVidaMaxima;
@@ -24,4 +24,5 @@ public abstract class Vida {
 
     public abstract int daniar(int danio);
     public abstract int curar(int curacion);
+    public abstract LinkedList<String> getInformacion();
 }

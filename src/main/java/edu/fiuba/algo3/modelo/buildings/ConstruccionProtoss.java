@@ -19,7 +19,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     private static final int CURACION_PROTOSS = 100;
     protected Posicion pos;
     protected LinkedList<Class> correlativity;
-    protected Tierra superficie;
+    protected Ataque superficie;
     protected int turnos;
     protected boolean energizado;
     //PODRIAMOS HACER QUE EL PASAR TURNO DE CONSTRUCCION PROTOSSS SE CURE O REGENERE ESCUDO
@@ -33,7 +33,7 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
                 economia.gastarMineral(costoMineral);
             }
         } catch(final RuntimeException e) {
-            throw new RuntimeException("No tenes los minerales suficientes");
+            throw new RuntimeException(e.getMessage());
         }
         this.costoMineral = costoMineral;
         this.costoGas = costoGas;
@@ -48,10 +48,15 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
-       if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
-           return vida.daniar(danio);
-       }
-       return 0;
+        boolean atacable = tipoDeAtaque.es(superficie);
+        boolean enRango = tipoDeAtaque.inRange(pos, posicionAtacante);
+        if (!atacable) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque sus tipos no son compatibles.");
+        }
+        if (!enRango) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque esta muy lejos.");
+        }
+        return vida.daniar(danio);
     }
 
     @Override
@@ -100,6 +105,11 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
         if(turnos < tiempoDeConstruccion) throw new RuntimeException("No se termino de construir el edificio");
     }
 
+    @Override
+    public int getVida() {
+        return vida.getVida();
+    }
+
     public void pasarTurno() {
         turnos++;
     }
@@ -112,6 +122,22 @@ public class ConstruccionProtoss implements Turno, Objetivo, Estructura {
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss,LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
         LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionProtoss;
         vida.eliminarConstruccion(list, this);
+    }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList();
+        list.addAll(vida.getInformacion());
+        try {
+            construida();
+            list.add("Edificio activo");
+        } catch (RuntimeException e) {
+            list.add(String.format("Turnos hasta activarse: %s", tiempoDeConstruccion-turnos));
+        }
+        list.add(energizado ? "Edificio energizado!" : "Edificio sin energia");
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        list.add(String.format("Se cura %s puntos por turno", CURACION_PROTOSS));
+        return list;
     }
 
 }

@@ -36,7 +36,7 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
 
 
         } catch(final RuntimeException e) {
-            throw new RuntimeException("No tenes los minerales suficientes");
+            throw new RuntimeException(e.getMessage());
         }
         this.vida = new VidaZerg(puntosDeVidaMaxima);
         this.costoGas = costoGas;
@@ -48,16 +48,26 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
         this.turnos = 0;
     }
 
+    @Override
+    public int getVida() {
+        return vida.getVida();
+    }
+
     public int curar() {
         return vida.curar(CURACION_ZERG);
     }
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
-        if(tipoDeAtaque.equals(superficie) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
-            return vida.daniar(danio);
+        boolean atacable = tipoDeAtaque.es(superficie);
+        boolean enRango = tipoDeAtaque.inRange(pos, posicionAtacante);
+        if (!atacable) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque sus tipos no son compatibles.");
         }
-        return 0;
+        if (!enRango) {
+            throw new RuntimeException("No puedes atacar a esta construccion\nporque esta muy lejos.");
+        }
+        return vida.daniar(danio);
     }
 
     @Override
@@ -109,6 +119,22 @@ public class ConstruccionZerg implements Turno, Objetivo, Estructura {
     public void destruir(LinkedList<ConstruccionZerg> construccionesZerg, LinkedList<ConstruccionProtoss> construccionProtoss, LinkedList<ExtraeRecurso> extraeRecursos, FloorManager floorManager) {
         LinkedList<Estructura> list = (LinkedList<Estructura>) (List<?>)  construccionesZerg;
         vida.eliminarConstruccion(list, this);
+    }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList();
+        list.addAll(vida.getInformacion());
+        list.add(String.format("Unidad de %s", superficie.getNombre()));
+        try {
+            construida();
+            list.add("Edificio activo");
+        } catch (RuntimeException e) {
+            list.add(String.format("Turnos hasta activarse: %s", tiempoDeConstruccion-turnos));
+        }
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        list.add(String.format("Se cura %s puntos por turno", CURACION_ZERG));
+        return list;
     }
 
 }

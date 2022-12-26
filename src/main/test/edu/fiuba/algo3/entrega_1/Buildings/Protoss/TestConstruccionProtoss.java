@@ -23,24 +23,28 @@ public class TestConstruccionProtoss {
 
     @Test
     public void danioUnaConstruccionProtossSinSacarleElEscudoYNoPierdeVida() {
-        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre, new Posicion(3,3)));
+        int vida = constr.getVida();
+        Assertions.assertEquals(50, constr.recibirDanio(50, terrestre, new Posicion(3,3)));
+        Assertions.assertEquals(vida, constr.getVida());
     }
 
     @Test
     public void danioUnaConstruccionProtossSacandoleElEscudoYPierdeVida() {
-        Assertions.assertEquals(50, constr.recibirDanio(100, terrestre, new Posicion(3,3)));
+        int vidaAntes = constr.getVida();
+        Assertions.assertEquals(100, constr.recibirDanio(100, terrestre, new Posicion(3,3)));
+        Assertions.assertEquals(constr.getVida(), vidaAntes-50);
     }
 
     @Test
     public void curarUnaConstruccionProtossSoloLeRegeneraElEscudo() {
-        Assertions.assertEquals(150, constr.recibirDanio(200, terrestre, new Posicion(3,3)));
+        Assertions.assertEquals(200, constr.recibirDanio(200, terrestre, new Posicion(3,3)));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }
 
     @Test
     public void curarUnaConstruccionProtossConEscudoMaximoNoLoCura() {
-        Assertions.assertEquals(0, constr.recibirDanio(50, terrestre, new Posicion(3,3) ));
+        Assertions.assertEquals(50, constr.recibirDanio(50, terrestre, new Posicion(3,3) ));
         Assertions.assertEquals(50, constr.curar());
         Assertions.assertEquals(0, constr.curar());
     }

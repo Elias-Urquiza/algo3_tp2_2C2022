@@ -18,6 +18,9 @@ public class Jugador {
     public String getNombre() {
         return nombre;
     }
+    public Raza getRaza() {
+        return raza;
+    }
 
     // TODO Comportamiento? Tal vez sirva como clase a la que la UI delega comportamiento como
     //  "display color", "display nombre", etc.

@@ -294,6 +294,16 @@ public class FloorManager {
 
     }
 
+
+    public void noHayVolcan(Posicion posicion){
+        for (Volcan volcan : volcanes){
+            Posicion posicionVolcan = volcan.getPos();
+            if(posicionVolcan.equals(posicion)){
+                throw new RuntimeException("hay un volcan en esa posicion");
+            }
+        }
+    }
+
     public  void buscarCoincidenciasDelMoho(Posicion posicion) {
 
         for (Moho m : moho) {
@@ -421,5 +431,13 @@ public class FloorManager {
             if (volcanes.getPos().equals(pos))
                 throw new RuntimeException("Hay un volcan en esta posicion");
         }
+    }
+
+    public boolean cristalNoCoicideConNexoMineral(Posicion pos) {
+        for(ExtraeRecurso ext : construccionQueExtrae ){
+            if(ext.getPosicion().equals(pos))
+                return true;
+        }
+        return false;
     }
 }

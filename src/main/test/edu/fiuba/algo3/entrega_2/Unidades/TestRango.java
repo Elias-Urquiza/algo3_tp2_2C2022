@@ -12,12 +12,14 @@ import edu.fiuba.algo3.modelo.unidades.protoss.Zealot;
 import edu.fiuba.algo3.modelo.unidades.zerg.Hidralisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Mutalisco;
 import edu.fiuba.algo3.modelo.unidades.zerg.Zerling;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestRango {
 
@@ -31,8 +33,12 @@ public class TestRango {
 
     @BeforeEach
     public void initEach() {
-        mockSuministros.put(Raza.PROTOSS, new Suministros());
-        mockSuministros.put(Raza.ZERG, new Suministros());
+        Suministros suministrosProtoss = new Suministros();
+        suministrosProtoss.aumentarMaxSuminstros(100);
+        Suministros suministrosZerg = new Suministros();
+        suministrosZerg.aumentarMaxSuminstros(100);
+        mockSuministros.put(Raza.PROTOSS, suministrosProtoss);
+        mockSuministros.put(Raza.ZERG, suministrosZerg);
         unidadManager.crearUnidad(sacoDeBoxTerrestreZerg, new Posicion(3,3), mockSuministros);
         unidadManager.crearUnidad(sacoDeBoxAereoZerg, new Posicion(4,4), mockSuministros);
         unidadManager.crearUnidad(sacoDeBoxTerrestreProtoss, new Posicion(6,6), mockSuministros);
@@ -55,13 +61,9 @@ public class TestRango {
     @Test
     public void unZerlingNoAtacaFueraDeSuRango(){
         Zerling unidad = new Zerling(economia, new Posicion(3,1));
-        int danioEsperado = 0;
-
-
         for (int i = 0; i<4; i++)
             unidad.pasarTurno();
-
-        assertEquals(danioEsperado, unidad.atacar(sacoDeBoxTerrestreZerg) );
+        assertThrows(RuntimeException.class, () -> unidad.atacar(sacoDeBoxTerrestreZerg));
     }
 
     @Test
@@ -82,21 +84,18 @@ public class TestRango {
 
     @Test
     public void unHidraliscoNoAtacaFueraDeSuRango(){
-        Posicion pos = new Posicion(4,8);
+        Posicion pos = new Posicion(3,8);
         Hidralisco unidad = new Hidralisco(economia, pos);
-        int danioEsperado = 0;
-
         for (int i = 0; i<4; i++)
             unidad.pasarTurno();
-
-        assertEquals(danioEsperado, unidad.atacar(sacoDeBoxAereoProtoss) );
+        assertThrows(RuntimeException.class, () -> unidad.atacar(sacoDeBoxAereoProtoss) );
     }
 
     @Test
     public void unMutaliscoAtacaDentroDeSuRango(){
         Posicion pos = new Posicion(6,8);
         Mutalisco unidad = new Mutalisco(economia, pos);
-        int danioEsperado = 3;
+        int danioEsperado = 9;
 
         for (int i = 0; i<8; i++)
             unidad.pasarTurno();
@@ -111,12 +110,9 @@ public class TestRango {
     public void unMutaliscoNoAtacaFueraDeSuRango(){
         Posicion pos = new Posicion(4,8);
         Mutalisco unidad = new Mutalisco(economia, pos);
-        int danioEsperado = 0;
-
         for (int i = 0; i<7; i++)
             unidad.pasarTurno();
-
-        assertEquals(danioEsperado, unidad.atacar(sacoDeBoxAereoZerg) );
+        assertThrows(RuntimeException.class, () -> unidad.atacar(sacoDeBoxAereoZerg) );
     }
 
     @Test
@@ -138,12 +134,9 @@ public class TestRango {
     public void unDragonNoAtacaFueraDeSuRango(){
         Posicion pos = new Posicion(3,8);
         Dragon unidad = new Dragon(economia, pos);
-        int danioEsperado = 0;
-
         for (int i = 0; i<6; i++)
             unidad.pasarTurno();
-
-        assertEquals(danioEsperado, unidad.atacar(sacoDeBoxAereoZerg) );
+        assertThrows(RuntimeException.class, () -> unidad.atacar(sacoDeBoxAereoZerg) );
     }
 }
 

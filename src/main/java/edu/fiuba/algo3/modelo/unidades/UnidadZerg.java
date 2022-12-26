@@ -3,13 +3,14 @@ package edu.fiuba.algo3.modelo.unidades;
 import edu.fiuba.algo3.modelo.Economia;
 import edu.fiuba.algo3.modelo.Posicion;
 import edu.fiuba.algo3.modelo.Suministros;
-import edu.fiuba.algo3.modelo.buildings.zerg.Zangano;
 import edu.fiuba.algo3.modelo.jugadores.Raza;
 import edu.fiuba.algo3.modelo.VidaZerg;
-import edu.fiuba.algo3.modelo.buildings.ConstruccionProtoss;
+import edu.fiuba.algo3.modelo.unidades.zerg.Zangano;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public abstract class UnidadZerg extends Unidad {
     private VidaZerg vida;
@@ -23,10 +24,15 @@ public abstract class UnidadZerg extends Unidad {
 
     @Override
     public int recibirDanio(int danio, Ataque tipoDeAtaque, Posicion posicionAtacante) {
-        if (superficieAtaque.equals(tipoDeAtaque) && tipoDeAtaque.inRange(pos, posicionAtacante)) {
-            return vida.daniar(danio);
+        boolean atacable = tipoDeAtaque.es(superficie);
+        boolean enRango = tipoDeAtaque.inRange(pos, posicionAtacante);
+        if (!atacable) {
+            throw new RuntimeException("No puedes atacar a esta unidad porque sus tipos no son compatibles.");
         }
-        return 0;//podemos poner una constante
+        if (!enRango) {
+            throw new RuntimeException("No puedes atacar a esta unidad porque esta muy lejos.");
+        }
+        return vida.daniar(danio);
     }
 
     @Override
@@ -48,4 +54,39 @@ public abstract class UnidadZerg extends Unidad {
     public void agregaZangano(LinkedList<Zangano> zanganos) {
         return;
     }
+
+    @Override
+    public LinkedList<String> getInformacion() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addAll(vida.getInformacion());
+        list.add(String.format("Unidad de: %s", superficie));
+        if (!ataques.isEmpty()) {
+            list.add(String.format("Puede atacar unidades de %s", getNombreDeAtaques()));
+        }
+        list.add(String.format("Ocupa %s suministros", suministro));
+        if (turnos < tiempoDeConstruccion) {
+            list.add(String.format("Turnos en construirse: %s", tiempoDeConstruccion - turnos));
+        } else {
+            list.add("Unidad activa");
+        }
+        list.add(String.format("Ubicado en: %s - %s", pos.getX(), pos.getY()));
+        for(Ataque a : ataques) {
+            list.addAll(a.getInformacion());
+        }
+        return list;
+    }
+
+    @Override
+    public int getVida(){
+        return vida.getVida();
+    }
+
+    private String getNombreDeAtaques() {
+        List<String> list = new ArrayList<>();
+        for (Ataque a : ataques) {
+            list.add(a.getNombre());
+        }
+        return String.join(",", list);
+    }
+
 }

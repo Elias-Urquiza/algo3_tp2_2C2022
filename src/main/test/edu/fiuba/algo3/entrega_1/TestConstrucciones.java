@@ -30,7 +30,7 @@ public class TestConstrucciones {
         boolean afirmacion = false;
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
-        economia.ingresarMineral(150);
+        economia.ingresarMineral(300);
         Extractor extractor = new Extractor(economia, new Posicion(0,0));
         Criadero criadero = new Criadero(economia, new Posicion(0,0));
         criadero.setFloorManager(fm);
@@ -59,9 +59,9 @@ public class TestConstrucciones {
         boolean afirmacion = false;
         Economia economia = new Economia();
         economia.ingresarGasVespeno(0);
-        economia.ingresarMineral(150);
+        economia.ingresarMineral(300);
         Extractor extractor = new Extractor(economia, new Posicion(2,2));
-        Criadero criadero = new Criadero(economia, new Posicion(0,0));
+        Criadero criadero = new Criadero(economia,    new Posicion(0,0));
         criadero.setFloorManager(fm);
         criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();criadero.pasarTurno();
 

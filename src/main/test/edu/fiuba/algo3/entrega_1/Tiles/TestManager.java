@@ -12,7 +12,6 @@ import edu.fiuba.algo3.modelo.unidades.protoss.Scout;
 import edu.fiuba.algo3.modelo.unidades.zerg.Hidralisco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -344,15 +343,15 @@ public class TestManager {
         manager.agregarVolcanes(pos2);
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
-                () -> manager.construirEstructuraDeCristales(pos2, new NexoMineral(economia, pos2))
+                () -> manager.construirNexoMineral(pos2, new NexoMineral(economia, pos2))
         );
-        assertEquals("No hay un mineral en la posicion", exception.getMessage());
+        assertEquals("hay un volcan en esa posicion", exception.getMessage());
     }
 
     @Test
     public void intentoConstruirNexoMineralSobreCristalYPuedo() {
         Posicion pos1 = new Posicion(10, 10);
-        assertDoesNotThrow(() -> manager.construirEstructuraDeCristales(pos1, new NexoMineral(economia, pos1)));
+        assertDoesNotThrow(() -> manager.construirNexoMineral(pos1, new NexoMineral(economia, pos1)));
     }
 
     @Test
@@ -683,13 +682,7 @@ public class TestManager {
     @Test
     public void llenarElLimiteDeUnidadesEIntentarConstruirMasUnidadesTiraError() {
         // Setup to reach 200 max limit -> if limit is changed, test will fail.
-        for(int i = 5; i < 15; i++) {
-            for(int j = 5; j < 10; j++) {
-                Posicion pos = new Posicion(i, j);
-                manager.crearProtoss(pos, new Scout(economia, pos));
-            }
-        }
-        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
+        manager.crearProtoss(new Posicion(18, 17), new Scout(economia, new Posicion(18, 17)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
@@ -701,14 +694,10 @@ public class TestManager {
     public void noLlenarElLimiteConUnPilonYDestruirElPilonYaNoTeDejaConstruir() {
         // Setup to reach 200 max limit -> if limit is changed, test will fail.
         manager.construirPilonEn(new Posicion(0,0), new Pilon(economia, new Posicion(0,0)));
-        for(int i = 5; i < 15; i++) {
-            for(int j = 5; j < 10; j++) {
-                Posicion pos = new Posicion(i, j);
-                manager.crearProtoss(pos, new Scout(economia, pos));
-            }
-        }
+
+        Posicion pos = new Posicion(1, 1);
+        manager.crearProtoss(pos, new Scout(economia, pos));
         manager.destruirProtoss(new Posicion(0, 0));
-        manager.crearProtoss(new Posicion(1, 20), new Scout(economia, new Posicion(1, 20)));
         final RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> manager.crearProtoss(new Posicion(18, 18), new Scout(economia, new Posicion(18, 18)))
@@ -739,11 +728,9 @@ public class TestManager {
 
 
         for(int i = 0; i<59; i++)
-            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
-        for(int i = 0; i<1; i++)
-            manager.unidadAtacaConstruccion(hidralisco, manager.getConstruccionProtoss().get(0));
+            manager.unidadAtacaConstruccion(Raza.ZERG, hidralisco, manager.getConstruccionProtoss().get(0));
 
-        RuntimeException exception = assertThrows( RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows( RuntimeException.class, () ->   manager.unidadAtacaConstruccion(Raza.ZERG, hidralisco, manager.getConstruccionProtoss().get(0)));
         assertEquals("Los Zerg han ganado el juego", exception.getMessage());
     }
 
@@ -762,10 +749,10 @@ public class TestManager {
 
         manager.moverUnidad(new Posicion(17, 16), dragon);
 
-        for(int i =0; i< 25 ;i++)
-            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+        for(int i =0; i< 24 ;i++)
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0));
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0)));
         assertEquals("Los Protoss han ganado el juego", exception.getMessage());
 
     }
@@ -792,14 +779,14 @@ public class TestManager {
         extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();extractor.pasarTurno();
 
         for(int i =0; i< 25 ;i++)
-            manager.unidadAtacaConstruccion(dragon, manager.getConstruccionesZerg().get(0));
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, manager.getConstruccionesZerg().get(0));
 
         assertDoesNotThrow( () -> manager.pasarTurno());
 
-        for(int i =0; i< 38 ;i++)// dragon le pega al extractor (por gil le pasa)
-            manager.unidadAtacaConstruccion(dragon, extractor);
+        for(int i =0; i< 37 ;i++)// dragon le pega al extractor (por gil le pasa)
+            manager.unidadAtacaConstruccion(Raza.ZERG, dragon, extractor);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.pasarTurno());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> manager.unidadAtacaConstruccion(Raza.ZERG, dragon, extractor));
         assertEquals("Los Protoss han ganado el juego", exception.getMessage());
     }
 }

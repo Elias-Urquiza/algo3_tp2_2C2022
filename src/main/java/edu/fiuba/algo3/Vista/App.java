@@ -16,27 +16,11 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
- */
+ **/
 public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        // usamos una Vbox y una Hbox
-
-        /* Mover a vista del juego
-        CajaDeAbajo cajaAbajo = new CajaDeAbajo();
-        CajaDeLaDerecha cajaDeLaDerecha = new CajaDeLaDerecha();
-        StackPane stackPane = new StackPane(cajaAbajo, cajaDeLaDerecha);
-
-
-
-        //var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(stackPane, 1000, 700);
-        stage.setScene(scene);
-
-
-        stage.show();
-        */
         GameController controller = new GameController(stage);
         controller.iniciarPantallaSeleccion();
     }
@@ -44,7 +28,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-
-
 }

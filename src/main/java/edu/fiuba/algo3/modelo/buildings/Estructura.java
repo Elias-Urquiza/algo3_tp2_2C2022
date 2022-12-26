@@ -12,5 +12,8 @@ public interface Estructura {
 
     void construida();
 
+    int getVida();
+
     Object getPosicion();
+    LinkedList<String> getInformacion();
 }
