@@ -15,11 +15,9 @@ Corrector: **Santiago Valdez**
 
 ## Aplicación
 
-La versión más reciente de la aplicación puede encontrarse en la pestaña [releases](https://github.com/Elias-Urquiza/algo3_tp2_2C2022/releases/latest) y ejecutarse en Linux, Windows o Mac de esta forma:
-
-```bash
-$ java -jar <archivo.jar>
-```
+En la carpeta```./out/artifacts/tp2_jar/``` se encuentra el .jar de la aplicacion para su descarga.
+O sino desde el IDE IntelliJ usando ```Build and Run``` de la siguiente clase:
+```edu.fiuba.algo3.Vista.Main```
 
 ## Desarrollo
 
