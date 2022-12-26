@@ -275,6 +275,13 @@ public class Manager {
         return energias;
     }
 
+    public LinkedList<ConstruccionProtoss> getConstruccionProtoss(){
+        return construccionProtoss;
+    }
+    public LinkedList<ConstruccionZerg> getConstruccionesZerg(){
+        return construccionesZerg;
+    }
+
     public void construirProtoss(Posicion pos, ConstruccionProtoss protoss) {
 
         if(floorManager.conVacio(pos, maxX, maxY) )
@@ -315,6 +322,8 @@ public class Manager {
        }
 
     }
+
+
 
     public void destruirZerg(Posicion pos) {
         int size = construccionesZerg.size();
