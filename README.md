@@ -19,6 +19,8 @@ En la carpeta```./out/artifacts/tp2_jar/``` se encuentra el .jar de la aplicacio
 O sino desde el IDE IntelliJ usando ```Build and Run``` de la siguiente clase:
 ```edu.fiuba.algo3.Vista.Main```
 
+En la carpeta IMPORT se encuentra el informe y los diagramas de secuencia.
+
 ## Desarrollo
 
 Aquellos que deseen colaborar con el proyecto pueden consultar la [guía de desarrollo](./docs/Desarrollo.md).
